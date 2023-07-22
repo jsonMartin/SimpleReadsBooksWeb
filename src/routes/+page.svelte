@@ -32,7 +32,7 @@
 	</NavUl>
 </Navbar>
 
-<img src="/images/banner.png" width="100%" alt="Simple Reads Books Banner" />
+<img src="/images/banner.png" width="100%" alt="Simple Reads Books Banner" loading="lazy" />
 
 <div class="p-10">
 	<h1>Test UI Components</h1>
