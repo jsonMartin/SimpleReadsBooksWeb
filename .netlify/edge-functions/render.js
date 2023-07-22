@@ -649,8 +649,8 @@ var init__ = __esm({
   ".svelte-kit/output/server/nodes/0.js"() {
     index = 0;
     component = async () => component_cache ?? (component_cache = (await Promise.resolve().then(() => (init_layout_svelte(), layout_svelte_exports))).default);
-    imports = ["_app/immutable/nodes/0.0c39b90d.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"];
-    stylesheets = ["_app/immutable/assets/0.b312a3c0.css"];
+    imports = ["_app/immutable/nodes/0.12bd1d77.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"];
+    stylesheets = ["_app/immutable/assets/0.8dda2100.css"];
     fonts = [];
   }
 });
@@ -708,7 +708,7 @@ var init__2 = __esm({
   ".svelte-kit/output/server/nodes/1.js"() {
     index2 = 1;
     component2 = async () => component_cache2 ?? (component_cache2 = (await Promise.resolve().then(() => (init_error_svelte(), error_svelte_exports))).default);
-    imports2 = ["_app/immutable/nodes/1.29e57cbe.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js", "_app/immutable/chunks/singletons.e758c38c.js"];
+    imports2 = ["_app/immutable/nodes/1.dcb6f80e.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js", "_app/immutable/chunks/singletons.64c52ef0.js"];
     stylesheets2 = [];
     fonts2 = [];
   }
@@ -4125,7 +4125,7 @@ var init_page_svelte = __esm({
               }
             })}`;
           }
-        })} <img src="/images/banner.png" width="100%" alt="Simple Reads Books Banner"> <div class="p-10"><h1 data-svelte-h="svelte-1b1csk2">Test UI Components</h1> <hr> <br> ${validate_component(Button, "Button").$$render($$result, { class: "mb-5" }, {}, {
+        })} <div class="max-w-screen-2xl m-auto"><img src="/images/banner.png" width="100%" alt="Simple Reads Books Banner" loading="lazy" style="aspect-ratio:288/85"> <div class="p-10"><h1 data-svelte-h="svelte-1b1csk2">Test UI Components</h1> <hr> <br> ${validate_component(Button, "Button").$$render($$result, { class: "mb-5" }, {}, {
           default: () => {
             return `Default modal`;
           }
@@ -4155,12 +4155,12 @@ var init_page_svelte = __esm({
               })} `;
             },
             default: () => {
-              return `<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-14si2p">With less than a month to go before the European Union enacts new consumer privacy laws for
-			its citizens, companies around the world are updating their terms of service agreements to
-			comply.</p> <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-1c3u9mn">The European Union\u2019s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25
-			and is meant to ensure a common set of data rights in the European Union. It requires
-			organizations to notify users as soon as possible of high-risk data breaches that could
-			personally affect them.</p>`;
+              return `<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-1ing1jd">With less than a month to go before the European Union enacts new consumer privacy laws for
+				its citizens, companies around the world are updating their terms of service agreements to
+				comply.</p> <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-95wt9w">The European Union\u2019s General Data Protection Regulation (G.D.P.R.) goes into effect on May
+				25 and is meant to ensure a common set of data rights in the European Union. It requires
+				organizations to notify users as soon as possible of high-risk data breaches that could
+				personally affect them.</p>`;
             }
           }
         )} ${validate_component(Footer, "Footer").$$render(
@@ -4212,7 +4212,7 @@ var init_page_svelte = __esm({
               )}</div> <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"> ${validate_component(FooterCopyright, "FooterCopyright").$$render($$result, { href: "/", by: "Flowbite\u2122" }, {}, {})}`;
             }
           }
-        )}</div>`;
+        )}</div></div>`;
       } while (!$$settled);
       return $$rendered;
     });
@@ -4233,7 +4233,7 @@ var init__3 = __esm({
   ".svelte-kit/output/server/nodes/2.js"() {
     index3 = 2;
     component3 = async () => component_cache3 ?? (component_cache3 = (await Promise.resolve().then(() => (init_page_svelte(), page_svelte_exports))).default);
-    imports3 = ["_app/immutable/nodes/2.2cd1b292.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"];
+    imports3 = ["_app/immutable/nodes/2.d5ba0da4.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"];
     stylesheets3 = ["_app/immutable/assets/2.1d121e74.css"];
     fonts3 = [];
   }
@@ -4403,7 +4403,7 @@ var options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "1ubgoqb"
+  version_hash: "15yhmqe"
 };
 function get_hooks() {
   return {};
@@ -7790,7 +7790,7 @@ var manifest = (() => {
     assets: /* @__PURE__ */ new Set(["favicon.png", "images/banner.png"]),
     mimeTypes: { ".png": "image/png" },
     _: {
-      client: { "start": "_app/immutable/entry/start.9e6a6473.js", "app": "_app/immutable/entry/app.c9f498e3.js", "imports": ["_app/immutable/entry/start.9e6a6473.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/singletons.e758c38c.js", "_app/immutable/entry/app.c9f498e3.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"], "stylesheets": [], "fonts": [] },
+      client: { "start": "_app/immutable/entry/start.8b8740bc.js", "app": "_app/immutable/entry/app.86c0dceb.js", "imports": ["_app/immutable/entry/start.8b8740bc.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/singletons.64c52ef0.js", "_app/immutable/entry/app.86c0dceb.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"], "stylesheets": [], "fonts": [] },
       nodes: [
         __memo(() => Promise.resolve().then(() => (init__(), __exports))),
         __memo(() => Promise.resolve().then(() => (init__2(), __exports2))),
