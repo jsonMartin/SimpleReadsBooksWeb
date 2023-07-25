@@ -11,81 +11,126 @@
 	let defaultModal = false;
 </script>
 
-<Navbar let:hidden let:toggle rounded color="form">
-	<NavBrand href="/">
-		<img
-			src="https://flowbite.com/docs/images/logo.svg"
-			class="mr-3 h-6 sm:h-9"
-			alt="Flowbite Logo"
-		/>
-		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-			Simple Reads Books
-		</span>
-	</NavBrand>
-	<NavHamburger on:click={toggle} />
-	<NavUl {hidden}>
-		<NavLi href="/" active={true}>Home</NavLi>
-		<NavLi href="/about">About</NavLi>
-		<NavLi href="/services">Services</NavLi>
-		<NavLi href="/pricing">Pricing</NavLi>
-		<NavLi href="/contact">Contact</NavLi>
-	</NavUl>
-</Navbar>
+<header>
+	<Navbar let:hidden let:toggle color="form" style="display:none;">
+		<NavBrand href="/">
+			<img
+				src="https://flowbite.com/docs/images/logo.svg"
+				class="mr-3 h-6 sm:h-9"
+				alt="Flowbite Logo"
+			/>
+			<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+				Simple Reads Books
+			</span>
+		</NavBrand>
+		<NavHamburger on:click={toggle} />
+		<NavUl {hidden}>
+			<NavLi href="/" active={true}>Home</NavLi>
+			<NavLi href="/about">About</NavLi>
+			<NavLi href="/services">Services</NavLi>
+			<NavLi href="/pricing">Pricing</NavLi>
+			<NavLi href="/contact">Contact</NavLi>
+		</NavUl>
+	</Navbar>
 
-<div class="max-w-screen-2xl m-auto">
 	<img
+		class="max-w-screen-2xl m-auto"
 		src="/images/banner.png"
 		width="100%"
 		alt="Simple Reads Books Banner"
 		loading="lazy"
 		style="aspect-ratio:288/85"
 	/>
+</header>
 
-	<div class="p-10">
-		<h1>Test UI Components</h1>
+<div class="max-w-screen-2xl m-auto">
+	<main>
+		<section
+			class="w-full py-20 bg-green-600 bg-opacity-40 flex-col justify-start items-center inline-flex"
+		>
+			<div class="justify-start items-center inline-flex">
+				<div class="self-stretch justify-between items-start gap-2.5 inline-flex">
+					<div class="grow shrink basis-0 flex-col justify-start items-center inline-flex">
+						<div
+							class="text-center text-gray-900 2xl:text-5xl lg:text-4xl text-2xl md:text-3xl font-normal px-10"
+						>
+							Simple Reads Books encourages children to explore nature through entertaining stories
+							filled with colorful illustrations
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 
-		<hr />
-		<br />
+		<section>
+			<div class="flex flex-row flex-wrap">
+				<!-- <div class="p-4 basis-7/12 md:basis-full"> -->
+				<div class="p-4 md:basis-7/12">
+					<img
+						class="rounded-lg w-full"
+						src="images/hunnie-bunnys-garden-mockup.png"
+						alt="book mockup cover"
+					/>
+					<div class="self-stretch text-center text-gray-900 lg:text-2xl text-xl font-normal p-3">
+						<p class="mb-2">
+							Hunnie Bunny’s Garden is a delightful blend of entertainment and education that
+							provides endless opportunities for learning and discovery.
+						</p>
+						<p class="mb-2">
+							This charming story is a wonderful testament to the beauty of nature and the joy that
+							gardening can bring.
+						</p>
+						<p class="font-medium pt-3">Add Hunnie Bunny’s Garden to your child’s library today!</p>
+					</div>
+				</div>
 
-		<Button on:click={() => (defaultModal = true)} class="mb-5">Default modal</Button>
+				<div class="p-4 basis-full md:basis-5/12 flex flex-col justify-start items-center">
+					<div
+						class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal"
+					>
+						Release Date <span class="font-medium">August 1, 2023</span>
+					</div>
 
-		<Modal title="Terms of Service" bind:open={defaultModal} autoclose>
-			<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-				With less than a month to go before the European Union enacts new consumer privacy laws for
-				its citizens, companies around the world are updating their terms of service agreements to
-				comply.
-			</p>
-			<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-				The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May
-				25 and is meant to ensure a common set of data rights in the European Union. It requires
-				organizations to notify users as soon as possible of high-risk data breaches that could
-				personally affect them.
-			</p>
-			<svelte:fragment slot="footer">
-				<Button on:click={() => alert('Handle "success"')}>I accept</Button>
-				<Button color="alternative">Decline</Button>
-			</svelte:fragment>
-		</Modal>
+					<Button color="primary" size="xl" class="mt-10">
+						Buy on Amazon &nbsp;
 
-		<Footer footerType="logo" class="bg-purple-300">
+						<svg
+							aria-hidden="true"
+							class="mr-2 ml-1 w-6 h-6"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							xmlns="http://www.w3.org/2000/svg"
+							><path
+								d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+							/></svg
+						>
+					</Button>
+					<img style="scale:1.25" src="/images/hunnie-bunny-reading-book.png" class="mt-10" />
+				</div>
+			</div>
+		</section>
+
+		<Footer footerType="socialmedia" class="bg-[#420063]">
 			<div class="sm:flex sm:items-center sm:justify-between">
 				<FooterBrand
 					href="https://flowbite.com"
 					src="https://flowbite.com/docs/images/logo.svg"
 					alt="Flowbite Logo"
 					name="Simple Reads Books"
+					style="filter:invert(1)"
 				/>
 				<FooterLinkGroup
-					ulClass="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400"
+					ulClass="flex flex-wrap items-center mb-6 text-sm text-white sm:mb-0 dark:text-gray-400"
 				>
-					<FooterLink href="/">About</FooterLink>
+					<FooterLink href="/">Terms & Conditions</FooterLink>
 					<FooterLink href="/">Privacy Policy</FooterLink>
-					<FooterLink href="/">Licensing</FooterLink>
-					<FooterLink href="/">Contact</FooterLink>
+					<FooterLink href="/">Reviews</FooterLink>
 				</FooterLinkGroup>
 			</div>
 			<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-			<FooterCopyright href="/" by="Flowbite™" />
+
+			<!-- TODO: Footer copyright defualts to current year (server writes this) -->
+			<FooterCopyright href="/" by="Simple Reads Books, Inc." spanClass="text-white text-sm" />
 		</Footer>
-	</div>
+	</main>
 </div>
