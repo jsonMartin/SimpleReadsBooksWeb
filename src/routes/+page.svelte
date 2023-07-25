@@ -11,52 +11,50 @@
 	let defaultModal = false;
 </script>
 
-<header>
-	<Navbar let:hidden let:toggle color="form" style="display:none;">
-		<NavBrand href="/">
-			<img
-				src="https://flowbite.com/docs/images/logo.svg"
-				class="mr-3 h-6 sm:h-9"
-				alt="Flowbite Logo"
-			/>
-			<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-				Simple Reads Books
-			</span>
-		</NavBrand>
-		<NavHamburger on:click={toggle} />
-		<NavUl {hidden}>
-			<NavLi href="/" active={true}>Home</NavLi>
-			<NavLi href="/about">About</NavLi>
-			<NavLi href="/services">Services</NavLi>
-			<NavLi href="/pricing">Pricing</NavLi>
-			<NavLi href="/contact">Contact</NavLi>
-		</NavUl>
-	</Navbar>
+<div class="max-w-screen-xl m-auto">
+	<header>
+		<Navbar let:hidden let:toggle color="form" style="display:none;">
+			<NavBrand href="/">
+				<img
+					src="https://flowbite.com/docs/images/logo.svg"
+					class="mr-3 h-6 sm:h-9"
+					alt="Flowbite Logo"
+				/>
+				<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+					Simple Reads Books
+				</span>
+			</NavBrand>
+			<NavHamburger on:click={toggle} />
+			<NavUl {hidden}>
+				<NavLi href="/" active={true}>Home</NavLi>
+				<NavLi href="/about">About</NavLi>
+				<NavLi href="/services">Services</NavLi>
+				<NavLi href="/pricing">Pricing</NavLi>
+				<NavLi href="/contact">Contact</NavLi>
+			</NavUl>
+		</Navbar>
 
-	<img
-		class="max-w-screen-2xl m-auto"
-		src="/images/banner.png"
-		width="100%"
-		alt="Simple Reads Books Banner"
-		loading="lazy"
-		style="aspect-ratio:288/85"
-	/>
-</header>
+		<img
+			class="max-w-screen-2xl m-auto"
+			src="/images/banner.png"
+			width="100%"
+			alt="Simple Reads Books Banner"
+			loading="lazy"
+			style="aspect-ratio:288/85"
+		/>
+	</header>
 
-<div class="max-w-screen-2xl m-auto">
 	<main>
 		<section
-			class="w-full py-20 bg-green-600 bg-opacity-40 flex-col justify-start items-center inline-flex"
+			class="w-full py-10 md:py-20 px-4 md:px-5 bg-green-600 bg-opacity-40 flex-col justify-start items-center inline-flex"
 		>
 			<div class="justify-start items-center inline-flex">
 				<div class="self-stretch justify-between items-start gap-2.5 inline-flex">
-					<div class="grow shrink basis-0 flex-col justify-start items-center inline-flex">
-						<div
-							class="text-center text-gray-900 2xl:text-5xl lg:text-4xl text-2xl md:text-3xl font-normal px-10"
-						>
-							Simple Reads Books encourages children to explore nature through entertaining stories
-							filled with colorful illustrations
-						</div>
+					<div
+						class="text-center text-gray-900 lg:text-4xl xs:text-normal sm:text-2xl md:text-3xl font-normal md:px-10"
+					>
+						Simple Reads Books encourages children to explore nature through entertaining stories
+						filled with colorful illustrations
 					</div>
 				</div>
 			</div>
@@ -109,28 +107,30 @@
 				</div>
 			</div>
 		</section>
-
-		<Footer footerType="socialmedia" class="bg-[#420063]">
-			<div class="sm:flex sm:items-center sm:justify-between">
-				<FooterBrand
-					href="https://flowbite.com"
-					src="https://flowbite.com/docs/images/logo.svg"
-					alt="Flowbite Logo"
-					name="Simple Reads Books"
-					style="filter:invert(1)"
-				/>
-				<FooterLinkGroup
-					ulClass="flex flex-wrap items-center mb-6 text-sm text-white sm:mb-0 dark:text-gray-400"
-				>
-					<FooterLink href="/">Terms & Conditions</FooterLink>
-					<FooterLink href="/">Privacy Policy</FooterLink>
-					<FooterLink href="/">Reviews</FooterLink>
-				</FooterLinkGroup>
-			</div>
-			<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-
-			<!-- TODO: Footer copyright defualts to current year (server writes this) -->
-			<FooterCopyright href="/" by="Simple Reads Books, Inc." spanClass="text-white text-sm" />
-		</Footer>
 	</main>
 </div>
+
+<Footer footerType="socialmedia" class="bg-[#420063] w-[100vw]">
+	<div style="max-width: 1280px" class="m-auto">
+		<div class="sm:flex sm:items-center sm:justify-between">
+			<FooterBrand
+				href="https://flowbite.com"
+				src="https://flowbite.com/docs/images/logo.svg"
+				alt="Flowbite Logo"
+				name="Simple Reads Books"
+				style="filter:invert(1)"
+			/>
+			<FooterLinkGroup
+				ulClass="flex flex-wrap items-center mb-6 text-sm text-white sm:mb-0 dark:text-gray-400"
+			>
+				<FooterLink href="/">Terms & Conditions</FooterLink>
+				<FooterLink href="/">Privacy Policy</FooterLink>
+				<FooterLink href="/">Reviews</FooterLink>
+			</FooterLinkGroup>
+		</div>
+		<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+
+		<!-- TODO: Footer copyright defualts to current year (server writes this) -->
+		<FooterCopyright href="/" by="Simple Reads Books, Inc." spanClass="text-white text-sm" />
+	</div>
+</Footer>
