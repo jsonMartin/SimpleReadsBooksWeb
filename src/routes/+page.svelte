@@ -32,7 +32,7 @@
 			let:toggle
 			color="form"
 			navClass="w-full md:absolute md:bg-transparent p-3"
-			navDivClass="mx-auto flex flex-wrap justify-between items-center max-w-screen-xl"
+			navDivClass="mx-auto flex flex-wrap justify-between items-center max-w-screen-xl animate-flipInX"
 			class="max-w-screen-xl"
 		>
 			<NavBrand href="/">
@@ -211,9 +211,9 @@
 					alt="Simple Reads Books"
 					name="Simple Reads Books"
 					class="text-white"
-					spanClass="text-white text-md md:text-lg font-[Itim] whitespace-nowrap hidden sm:block"
+					spanClass="text-white text-md md:text-xl font-[Itim] whitespace-nowrap hidden sm:block"
 					imgClass="h-10 pr-3"
-					aClass="flex flex-row items-center min-w-[fit-content] mr-3 col-span-3"
+					aClass="flex flex-row items-center min-w-[fit-content] mr-3 col-span-3 hidden sm:flex"
 				/>
 
 				<FooterLinkGroup
@@ -256,7 +256,9 @@
 			<!-- <FooterCopyright href="/" by="Simple Reads Books, Inc." spanClass="text-gray-200 text-xs" /> -->
 
 			<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-			<div class="sm:flex sm:items-center sm:justify-between">
+			<div
+				class="flex flex-col sm:flex-row items-center justify-center sm:items-center sm:justify-between"
+			>
 				<FooterCopyright
 					href="/"
 					by="Simple Reads Books, Inc."
