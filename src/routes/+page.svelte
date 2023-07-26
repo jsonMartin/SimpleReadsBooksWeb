@@ -21,10 +21,10 @@
 </script>
 
 <!-- <div class="max-w-screen-xl m-auto"> -->
-<div class="m-auto">
+<div class="m-auto max-w-screen-xl">
 	<header>
 		<Navbar let:hidden let:toggle color="form">
-			<NavBrand href="/">
+			<NavBrand href="/" class="" hidden="true">
 				<img
 					src="https://flowbite.com/docs/images/logo.svg"
 					class="mr-3 h-6 sm:h-9"
@@ -178,39 +178,37 @@
 					class="hidden sm:flex col-span-3 max-w-[20%] animate-rotate-custom"
 					src="images/mr_frog_sitting.png"
 					loading="lazy"
+					alt="Mr. Frog sitting"
 				/>
 			</div>
-
-			<!--				<img class="w-[191px] h-[170px] left-[1210px] top-[47px] absolute" src="https://via.placeholder.com/191x170" />-->
-			<!--				<img class="w-[252px] h-[190px] left-[257px] top-[27px] absolute origin-top-left rotate-180" src="https://via.placeholder.com/252x190" />-->
 		</section>
 	</main>
-</div>
 
-<Footer footerType="socialmedia" class="bg-[#420063]">
-	<div class="m-auto max-w-screen-xl">
-		<div class="sm:flex sm:items-center sm:justify-between">
-			<FooterBrand
-				href="https://flowbite.com"
-				src="https://flowbite.com/docs/images/logo.svg"
-				alt="Flowbite Logo"
-				name="Simple Reads Books"
-				style="filter:invert(1)"
-			/>
-			<FooterLinkGroup
-				ulClass="flex flex-wrap items-center mb-6 text-sm text-white sm:mb-0 dark:text-gray-400"
-			>
-				<FooterLink href="/">Terms & Conditions</FooterLink>
-				<FooterLink href="/">Privacy Policy</FooterLink>
-				<FooterLink href="/">Reviews</FooterLink>
-			</FooterLinkGroup>
+	<Footer footerType="socialmedia" class="bg-[#420063]">
+		<div class="m-auto max-w-screen-xl">
+			<div class="sm:flex sm:items-center sm:justify-between">
+				<FooterBrand
+					href="https://flowbite.com"
+					src="https://flowbite.com/docs/images/logo.svg"
+					alt="Flowbite Logo"
+					name="Simple Reads Books"
+					style="filter:invert(1)"
+				/>
+				<FooterLinkGroup
+					ulClass="flex flex-wrap items-center mb-6 text-sm text-white sm:mb-0 dark:text-gray-400"
+				>
+					<FooterLink href="/">Terms & Conditions</FooterLink>
+					<FooterLink href="/">Privacy Policy</FooterLink>
+					<FooterLink href="/">Reviews</FooterLink>
+				</FooterLinkGroup>
+			</div>
+			<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+
+			<!-- TODO: Footer copyright defualts to current year (server writes this) -->
+			<FooterCopyright href="/" by="Simple Reads Books, Inc." spanClass="text-white text-sm" />
 		</div>
-		<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-
-		<!-- TODO: Footer copyright defualts to current year (server writes this) -->
-		<FooterCopyright href="/" by="Simple Reads Books, Inc." spanClass="text-white text-sm" />
-	</div>
-</Footer>
+	</Footer>
+</div>
 
 <style>
 	@keyframes bounce {
