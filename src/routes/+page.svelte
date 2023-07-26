@@ -20,9 +20,10 @@
 	let defaultModal = false;
 </script>
 
-<div class="max-w-screen-xl m-auto">
+<!-- <div class="max-w-screen-xl m-auto"> -->
+<div class="m-auto">
 	<header>
-		<Navbar let:hidden let:toggle color="form" style="display:none;">
+		<Navbar let:hidden let:toggle color="form">
 			<NavBrand href="/">
 				<img
 					src="https://flowbite.com/docs/images/logo.svg"
@@ -44,7 +45,7 @@
 		</Navbar>
 
 		<img
-			class="max-w-screen-2xl m-auto"
+			_class="max-w-screen-2xl m-auto"
 			src="/images/banner.png"
 			width="100%"
 			alt="Simple Reads Books Banner"
@@ -55,7 +56,7 @@
 
 	<main>
 		<section
-			class="w-full py-10 md:py-20 px-4 md:px-5 bg-[#009933] bg-opacity-40 flex-col justify-start items-center inline-flex"
+			class="w-full py-10 md:py-20 px-4 md:px-5 bg-[#009933] bg-opacity-40 flex-col justify-start items-center inline-flex font-[Itim]"
 		>
 			<div class="justify-start items-center inline-flex">
 				<div class="self-stretch justify-between items-start gap-2.5 inline-flex">
@@ -71,7 +72,7 @@
 
 		<!-- TODO: Refactor into component -->
 		<section>
-			<div class="flex flex-row flex-wrap">
+			<div class="flex flex-row flex-wrap font-[Itim]">
 				<!-- <div class="p-4 basis-7/12 md:basis-full"> -->
 				<div class="p-4 md:basis-7/12">
 					<img
@@ -142,7 +143,7 @@
 			</div>
 		</section>
 
-		<section class="w-full">
+		<section class="w-full font-[Itim]">
 			<div
 				class="bg-[rgba(0,102,204,0.44)] p-2.5 flex flex-row items-center justify-between w-full relative"
 			>
