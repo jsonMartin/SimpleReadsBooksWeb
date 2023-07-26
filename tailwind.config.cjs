@@ -28,6 +28,16 @@ const config = {
         'xl': '1440px',
         // => @media (min-width: 1440px) { ... }
       },
+
+      keyframes: {
+        flipInX: {
+          '0%': { transform: 'rotateX(85deg)', opacity: 0 },
+          '100%': { transform: 'rotateX(0deg)', opacity: 1 },
+        }
+      },
+      animation: {
+        flipInX: 'flipInX .8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1', // 1 indicates the animation will run once
+      }
     },
 
   }
