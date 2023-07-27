@@ -56,7 +56,9 @@
 				<NavBrand href="/">
 					<div class="md:hidden flex flex-row justify-center items-center min-w-min">
 						<img src="images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" />
-						<span class="self-center whitespace-nowrap sm dark:text-white font-[Itim]">
+						<span
+							class="self-center whitespace-nowrap sm dark:text-white font-[Itim] text-md sm:text-lg"
+						>
 							Simple Reads Books
 						</span>
 					</div>
