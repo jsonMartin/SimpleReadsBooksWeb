@@ -41,7 +41,7 @@
 </script>
 
 <div>
-	<div class="m-auto max-w-screen-xl w-full">
+	<div class="m-auto max-w-screen-xl w-full overflow-hidden">
 		<!-- Use visibility:hidden instead of conditionally rendering -->
 		<!-- This is to prevent the animation from firing unnecessarily -->
 		<header class={headerClass} style={$page.error && 'visibility: hidden; height: 0'}>
