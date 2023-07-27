@@ -33,10 +33,20 @@ const config = {
         flipInX: {
           '0%': { transform: 'rotateX(85deg)', opacity: 0 },
           '100%': { transform: 'rotateX(0deg)', opacity: 1 },
+        },
+        slideUp: {
+          '0%': { transform: `translateY(75%)` },
+          '100%': { transform: `translateY(0%)` },
+        },
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
         }
       },
       animation: {
         flipInX: 'flipInX .8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1', // 1 indicates the animation will run once
+        slideUp: 'slideUp 2s ease-in-out 1',
+        fadeIn: 'fadeIn 2s ease-in-out 1',
       }
     },
 

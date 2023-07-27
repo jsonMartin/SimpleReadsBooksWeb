@@ -60,7 +60,7 @@
 					This charming story is a wonderful testament to the beauty of nature and the joy that
 					gardening can bring.
 				</p>
-				<p class="pt-3 text-shadow-black-sm">
+				<p class="pt-3 text-shadow-black-xs text-black">
 					Add Hunnie Bunny’s Garden to your child’s library today!
 				</p>
 			</div>
@@ -70,7 +70,7 @@
 			<div
 				class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal"
 			>
-				Release Date <span class="font-medium text-shadow">August 1, 2023</span>
+				Release Date <mark class="px-2 bg-[#B9D6B8] rounded">August 1, 2023</mark>
 			</div>
 
 			<Button disabled color="primary" size="xl" class="mt-10">
@@ -119,7 +119,7 @@
 		class="bg-[rgba(0,102,204,0.44)] p-2.5 flex flex-row items-center justify-between w-full relative"
 	>
 		<img
-			class="hidden sm:flex col-span-3 max-w-[20%] animate-bounce-custom"
+			class="hidden sm:flex col-span-3 max-w-[20%] animate-rotate-custom"
 			src="images/mr_squirrel_sitting.png"
 			loading="lazy"
 		/>
@@ -146,7 +146,7 @@
 		</div>
 
 		<img
-			class="hidden sm:flex col-span-3 max-w-[20%] animate-rotate-custom"
+			class="hidden sm:flex col-span-3 max-w-[20%] animate-bounce-custom"
 			src="images/mr_frog_sitting.png"
 			loading="lazy"
 			alt="Mr. Frog sitting"
@@ -174,7 +174,7 @@
 			transform: scaleX(1);
 		}
 		50% {
-			transform: scaleX(0.95);
+			transform: scaleX(0.98);
 		}
 		100% {
 			transform: scaleX(1);

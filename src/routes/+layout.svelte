@@ -27,6 +27,17 @@
 	} from 'flowbite-svelte';
 
 	let defaultModal = false;
+
+	// Hide allow overflow from the banner to overlap other parts of the page.
+	const OVERFLOW_ANIMATION_TIME = 2000;
+	let hideOverflow = true;
+	setTimeout(() => {
+		hideOverflow = false;
+	}, OVERFLOW_ANIMATION_TIME);
+
+	$: headerClass = hideOverflow
+		? 'w-full relative overflow-hidden relative'
+		: 'w-full relative overflow-visible relative';
 </script>
 
 <div>
@@ -34,7 +45,7 @@
 		<slot />
 	{:else}
 		<div class="m-auto max-w-screen-xl w-full">
-			<header class="w-full relative">
+			<header class={headerClass}>
 				<Navbar
 					let:hidden
 					let:toggle
@@ -62,11 +73,44 @@
 						divClass="w-full md:block md:w-auto md:bg-black md:bg-opacity-[.15] md:rounded-full md:mr-2 md:mt-2 md:[transform:perspective(250px)_translateZ(0)_rotateX(5deg)]"
 						color="green"
 					>
-						<NavLi href="/home" active={true}>Welcome</NavLi>
-						<NavLi href="/about">About</NavLi>
-						<NavLi href="/services">Products</NavLi>
-						<NavLi href="/pricing">Books</NavLi>
-						<NavLi href="/contact">Contact</NavLi>
+						<NavLi
+							href="/home"
+							active={true}
+							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+						>
+							<span>Welcome</span>
+						</NavLi>
+						<NavLi
+							href="/about"
+							class="hover:font-bolder"
+							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+						>
+							<span>About</span>
+						</NavLi>
+
+						<NavLi
+							href="/services"
+							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+						>
+							<span>Products</span>
+						</NavLi>
+						<NavLi
+							href="/pricing"
+							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+						>
+							<span>Books</span>
+						</NavLi>
+						<NavLi
+							href="/contact"
+							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+						>
+							<span>Contact</span>
+						</NavLi>
 					</NavUl>
 				</Navbar>
 
@@ -77,6 +121,18 @@
 					alt="Simple Reads Books Banner"
 					loading="lazy"
 					style="aspect-ratio:288/85"
+				/>
+
+				<img
+					src="/images/hunnie-bunny-peering-over.png"
+					class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp"
+					alt="Hunnie Bunny Peering Over"
+				/>
+
+				<img
+					src="/images/hunnie-bunny-reading.png"
+					class="absolute md:left-[-3%] left-[-7%] bottom-[0px] rotate-3 h-[40%] animate-fadeIn"
+					alt="Hunnie Bunny Peering Over"
 				/>
 			</header>
 
@@ -192,19 +248,9 @@
 		</div>
 	{/if}
 
-	{#if false}
-		<Modal title="Terms of Service" bind:open={defaultModal} autoclose>
-			<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">Modal</p>
-			<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-				The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May
-				25 and is meant to ensure a common set of data rights in the European Union. It requires
-				organizations to notify users as soon as possible of high-risk data breaches that could
-				personally affect them.
-			</p>
-			<svelte:fragment slot="footer">
-				<Button on:click={() => alert('Handle "success"')}>I accept</Button>
-				<Button color="alternative">Decline</Button>
-			</svelte:fragment>
-		</Modal>
-	{/if}
+	<Modal title="E-mail not ready yet" bind:open={defaultModal} autoclose>
+		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+			E-mail subscription not ready yet
+		</p>
+	</Modal>
 </div>

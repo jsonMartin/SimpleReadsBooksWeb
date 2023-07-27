@@ -31,7 +31,7 @@
 			</p>
 
 			<Button
-				class="bg-[#BDFD4F] !text-black hover:bg-blue-400"
+				class="bg-primary-500 !text-white hover:bg-[#BDFD4F] hover:!text-black"
 				size="lg"
 				on:click={() => goto('/home')}
 			>
