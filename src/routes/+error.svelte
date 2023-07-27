@@ -1,5 +1,7 @@
 <script>
 	import { Button } from 'flowbite-svelte';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 </script>
 
 <svelte:head>
@@ -7,13 +9,17 @@
 </svelte:head>
 
 <section class="bg-white dark:bg-gray-900">
+	{#if $page?.error?.message !== 'Not Found'}
+		<h1 class="rounded-sm shadow p-5 w-full text-center bold">Error: {$page?.error?.message}</h1>
+	{/if}
+
 	<div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
 		<div class="mx-auto max-w-screen-sm text-center">
 			<lottie-player
 				src="https://lottie.host/5824a45e-3640-4d4f-8085-c82b1a40ca91/4RT9fuVtBk.json"
 				background="#fff"
 				speed="1"
-				_style="width: 300px; height: 300px"
+				class="sm:w-[600px] sm:h-[600px]"
 				loop
 				autoplay
 				direction="1"
@@ -24,7 +30,11 @@
 				Uh oh! That page doesn’t exist 😲
 			</p>
 
-			<Button class="bg-[#BDFD4F] !text-black" size="lg" href="/">
+			<Button
+				class="bg-[#BDFD4F] !text-black hover:bg-blue-400"
+				size="lg"
+				on:click={() => goto('/home')}
+			>
 				<svg
 					class="w-4 h-4 mr-2"
 					aria-hidden="true"
