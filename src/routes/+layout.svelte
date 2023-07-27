@@ -41,101 +41,102 @@
 </script>
 
 <div>
-	{#if $page.error}
-		<slot />
-	{:else}
-		<div class="m-auto max-w-screen-xl w-full">
-			<header class={headerClass}>
-				<Navbar
-					let:hidden
-					let:toggle
-					color="form"
-					navClass="w-full md:absolute md:bg-transparent p-3"
-					navDivClass="mx-auto flex flex-wrap justify-between items-center max-w-screen-xl animate-flipInX"
-					class="max-w-screen-xl"
+	<div class="m-auto max-w-screen-xl w-full">
+		<!-- Use visibility:hidden instead of conditionally rendering -->
+		<!-- This is to prevent the animation from firing unnecessarily -->
+		<header class={headerClass} style={$page.error && 'visibility: hidden; height: 0'}>
+			<Navbar
+				let:hidden
+				let:toggle
+				color="form"
+				navClass="w-full md:absolute md:bg-transparent p-3"
+				navDivClass="mx-auto flex flex-wrap justify-between items-center max-w-screen-xl animate-flipInX"
+				class="max-w-screen-xl"
+			>
+				<NavBrand href="/">
+					<div class="md:hidden flex flex-row justify-center items-center min-w-min">
+						<img src="images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" />
+						<span class="self-center whitespace-nowrap sm dark:text-white font-[Itim]">
+							Simple Reads Books
+						</span>
+					</div>
+				</NavBrand>
+
+				<NavHamburger on:click={() => toggle()} />
+
+				<NavUl
+					{hidden}
+					nonActiveClass="md:text-white md:font-bold"
+					activeClass="font-extrabold text-white underline bg-green-400 md:bg-transparent"
+					ulClass="flex flex-col p-3 mt-3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium bg-gray-100 md:bg-transparent"
+					divClass="w-full md:block md:w-auto md:bg-black md:bg-opacity-[.15] md:rounded-full md:mr-2 md:mt-2 md:[transform:perspective(250px)_translateZ(0)_rotateX(5deg)]"
+					color="green"
 				>
-					<NavBrand href="/">
-						<div class="md:hidden flex flex-row justify-center items-center min-w-min">
-							<img src="images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" />
-							<span class="self-center whitespace-nowrap sm dark:text-white font-[Itim]">
-								Simple Reads Books
-							</span>
-						</div>
-					</NavBrand>
-
-					<NavHamburger on:click={() => toggle()} />
-
-					<NavUl
-						{hidden}
-						nonActiveClass="md:text-white md:font-bold"
-						activeClass="font-extrabold text-white underline bg-green-400 md:bg-transparent"
-						ulClass="flex flex-col p-3 mt-3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium bg-gray-100 md:bg-transparent"
-						divClass="w-full md:block md:w-auto md:bg-black md:bg-opacity-[.15] md:rounded-full md:mr-2 md:mt-2 md:[transform:perspective(250px)_translateZ(0)_rotateX(5deg)]"
-						color="green"
+					<NavLi
+						href="/home"
+						active={true}
+						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
 					>
-						<NavLi
-							href="/home"
-							active={true}
-							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
-							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
-						>
-							<span>Welcome</span>
-						</NavLi>
-						<NavLi
-							href="/about"
-							class="hover:font-bolder"
-							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
-							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
-						>
-							<span>About</span>
-						</NavLi>
+						<span>Welcome</span>
+					</NavLi>
+					<NavLi
+						href="/about"
+						class="hover:font-bolder"
+						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+					>
+						<span>About</span>
+					</NavLi>
 
-						<NavLi
-							href="/services"
-							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
-							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
-						>
-							<span>Products</span>
-						</NavLi>
-						<NavLi
-							href="/pricing"
-							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
-							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
-						>
-							<span>Books</span>
-						</NavLi>
-						<NavLi
-							href="/contact"
-							nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
-							activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
-						>
-							<span>Contact</span>
-						</NavLi>
-					</NavUl>
-				</Navbar>
+					<NavLi
+						href="/services"
+						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+					>
+						<span>Products</span>
+					</NavLi>
+					<NavLi
+						href="/pricing"
+						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+					>
+						<span>Books</span>
+					</NavLi>
+					<NavLi
+						href="/contact"
+						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
+						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+					>
+						<span>Contact</span>
+					</NavLi>
+				</NavUl>
+			</Navbar>
+			<img
+				class="max-w-screen-2xl m-auto"
+				src="/images/banner.png"
+				width="100%"
+				alt="Simple Reads Books Banner"
+				loading="lazy"
+				style="aspect-ratio:288/85"
+			/>
 
-				<img
-					class="max-w-screen-2xl m-auto"
-					src="/images/banner.png"
-					width="100%"
-					alt="Simple Reads Books Banner"
-					loading="lazy"
-					style="aspect-ratio:288/85"
-				/>
+			<img
+				src="/images/hunnie-bunny-peering-over.png"
+				class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp"
+				alt="Hunnie Bunny Peering Over"
+			/>
 
-				<img
-					src="/images/hunnie-bunny-peering-over.png"
-					class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp"
-					alt="Hunnie Bunny Peering Over"
-				/>
+			<img
+				src="/images/hunnie-bunny-reading.png"
+				class="absolute sm:left-[-5%] md:left-[-3%] left-[-7%] bottom-[0px] rotate-3 h-[40%] animate-fadeIn"
+				alt="Hunnie Bunny Peering Over"
+			/>
+		</header>
 
-				<img
-					src="/images/hunnie-bunny-reading.png"
-					class="absolute md:left-[-3%] left-[-7%] bottom-[0px] rotate-3 h-[40%] animate-fadeIn"
-					alt="Hunnie Bunny Peering Over"
-				/>
-			</header>
-
+		{#if $page.error}
+			<slot />
+		{:else}
 			<main>
 				<slot />
 			</main>
@@ -245,8 +246,8 @@
 					</div>
 				</div>
 			</Footer>
-		</div>
-	{/if}
+		{/if}
+	</div>
 
 	<Modal title="E-mail not ready yet" bind:open={defaultModal} autoclose>
 		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
