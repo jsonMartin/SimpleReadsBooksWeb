@@ -49,7 +49,7 @@
 				let:hidden
 				let:toggle
 				color="form"
-				navClass="w-full md:absolute md:bg-transparent p-3"
+				navClass="w-full md:absolute md:bg-transparent bg-[#FF5A1F] text-white p-3"
 				navDivClass="mx-auto flex flex-wrap justify-between items-center max-w-screen-xl animate-flipInX"
 				class="max-w-screen-xl"
 			>
@@ -112,6 +112,7 @@
 					</NavLi>
 				</NavUl>
 			</Navbar>
+
 			<img
 				class="max-w-screen-2xl m-auto"
 				src="/images/banner.png"
@@ -129,7 +130,7 @@
 
 			<img
 				src="/images/hunnie-bunny-reading.png"
-				class="absolute sm:left-[-5%] md:left-[-3%] left-[-7%] bottom-[0px] rotate-3 h-[40%] animate-fadeIn"
+				class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-fadeIn"
 				alt="Hunnie Bunny Peering Over"
 			/>
 		</header>
