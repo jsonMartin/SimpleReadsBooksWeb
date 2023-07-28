@@ -74,7 +74,7 @@
                 >
                     <NavLi
                             href="/home"
-                            active={$page.url.pathname.includes('home')}
+                            active={$page.url.pathname.includes('home') || $page.url.pathname === '/'}
                             nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
                             activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
                     >
