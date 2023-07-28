@@ -8,12 +8,16 @@
 	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </svelte:head>
 
-<section class="bg-white dark:bg-gray-900 h-[100vh] flex items-center">
+<section class="bg-white dark:bg-gray-900 h-[100vh] flex flex-col items-center">
 	{#if $page?.error?.message !== 'Not Found'}
-		<h1 class="rounded-sm shadow p-5 w-full text-center bold">Error: {$page?.error?.message}</h1>
+		<h1 class="rounded-sm shadow p-5 w-full text-center bold bg-red-500 text-white">
+			Error: {$page?.error?.message}
+		</h1>
 	{/if}
 
-	<div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 my-auto h-[100%] flex items-center">
+	<div
+		class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 my-auto h-[100%] flex items-center"
+	>
 		<div class="mx-auto max-w-screen-sm text-center">
 			<lottie-player
 				src="https://lottie.host/5824a45e-3640-4d4f-8085-c82b1a40ca91/4RT9fuVtBk.json"
