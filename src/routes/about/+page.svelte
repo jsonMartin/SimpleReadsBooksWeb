@@ -1,32 +1,32 @@
-<article class="prose prose-sm sm:prose-base md:prose-xl lg:prose-2xl">
-    <h1>Garlic bread with cheese: What the science tells us</h1>
-    <p>
-        For years parents have espoused the health benefits of eating garlic bread with cheese to their
-        children, with the food earning such an iconic status in our culture that kids will often dress
-        up as warm, cheesy loaf for Halloween.
-    </p>
-    <p>
-        But a recent study shows that the celebrated appetizer may be linked to a series of rabies cases
-        springing up around the country.
-    </p>
-</article>
+<article class="prose prose-lg sm:prose-xl md:prose-2xl w-full m-auto max-w-4xl p-2 md:p-0 pt-5 md:pt-8">
+    <h1 class="text-center">About Us</h1>
 
-<br />
-<hr />
-<br />
+    <div>
+        <img src="/images/dcm-author.png" class="sm:float-right sm:max-w-[50%] sm:rounded-bl-[75px] align-bottom rounded-br-[50px] rounded-bl-[50px]" alt="author"/>
 
-<article class="prose prose-sm sm:prose-base md:prose-xl lg:prose-2xl">
-    <h1>Prototyping from A to Z: best practices for successful prototypes</h1>
-    <p class="lead">Flowbite is an open-source library of UI components built with the utility-first classes from Tailwind CSS. It also includes interactive elements such as dropdowns, modals, datepickers.</p>
-    <p>Before going digital, you might benefit from scribbling down some ideas in a sketchbook. This way, you can think things through before committing to an actual design project.</p>
-    <p>But then I found a <a href="/">component library based on Tailwind CSS called Flowbite</a>. It comes with the most commonly used UI components, such as buttons, navigation bars, cards, form elements, and more which are conveniently built with the utility classes from Tailwind CSS.</p>
+        <p class="font-medium -mt-[30px]">Welcome to Simple Reads Books!<br/></p>
+        <p class="font-medium"> My name is Deborah Martin and I am the author of the Hunnie Bunny book series.</p>
 
-    <h2>When does design come in handy?</h2>
-    <p>While it might seem like extra work at a first glance, here are some key moments in which prototyping will come in handy:</p>
-    <ol>
-        <li><strong>Usability testing</strong>. Does your user know how to exit out of screens? Can they follow your intended user journey and buy something from the site you’ve designed? By running a usability test, you’ll be able to see how users will interact with your design once it’s live;</li>
-        <li><strong>Involving stakeholders</strong>. Need to check if your GDPR consent boxes are displaying properly? Pass your prototype to your data protection team and they can test it for real;</li>
-        <li><strong>Impressing a client</strong>. Prototypes can help explain or even sell your idea by providing your client with a hands-on experience;</li>
-        <li><strong>Communicating your vision</strong>. By using an interactive medium to preview and test design elements, designers and developers can understand each other — and the project — better.</li>
-    </ol>
+        <p>I have always enjoyed writing children’s stories and decided to finally publish Hunnie Bunny’s Garden after my grandson’s birth In August of 2022. Even though I wrote Hunnie Bunny’s Garden in 1985 when my son was two years old, I
+            never forgot about the story and recently was able to find the perfect illustrator to bring the story to life.</p>
+
+        <p>Growing up in Roanoke, Virginia, we had lots of pets, including cats, dogs, bunnies, birds and fish, all at the same time. So, it was natural for me to write about animals as I grew older. I believe that children learn empathy,
+            respect and responsibility when pets are part of the family.</p>
+
+        <p>Horses have always been my first love and true passion, and I was fortunate to buy my first horse when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows.</p>
+
+        <p>When I moved to California, I gave up riding to raise my family and didn’t buy another horse until our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named Crimson Sky, a black German
+            warmblood gelding named San Fransisko, and a bay Oldenburg gelding named Santana. All three are trained in dressage and have done extremely well at shows with their professional rider.</p>
+
+        <p>Besides my horses, I have two other four-legged children: a fifteen-year-old Bluepoint Balinese cat named Zoie (who is quite the diva in our house) and an eight-year-old Bluepoint Birman/Siamese mix named Rascal (who definitely
+            lives up to his name). They are wonderful companions, and my home wouldn’t be the same without them!</p>
+
+        <p>I hope you will join the Simple Reads Books community and share my books with your family and friends. Enjoy!</p>
+        Horses have always been my first love and true passion, and I was fortunate to buy my first horse when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows. When I moved to California, I
+        gave up riding to raise my family and didn’t buy another horse until our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named Crimson Sky, a black German warmblood gelding named San
+        Fransisko, and a bay Oldenburg gelding named Santana. All three are trained in dressage and have done extremely well at shows with their professional rider.
+
+        <h2>Mission Statement</h2>
+        <p>Simple Reads Books is dedicated to presenting children’s stories with a positive message using colorful illustrations to build self-esteem and a love of animals and nature.</p>
+    </div>
 </article>
