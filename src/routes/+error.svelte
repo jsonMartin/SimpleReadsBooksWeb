@@ -2,6 +2,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import ButtonBack from './terms/ButtonBack.svelte';
 </script>
 
 <svelte:head>
@@ -34,28 +35,7 @@
 				Uh oh! That page doesn’t exist 😲
 			</p>
 
-			<Button
-				class="bg-primary-500 !text-white hover:bg-[#BDFD4F] hover:!text-black"
-				size="lg"
-				on:click={() => goto('/home')}
-			>
-				<svg
-					class="w-4 h-4 mr-2"
-					aria-hidden="true"
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 14 10"
-				>
-					<path
-						stroke="currentColor"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M13 5H1m0 0 4 4M1 5l4-4"
-					/>
-				</svg>
-				Go back
-			</Button>
+			<ButtonBack />
 		</div>
 	</div>
 </section>

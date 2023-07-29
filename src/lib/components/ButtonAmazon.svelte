@@ -1,13 +1,14 @@
-<script>
+<script lang="ts">
 	import { Button } from 'flowbite-svelte';
 
 	export let fullWidth = false;
 	export let disabled = true;
+	export let size: 'xl' | 'xs' | 'sm' | 'lg' | 'md' = 'xl';
 
 	$: buttonClass = `${fullWidth && 'w-full'}`;
 </script>
 
-<Button disabled color="primary" size="xl" class={buttonClass} on:click={() => alert('Clicked')}>
+<Button disabled color="primary" {size} class={buttonClass} on:click={() => alert('Clicked')}>
 	<svg
 		class="mr-3"
 		style="color: white"

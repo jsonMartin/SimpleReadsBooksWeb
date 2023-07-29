@@ -1,5 +1,6 @@
 <script>
-	import ButtonAmazon from './ButtonAmazon.svelte';
+	import { goto } from '$app/navigation';
+	import ButtonAmazon from '../../lib/components/ButtonAmazon.svelte';
 
 	import {
 		Navbar,
@@ -47,25 +48,37 @@
 <section>
 	<div class="flex flex-row flex-wrap font-[Itim]">
 		<!-- <div class="p-4 basis-7/12 md:basis-full"> -->
-		<div class="p-4 md:basis-7/12">
-			<img
-				class="rounded-lg w-full"
-				src="images/hunnie-bunnys-garden-mockup.png"
-				alt="book mockup cover"
-			/>
-			<div class="self-stretch text-center text-gray-900 md:text-xl lg:text-2xl text-xl p-3">
-				<p class="mb-2">
-					Hunnie Bunny’s Garden is a delightful blend of entertainment and education that provides
-					endless opportunities for learning and discovery.
-				</p>
-				<p class="mb-2">
-					This charming story is a wonderful testament to the beauty of nature and the joy that
-					gardening can bring.
-				</p>
-				<p class="pt-3 text-shadow-black-xs text-black">
-					Add Hunnie Bunny’s Garden to your child’s library today!
-				</p>
-			</div>
+		<div
+			class="p-4 md:basis-7/12"
+			role="button"
+			tabindex="0"
+			on:keypress={(e) => {
+				if (e.key === 'Enter') {
+					goto('/products/hunnie-bunnys-garden');
+				}
+			}}
+			on:click={() => goto('/products/hunnie-bunnys-garden')}
+		>
+			<a href="/products/hunnie-bunnys-garden">
+				<img
+					class="rounded-lg w-full"
+					src="images/hunnie-bunnys-garden-mockup.png"
+					alt="book mockup cover"
+				/>
+				<div class="self-stretch text-center text-gray-900 md:text-xl lg:text-2xl text-xl p-3">
+					<p class="mb-2">
+						Hunnie Bunny’s Garden is a delightful blend of entertainment and education that provides
+						endless opportunities for learning and discovery.
+					</p>
+					<p class="mb-2">
+						This charming story is a wonderful testament to the beauty of nature and the joy that
+						gardening can bring.
+					</p>
+					<p class="pt-3 text-shadow-black-xs text-black">
+						Add Hunnie Bunny’s Garden to your child’s library today!
+					</p>
+				</div>
+			</a>
 		</div>
 
 		<div class="p-4 basis-full md:basis-5/12 flex flex-col justify-start items-center">

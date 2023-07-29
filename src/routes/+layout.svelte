@@ -53,7 +53,7 @@
 			>
 				<NavBrand href="/">
 					<div class="md:hidden flex flex-row justify-center items-center min-w-min">
-						<img src="images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" />
+						<img src="/images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" />
 						<span
 							class="self-center whitespace-nowrap sm dark:text-white font-[Itim] text-md sm:text-lg"
 						>
@@ -145,7 +145,7 @@
 					>
 						<FooterBrand
 							href="/"
-							src="images/logo.png"
+							src="/images/logo.png"
 							alt="Simple Reads Books"
 							name="Simple Reads Books"
 							class="text-white"
@@ -163,7 +163,7 @@
 						</FooterLinkGroup>
 
 						<div class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13">
-							<p class="text-white text-xs pb-1 bg-transparent">Subscribe to our e-mail list!</p>
+							<p class="text-white text-xs pb-1 bg-transparent">Subscribe for e-mail updates!</p>
 
 							<ButtonGroup class="rounded-none w-full">
 								<Input

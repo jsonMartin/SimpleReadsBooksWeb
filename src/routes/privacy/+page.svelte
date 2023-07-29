@@ -5,6 +5,7 @@
 
 	import { goto } from '$app/navigation';
 	import { Button } from 'flowbite-svelte';
+	import ButtonBack from '../terms/ButtonBack.svelte';
 </script>
 
 <div class="max-w-2xl m-auto mb-5">
@@ -12,24 +13,7 @@
 		<h1 class="text-4xl font-extrabold">Privacy Policy</h1>
 		<h6 class="text-gray-500">Last updated on July 26th, 2023</h6>
 
-		<Button class="bg-primary-500 text-white mt-[24px]" size="lg" on:click={() => goto('/home')}>
-			<svg
-				class="w-4 h-4 mr-2"
-				aria-hidden="true"
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 14 10"
-			>
-				<path
-					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M13 5H1m0 0 4 4M1 5l4-4"
-				/>
-			</svg>
-			Go back
-		</Button>
+		<ButtonBack />
 	</section>
 
 	<p class="font-normal text-gray-900 pb-5">

@@ -94,11 +94,14 @@ function compute_slots(slots) {
   }
   return result;
 }
+function null_to_empty(value) {
+  return value == null ? "" : value;
+}
 function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
   return new CustomEvent(type, { detail, bubbles, cancelable });
 }
-function set_current_component(component4) {
-  current_component = component4;
+function set_current_component(component10) {
+  current_component = component10;
 }
 function get_current_component() {
   if (!current_component)
@@ -106,9 +109,9 @@ function get_current_component() {
   return current_component;
 }
 function createEventDispatcher() {
-  const component4 = get_current_component();
+  const component10 = get_current_component();
   return (type, detail, { cancelable = false } = {}) => {
-    const callbacks = component4.$$.callbacks[type];
+    const callbacks = component10.$$.callbacks[type];
     if (callbacks) {
       const event = custom_event(
         /** @type {string} */
@@ -117,7 +120,7 @@ function createEventDispatcher() {
         { cancelable }
       );
       callbacks.slice().forEach((fn) => {
-        fn.call(component4, event);
+        fn.call(component10, event);
       });
       return !event.defaultPrevented;
     }
@@ -130,6 +133,9 @@ function setContext(key2, context) {
 }
 function getContext(key2) {
   return get_current_component().$$.context.get(key2);
+}
+function ensure_array_like(array_like_or_iterator) {
+  return array_like_or_iterator?.length !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
 }
 function spread(args, attrs_to_add) {
   const attributes = Object.assign({}, ...args);
@@ -214,15 +220,23 @@ function escape_object(obj) {
   }
   return result;
 }
-function validate_component(component4, name) {
-  if (!component4 || !component4.$$render) {
+function each(items, fn) {
+  items = ensure_array_like(items);
+  let str = "";
+  for (let i = 0; i < items.length; i += 1) {
+    str += fn(items[i], i);
+  }
+  return str;
+}
+function validate_component(component10, name) {
+  if (!component10 || !component10.$$render) {
     if (name === "svelte:component")
       name += " this={...}";
     throw new Error(
       `<${name}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules. Otherwise you may need to fix a <${name}>.`
     );
   }
-  return component4;
+  return component10;
 }
 function create_ssr_component(fn) {
   function $$render(result, props, bindings, slots, context) {
@@ -250,7 +264,7 @@ function create_ssr_component(fn) {
       return {
         html,
         css: {
-          code: Array.from(result.css).map((css) => css.code).join("\n"),
+          code: Array.from(result.css).map((css3) => css3.code).join("\n"),
           map: null
           // TODO
         },
@@ -269,9 +283,10 @@ function add_attribute(name, value, boolean) {
 function style_object_to_string(style_object) {
   return Object.keys(style_object).filter((key2) => style_object[key2]).map((key2) => `${key2}: ${escape_attribute_value(style_object[key2])};`).join(" ");
 }
-var current_component, _boolean_attributes, boolean_attributes, invalid_attribute_name_character, ATTR_REGEX, CONTENT_REGEX, missing_component, on_destroy;
+var identity, current_component, _boolean_attributes, boolean_attributes, invalid_attribute_name_character, ATTR_REGEX, CONTENT_REGEX, missing_component, on_destroy;
 var init_ssr = __esm({
   ".svelte-kit/output/server/chunks/ssr.js"() {
+    identity = (x) => x;
     _boolean_attributes = /** @type {const} */
     [
       "allowfullscreen",
@@ -325,20 +340,20 @@ var require_cookie = __commonJS({
       var obj = {};
       var opt = options2 || {};
       var dec = opt.decode || decode;
-      var index4 = 0;
-      while (index4 < str.length) {
-        var eqIdx = str.indexOf("=", index4);
+      var index10 = 0;
+      while (index10 < str.length) {
+        var eqIdx = str.indexOf("=", index10);
         if (eqIdx === -1) {
           break;
         }
-        var endIdx = str.indexOf(";", index4);
+        var endIdx = str.indexOf(";", index10);
         if (endIdx === -1) {
           endIdx = str.length;
         } else if (endIdx < eqIdx) {
-          index4 = str.lastIndexOf(";", eqIdx - 1) + 1;
+          index10 = str.lastIndexOf(";", eqIdx - 1) + 1;
           continue;
         }
-        var key2 = str.slice(index4, eqIdx).trim();
+        var key2 = str.slice(index10, eqIdx).trim();
         if (void 0 === obj[key2]) {
           var val = str.slice(eqIdx + 1, endIdx).trim();
           if (val.charCodeAt(0) === 34) {
@@ -346,7 +361,7 @@ var require_cookie = __commonJS({
           }
           obj[key2] = tryDecode(val, dec);
         }
-        index4 = endIdx + 1;
+        index10 = endIdx + 1;
       }
       return obj;
     }
@@ -620,49 +635,10 @@ var require_set_cookie = __commonJS({
   }
 });
 
-// .svelte-kit/output/server/entries/pages/_layout.svelte.js
-var layout_svelte_exports = {};
-__export(layout_svelte_exports, {
-  default: () => Layout
-});
-var Layout;
-var init_layout_svelte = __esm({
-  ".svelte-kit/output/server/entries/pages/_layout.svelte.js"() {
-    init_ssr();
-    Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `${slots.default ? slots.default({}) : ``}`;
-    });
-  }
-});
-
-// .svelte-kit/output/server/nodes/0.js
-var __exports = {};
-__export(__exports, {
-  component: () => component,
-  fonts: () => fonts,
-  imports: () => imports,
-  index: () => index,
-  stylesheets: () => stylesheets
-});
-var index, component_cache, component, imports, stylesheets, fonts;
-var init__ = __esm({
-  ".svelte-kit/output/server/nodes/0.js"() {
-    index = 0;
-    component = async () => component_cache ?? (component_cache = (await Promise.resolve().then(() => (init_layout_svelte(), layout_svelte_exports))).default);
-    imports = ["_app/immutable/nodes/0.12bd1d77.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"];
-    stylesheets = ["_app/immutable/assets/0.8dda2100.css"];
-    fonts = [];
-  }
-});
-
-// .svelte-kit/output/server/entries/fallbacks/error.svelte.js
-var error_svelte_exports = {};
-__export(error_svelte_exports, {
-  default: () => Error$1
-});
-var getStores, page, Error$1;
-var init_error_svelte = __esm({
-  ".svelte-kit/output/server/entries/fallbacks/error.svelte.js"() {
+// .svelte-kit/output/server/chunks/stores.js
+var getStores, page;
+var init_stores = __esm({
+  ".svelte-kit/output/server/chunks/stores.js"() {
     init_ssr();
     getStores = () => {
       const stores = getContext("__svelte__");
@@ -685,43 +661,17 @@ var init_error_svelte = __esm({
         return store.subscribe(fn);
       }
     };
-    Error$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $page, $$unsubscribe_page;
-      $$unsubscribe_page = subscribe(page, (value) => $page = value);
-      $$unsubscribe_page();
-      return `<h1>${escape($page.status)}</h1> <p>${escape($page.error?.message)}</p>`;
-    });
   }
 });
 
-// .svelte-kit/output/server/nodes/1.js
-var __exports2 = {};
-__export(__exports2, {
-  component: () => component2,
-  fonts: () => fonts2,
-  imports: () => imports2,
-  index: () => index2,
-  stylesheets: () => stylesheets2
-});
-var index2, component_cache2, component2, imports2, stylesheets2, fonts2;
-var init__2 = __esm({
-  ".svelte-kit/output/server/nodes/1.js"() {
-    index2 = 1;
-    component2 = async () => component_cache2 ?? (component_cache2 = (await Promise.resolve().then(() => (init_error_svelte(), error_svelte_exports))).default);
-    imports2 = ["_app/immutable/nodes/1.dcb6f80e.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js", "_app/immutable/chunks/singletons.64c52ef0.js"];
-    stylesheets2 = [];
-    fonts2 = [];
-  }
-});
-
-// node_modules/tailwind-merge/dist/lib/tw-join.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/tw-join.mjs
 function twJoin() {
-  var index4 = 0;
+  var index10 = 0;
   var argument;
   var resolvedValue;
   var string = "";
-  while (index4 < arguments.length) {
-    if (argument = arguments[index4++]) {
+  while (index10 < arguments.length) {
+    if (argument = arguments[index10++]) {
       if (resolvedValue = toValue(argument)) {
         string && (string += " ");
         string += resolvedValue;
@@ -747,11 +697,11 @@ function toValue(mix) {
   return string;
 }
 var init_tw_join = __esm({
-  "node_modules/tailwind-merge/dist/lib/tw-join.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/tw-join.mjs"() {
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/class-utils.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/class-utils.mjs
 function createClassUtils(config) {
   var classMap = createClassMap(config);
   var conflictingClassGroups = config.conflictingClassGroups, _config$conflictingCl = config.conflictingClassGroupModifiers, conflictingClassGroupModifiers = _config$conflictingCl === void 0 ? {} : _config$conflictingCl;
@@ -878,13 +828,13 @@ function getPrefixedClassGroupEntries(classGroupEntries, prefix2) {
 }
 var CLASS_PART_SEPARATOR, arbitraryPropertyRegex;
 var init_class_utils = __esm({
-  "node_modules/tailwind-merge/dist/lib/class-utils.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/class-utils.mjs"() {
     CLASS_PART_SEPARATOR = "-";
     arbitraryPropertyRegex = /^\[(.+)\]$/;
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/lru-cache.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/lru-cache.mjs
 function createLruCache(maxCacheSize) {
   if (maxCacheSize < 1) {
     return {
@@ -928,11 +878,11 @@ function createLruCache(maxCacheSize) {
   };
 }
 var init_lru_cache = __esm({
-  "node_modules/tailwind-merge/dist/lib/lru-cache.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/lru-cache.mjs"() {
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/modifier-utils.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/modifier-utils.mjs
 function createSplitModifiers(config) {
   var separator = config.separator || ":";
   var isSeparatorSingleCharacter = separator.length === 1;
@@ -943,16 +893,16 @@ function createSplitModifiers(config) {
     var bracketDepth = 0;
     var modifierStart = 0;
     var postfixModifierPosition;
-    for (var index4 = 0; index4 < className.length; index4++) {
-      var currentCharacter = className[index4];
+    for (var index10 = 0; index10 < className.length; index10++) {
+      var currentCharacter = className[index10];
       if (bracketDepth === 0) {
-        if (currentCharacter === firstSeparatorCharacter && (isSeparatorSingleCharacter || className.slice(index4, index4 + separatorLength) === separator)) {
-          modifiers.push(className.slice(modifierStart, index4));
-          modifierStart = index4 + separatorLength;
+        if (currentCharacter === firstSeparatorCharacter && (isSeparatorSingleCharacter || className.slice(index10, index10 + separatorLength) === separator)) {
+          modifiers.push(className.slice(modifierStart, index10));
+          modifierStart = index10 + separatorLength;
           continue;
         }
         if (currentCharacter === "/") {
-          postfixModifierPosition = index4;
+          postfixModifierPosition = index10;
           continue;
         }
       }
@@ -994,12 +944,12 @@ function sortModifiers(modifiers) {
 }
 var IMPORTANT_MODIFIER;
 var init_modifier_utils = __esm({
-  "node_modules/tailwind-merge/dist/lib/modifier-utils.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/modifier-utils.mjs"() {
     IMPORTANT_MODIFIER = "!";
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/config-utils.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/config-utils.mjs
 function createConfigUtils(config) {
   return {
     cache: createLruCache(config.cacheSize),
@@ -1008,14 +958,14 @@ function createConfigUtils(config) {
   };
 }
 var init_config_utils = __esm({
-  "node_modules/tailwind-merge/dist/lib/config-utils.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/config-utils.mjs"() {
     init_class_utils();
     init_lru_cache();
     init_modifier_utils();
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/merge-classlist.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/merge-classlist.mjs
 function mergeClassList(classList, configUtils) {
   var splitModifiers = configUtils.splitModifiers, getClassGroupId = configUtils.getClassGroupId, getConflictingClassGroupIds = configUtils.getConflictingClassGroupIds;
   var classGroupsInConflict = /* @__PURE__ */ new Set();
@@ -1068,13 +1018,13 @@ function mergeClassList(classList, configUtils) {
 }
 var SPLIT_CLASSES_REGEX;
 var init_merge_classlist = __esm({
-  "node_modules/tailwind-merge/dist/lib/merge-classlist.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/merge-classlist.mjs"() {
     init_modifier_utils();
     SPLIT_CLASSES_REGEX = /\s+/;
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/create-tailwind-merge.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/create-tailwind-merge.mjs
 function createTailwindMerge() {
   for (var _len = arguments.length, createConfig = new Array(_len), _key = 0; _key < _len; _key++) {
     createConfig[_key] = arguments[_key];
@@ -1108,14 +1058,14 @@ function createTailwindMerge() {
   };
 }
 var init_create_tailwind_merge = __esm({
-  "node_modules/tailwind-merge/dist/lib/create-tailwind-merge.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/create-tailwind-merge.mjs"() {
     init_config_utils();
     init_merge_classlist();
     init_tw_join();
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/from-theme.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/from-theme.mjs
 function fromTheme(key2) {
   var themeGetter = function themeGetter2(theme) {
     return theme[key2] || [];
@@ -1124,11 +1074,11 @@ function fromTheme(key2) {
   return themeGetter;
 }
 var init_from_theme = __esm({
-  "node_modules/tailwind-merge/dist/lib/from-theme.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/from-theme.mjs"() {
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/validators.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/validators.mjs
 function isLength(value) {
   return isNumber(value) || stringLengths.has(value) || fractionRegex.test(value) || isArbitraryLength(value);
 }
@@ -1195,7 +1145,7 @@ function isShadow(value) {
 }
 var arbitraryValueRegex, fractionRegex, stringLengths, tshirtUnitRegex, lengthUnitRegex, shadowRegex;
 var init_validators = __esm({
-  "node_modules/tailwind-merge/dist/lib/validators.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/validators.mjs"() {
     arbitraryValueRegex = /^\[(?:([a-z-]+):)?(.+)\]$/i;
     fractionRegex = /^\d+\/\d+$/;
     stringLengths = /* @__PURE__ */ new Set(["px", "full", "screen"]);
@@ -1205,7 +1155,7 @@ var init_validators = __esm({
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/default-config.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/default-config.mjs
 function getDefaultConfig() {
   var colors = fromTheme("colors");
   var spacing = fromTheme("spacing");
@@ -3242,46 +3192,166 @@ function getDefaultConfig() {
   };
 }
 var init_default_config = __esm({
-  "node_modules/tailwind-merge/dist/lib/default-config.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/default-config.mjs"() {
     init_from_theme();
     init_validators();
   }
 });
 
-// node_modules/tailwind-merge/dist/lib/tw-merge.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/tw-merge.mjs
 var twMerge;
 var init_tw_merge = __esm({
-  "node_modules/tailwind-merge/dist/lib/tw-merge.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/lib/tw-merge.mjs"() {
     init_create_tailwind_merge();
     init_default_config();
     twMerge = /* @__PURE__ */ createTailwindMerge(getDefaultConfig);
   }
 });
 
-// node_modules/tailwind-merge/dist/tailwind-merge.mjs
+// node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/tailwind-merge.mjs
 var init_tailwind_merge = __esm({
-  "node_modules/tailwind-merge/dist/tailwind-merge.mjs"() {
+  "node_modules/.pnpm/tailwind-merge@1.14.0/node_modules/tailwind-merge/dist/tailwind-merge.mjs"() {
     init_tw_merge();
   }
 });
 
-// .svelte-kit/output/server/entries/pages/_page.svelte.js
-var page_svelte_exports = {};
-__export(page_svelte_exports, {
-  default: () => Page
-});
+// .svelte-kit/output/server/chunks/Indicator.svelte_svelte_type_style_lang.js
 function is_void(name) {
   return void_element_names.test(name) || name.toLowerCase() === "!doctype";
 }
-function quintOut(t) {
-  return --t * t * t * t * t + 1;
-}
-var void_element_names, Frame, ToolbarButton, CloseButton, Button, Footer, FooterBrand, FooterCopyright, FooterLink, FooterLinkGroup, Modal, Navbar, NavBrand, Menu, NavHamburger, NavLi, NavUl, Page;
-var init_page_svelte = __esm({
-  ".svelte-kit/output/server/entries/pages/_page.svelte.js"() {
+var void_element_names, Button;
+var init_Indicator_svelte_svelte_type_style_lang = __esm({
+  ".svelte-kit/output/server/chunks/Indicator.svelte_svelte_type_style_lang.js"() {
     init_ssr();
     init_tailwind_merge();
     void_element_names = /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/;
+    Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["pill", "outline", "size", "href", "type", "color", "shadow"]);
+      const group = getContext("group");
+      let { pill = false } = $$props;
+      let { outline = false } = $$props;
+      let { size = group ? "sm" : "md" } = $$props;
+      let { href = void 0 } = $$props;
+      let { type = "button" } = $$props;
+      let { color = group ? outline ? "dark" : "alternative" : "primary" } = $$props;
+      let { shadow = false } = $$props;
+      const colorClasses = {
+        alternative: "text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 hover:text-primary-700 focus:text-primary-700 dark:focus:text-white dark:hover:text-white",
+        blue: "text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700",
+        dark: "text-white bg-gray-800 hover:bg-gray-900 dark:bg-gray-800 dark:hover:bg-gray-700",
+        green: "text-white bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700",
+        light: "text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600",
+        primary: "text-white bg-primary-700 hover:bg-primary-800 dark:bg-primary-600 dark:hover:bg-primary-700",
+        purple: "text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700",
+        red: "text-white bg-red-700 hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700",
+        yellow: "text-white bg-yellow-400 hover:bg-yellow-500 ",
+        none: ""
+      };
+      const coloredFocusClasses = {
+        alternative: "focus:ring-gray-200 dark:focus:ring-gray-700",
+        blue: "focus:ring-blue-300 dark:focus:ring-blue-800",
+        dark: "focus:ring-gray-300 dark:focus:ring-gray-700",
+        green: "focus:ring-green-300 dark:focus:ring-green-800",
+        light: "focus:ring-gray-200 dark:focus:ring-gray-700",
+        primary: "focus:ring-primary-300 dark:focus:ring-primary-800",
+        purple: "focus:ring-purple-300 dark:focus:ring-purple-900",
+        red: "focus:ring-red-300 dark:focus:ring-red-900",
+        yellow: "focus:ring-yellow-300 dark:focus:ring-yellow-900",
+        none: ""
+      };
+      const coloredShadowClasses = {
+        alternative: "shadow-gray-500/50 dark:shadow-gray-800/80",
+        blue: "shadow-blue-500/50 dark:shadow-blue-800/80",
+        dark: "shadow-gray-500/50 dark:shadow-gray-800/80",
+        green: "shadow-green-500/50 dark:shadow-green-800/80",
+        light: "shadow-gray-500/50 dark:shadow-gray-800/80",
+        primary: "shadow-primary-500/50 dark:shadow-primary-800/80",
+        purple: "shadow-purple-500/50 dark:shadow-purple-800/80",
+        red: "shadow-red-500/50 dark:shadow-red-800/80 ",
+        yellow: "shadow-yellow-500/50 dark:shadow-yellow-800/80 ",
+        none: ""
+      };
+      const outlineClasses = {
+        alternative: "text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:bg-gray-900 focus:text-white focus:ring-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800",
+        blue: "text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600",
+        dark: "text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:bg-gray-900 focus:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600",
+        green: "text-green-700 hover:text-white border border-green-700 hover:bg-green-800 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600",
+        light: "text-gray-500 hover:text-gray-900 bg-white border border-gray-200 dark:border-gray-600 dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600",
+        primary: "text-primary-700 hover:text-white border border-primary-700 hover:bg-primary-700 dark:border-primary-500 dark:text-primary-500 dark:hover:text-white dark:hover:bg-primary-600",
+        purple: "text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500",
+        red: "text-red-700 hover:text-white border border-red-700 hover:bg-red-800 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600",
+        yellow: "text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400",
+        none: ""
+      };
+      const sizeClasses = {
+        xs: "px-3 py-2 text-xs",
+        sm: "px-4 py-2 text-sm",
+        md: "px-5 py-2.5 text-sm",
+        lg: "px-5 py-3 text-base",
+        xl: "px-6 py-3.5 text-base"
+      };
+      const hasBorder = () => outline || color === "alternative" || color === "light";
+      let buttonClass;
+      if ($$props.pill === void 0 && $$bindings.pill && pill !== void 0)
+        $$bindings.pill(pill);
+      if ($$props.outline === void 0 && $$bindings.outline && outline !== void 0)
+        $$bindings.outline(outline);
+      if ($$props.size === void 0 && $$bindings.size && size !== void 0)
+        $$bindings.size(size);
+      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
+        $$bindings.href(href);
+      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
+        $$bindings.type(type);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
+        $$bindings.shadow(shadow);
+      buttonClass = twMerge(
+        "text-center font-medium",
+        group ? "focus:ring-2" : "focus:ring-4",
+        group && "focus:z-10",
+        group || "focus:outline-none",
+        "inline-flex items-center justify-center " + sizeClasses[size],
+        outline ? outlineClasses[color] : colorClasses[color],
+        color === "alternative" && (group ? "dark:bg-gray-700 dark:text-white dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-600" : "dark:bg-transparent dark:border-gray-600 dark:hover:border-gray-700"),
+        outline && color === "dark" && (group ? "dark:text-white dark:border-white" : "dark:text-gray-400 dark:border-gray-700"),
+        coloredFocusClasses[color],
+        hasBorder() && group && "border-l-0 first:border-l",
+        group ? pill && "first:rounded-l-full last:rounded-r-full" || "first:rounded-l-lg last:rounded-r-lg" : pill && "rounded-full" || "rounded-lg",
+        shadow && "shadow-lg",
+        shadow && coloredShadowClasses[color],
+        $$props.disabled && "cursor-not-allowed opacity-50",
+        $$props.class
+      );
+      return `${((tag) => {
+        return tag ? `<${href ? "a" : "button"}${spread(
+          [
+            {
+              type: escape_attribute_value(href ? void 0 : type)
+            },
+            { href: escape_attribute_value(href) },
+            escape_object($$restProps),
+            {
+              class: escape_attribute_value(buttonClass)
+            },
+            {
+              role: escape_attribute_value(href ? "button" : void 0)
+            }
+          ],
+          {}
+        )}>${is_void(tag) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag) ? "" : `</${tag}>`}` : "";
+      })(href ? "a" : "button")} `;
+    });
+  }
+});
+
+// .svelte-kit/output/server/chunks/CloseButton.js
+var Frame, ToolbarButton, CloseButton;
+var init_CloseButton = __esm({
+  ".svelte-kit/output/server/chunks/CloseButton.js"() {
+    init_ssr();
+    init_Indicator_svelte_svelte_type_style_lang();
+    init_tailwind_merge();
     Frame = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
         "tag",
@@ -3498,122 +3568,63 @@ var init_page_svelte = __esm({
         }
       })} `;
     });
-    Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let $$restProps = compute_rest_props($$props, ["pill", "outline", "size", "href", "type", "color", "shadow"]);
-      const group = getContext("group");
-      let { pill = false } = $$props;
-      let { outline = false } = $$props;
-      let { size = group ? "sm" : "md" } = $$props;
-      let { href = void 0 } = $$props;
-      let { type = "button" } = $$props;
-      let { color = group ? outline ? "dark" : "alternative" : "primary" } = $$props;
-      let { shadow = false } = $$props;
-      const colorClasses = {
-        alternative: "text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 hover:text-primary-700 focus:text-primary-700 dark:focus:text-white dark:hover:text-white",
-        blue: "text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700",
-        dark: "text-white bg-gray-800 hover:bg-gray-900 dark:bg-gray-800 dark:hover:bg-gray-700",
-        green: "text-white bg-green-700 hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700",
-        light: "text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600",
-        primary: "text-white bg-primary-700 hover:bg-primary-800 dark:bg-primary-600 dark:hover:bg-primary-700",
-        purple: "text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700",
-        red: "text-white bg-red-700 hover:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700",
-        yellow: "text-white bg-yellow-400 hover:bg-yellow-500 ",
-        none: ""
-      };
-      const coloredFocusClasses = {
-        alternative: "focus:ring-gray-200 dark:focus:ring-gray-700",
-        blue: "focus:ring-blue-300 dark:focus:ring-blue-800",
-        dark: "focus:ring-gray-300 dark:focus:ring-gray-700",
-        green: "focus:ring-green-300 dark:focus:ring-green-800",
-        light: "focus:ring-gray-200 dark:focus:ring-gray-700",
-        primary: "focus:ring-primary-300 dark:focus:ring-primary-800",
-        purple: "focus:ring-purple-300 dark:focus:ring-purple-900",
-        red: "focus:ring-red-300 dark:focus:ring-red-900",
-        yellow: "focus:ring-yellow-300 dark:focus:ring-yellow-900",
-        none: ""
-      };
-      const coloredShadowClasses = {
-        alternative: "shadow-gray-500/50 dark:shadow-gray-800/80",
-        blue: "shadow-blue-500/50 dark:shadow-blue-800/80",
-        dark: "shadow-gray-500/50 dark:shadow-gray-800/80",
-        green: "shadow-green-500/50 dark:shadow-green-800/80",
-        light: "shadow-gray-500/50 dark:shadow-gray-800/80",
-        primary: "shadow-primary-500/50 dark:shadow-primary-800/80",
-        purple: "shadow-purple-500/50 dark:shadow-purple-800/80",
-        red: "shadow-red-500/50 dark:shadow-red-800/80 ",
-        yellow: "shadow-yellow-500/50 dark:shadow-yellow-800/80 ",
-        none: ""
-      };
-      const outlineClasses = {
-        alternative: "text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:bg-gray-900 focus:text-white focus:ring-gray-300 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800",
-        blue: "text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-600",
-        dark: "text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:bg-gray-900 focus:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-600",
-        green: "text-green-700 hover:text-white border border-green-700 hover:bg-green-800 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600",
-        light: "text-gray-500 hover:text-gray-900 bg-white border border-gray-200 dark:border-gray-600 dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600",
-        primary: "text-primary-700 hover:text-white border border-primary-700 hover:bg-primary-700 dark:border-primary-500 dark:text-primary-500 dark:hover:text-white dark:hover:bg-primary-600",
-        purple: "text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500",
-        red: "text-red-700 hover:text-white border border-red-700 hover:bg-red-800 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600",
-        yellow: "text-yellow-400 hover:text-white border border-yellow-400 hover:bg-yellow-500 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-white dark:hover:bg-yellow-400",
-        none: ""
-      };
-      const sizeClasses = {
-        xs: "px-3 py-2 text-xs",
-        sm: "px-4 py-2 text-sm",
-        md: "px-5 py-2.5 text-sm",
-        lg: "px-5 py-3 text-base",
-        xl: "px-6 py-3.5 text-base"
-      };
-      const hasBorder = () => outline || color === "alternative" || color === "light";
-      let buttonClass;
-      if ($$props.pill === void 0 && $$bindings.pill && pill !== void 0)
-        $$bindings.pill(pill);
-      if ($$props.outline === void 0 && $$bindings.outline && outline !== void 0)
-        $$bindings.outline(outline);
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/_layout.svelte.js
+var layout_svelte_exports = {};
+__export(layout_svelte_exports, {
+  default: () => Layout
+});
+function quintOut(t) {
+  return --t * t * t * t * t + 1;
+}
+function clampSize(s2) {
+  return s2 && s2 === "xs" ? "sm" : s2 === "xl" ? "lg" : s2;
+}
+var ButtonGroup, Wrapper, Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup, Input, Modal, Navbar, NavBrand, Menu, NavHamburger, NavLi, NavUl, OVERFLOW_ANIMATION_TIME, Layout;
+var init_layout_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/_layout.svelte.js"() {
+    init_ssr();
+    init_stores();
+    init_Indicator_svelte_svelte_type_style_lang();
+    init_tailwind_merge();
+    init_CloseButton();
+    ButtonGroup = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["size", "divClass"]);
+      let { size = "md" } = $$props;
+      let { divClass = "inline-flex rounded-lg shadow-sm" } = $$props;
+      setContext("group", { size });
       if ($$props.size === void 0 && $$bindings.size && size !== void 0)
         $$bindings.size(size);
-      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-        $$bindings.href(href);
-      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-        $$bindings.type(type);
-      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-        $$bindings.color(color);
-      if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
-        $$bindings.shadow(shadow);
-      buttonClass = twMerge(
-        "text-center font-medium",
-        group ? "focus:ring-2" : "focus:ring-4",
-        group && "focus:z-10",
-        group || "focus:outline-none",
-        "inline-flex items-center justify-center " + sizeClasses[size],
-        outline ? outlineClasses[color] : colorClasses[color],
-        color === "alternative" && (group ? "dark:bg-gray-700 dark:text-white dark:border-gray-700 dark:hover:border-gray-600 dark:hover:bg-gray-600" : "dark:bg-transparent dark:border-gray-600 dark:hover:border-gray-700"),
-        outline && color === "dark" && (group ? "dark:text-white dark:border-white" : "dark:text-gray-400 dark:border-gray-700"),
-        coloredFocusClasses[color],
-        hasBorder() && group && "border-l-0 first:border-l",
-        group ? pill && "first:rounded-l-full last:rounded-r-full" || "first:rounded-l-lg last:rounded-r-lg" : pill && "rounded-full" || "rounded-lg",
-        shadow && "shadow-lg",
-        shadow && coloredShadowClasses[color],
-        $$props.disabled && "cursor-not-allowed opacity-50",
-        $$props.class
-      );
-      return `${((tag) => {
-        return tag ? `<${href ? "a" : "button"}${spread(
-          [
-            {
-              type: escape_attribute_value(href ? void 0 : type)
-            },
-            { href: escape_attribute_value(href) },
-            escape_object($$restProps),
-            {
-              class: escape_attribute_value(buttonClass)
-            },
-            {
-              role: escape_attribute_value(href ? "button" : void 0)
-            }
-          ],
-          {}
-        )}>${is_void(tag) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag) ? "" : `</${tag}>`}` : "";
-      })(href ? "a" : "button")} `;
+      if ($$props.divClass === void 0 && $$bindings.divClass && divClass !== void 0)
+        $$bindings.divClass(divClass);
+      return `<div${spread(
+        [
+          escape_object($$restProps),
+          {
+            class: escape_attribute_value(twMerge(divClass, $$props.class))
+          },
+          { role: "group" }
+        ],
+        {}
+      )}>${slots.default ? slots.default({}) : ``}</div> `;
+    });
+    Wrapper = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["tag", "show", "use"]);
+      let { tag = "div" } = $$props;
+      let { show } = $$props;
+      let { use = () => {
+      } } = $$props;
+      if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
+        $$bindings.tag(tag);
+      if ($$props.show === void 0 && $$bindings.show && show !== void 0)
+        $$bindings.show(show);
+      if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+        $$bindings.use(use);
+      return `${show ? `${((tag$1) => {
+        return tag$1 ? `<${tag}${spread([escape_object($$restProps)], {})}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
+      })(tag)}` : `${slots.default ? slots.default({}) : ``}`} `;
     });
     Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["footerType"]);
@@ -3713,6 +3724,35 @@ var init_page_svelte = __esm({
         {}
       )}>${escape(by)}</a>` : `<span class="ml-1">${escape(by)}</span>`} ${escape(copyrightMessage)}</span> `;
     });
+    FooterIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["href", "ariaLabel", "aClass", "target"]);
+      let { href = "" } = $$props;
+      let { ariaLabel = "" } = $$props;
+      let { aClass = "text-gray-500 hover:text-gray-900 dark:hover:text-white" } = $$props;
+      let { target = void 0 } = $$props;
+      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
+        $$bindings.href(href);
+      if ($$props.ariaLabel === void 0 && $$bindings.ariaLabel && ariaLabel !== void 0)
+        $$bindings.ariaLabel(ariaLabel);
+      if ($$props.aClass === void 0 && $$bindings.aClass && aClass !== void 0)
+        $$bindings.aClass(aClass);
+      if ($$props.target === void 0 && $$bindings.target && target !== void 0)
+        $$bindings.target(target);
+      return `${href ? `<a${spread(
+        [
+          escape_object($$restProps),
+          { href: escape_attribute_value(href) },
+          { target: escape_attribute_value(target) },
+          {
+            "aria-label": escape_attribute_value(ariaLabel)
+          },
+          {
+            class: escape_attribute_value(twMerge(aClass, $$props.class))
+          }
+        ],
+        {}
+      )}>${slots.default ? slots.default({}) : ``}</a>` : `${slots.default ? slots.default({}) : ``}`} `;
+    });
     FooterLink = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["liClass", "aClass", "href", "target"]);
       let { liClass = "mr-4 last:mr-0 md:mr-6" } = $$props;
@@ -3744,6 +3784,99 @@ var init_page_svelte = __esm({
       if ($$props.ulClass === void 0 && $$bindings.ulClass && ulClass !== void 0)
         $$bindings.ulClass(ulClass);
       return `<ul${add_attribute("class", twMerge(ulClass, $$props.class), 0)}>${slots.default ? slots.default({}) : ``}</ul> `;
+    });
+    Input = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let _size;
+      let $$restProps = compute_rest_props($$props, ["type", "value", "size", "defaultClass", "color", "floatClass"]);
+      let $$slots = compute_slots(slots);
+      let { type = "text" } = $$props;
+      let { value = void 0 } = $$props;
+      let { size = void 0 } = $$props;
+      let { defaultClass = "block w-full disabled:cursor-not-allowed disabled:opacity-50" } = $$props;
+      let { color = "base" } = $$props;
+      let { floatClass = "flex absolute inset-y-0 items-center text-gray-500 dark:text-gray-400" } = $$props;
+      const borderClasses = {
+        base: "border-gray-300 dark:border-gray-600",
+        tinted: "border-gray-300 dark:border-gray-500",
+        green: "border-green-500 dark:border-green-400",
+        red: "border-red-500 dark:border-red-400"
+      };
+      const ringClasses = {
+        base: "focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500",
+        green: "focus:ring-green-500 focus:border-green-500 dark:focus:border-green-500 dark:focus:ring-green-500",
+        red: "focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500"
+      };
+      const colorClasses = {
+        base: "bg-gray-50 text-gray-900 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400",
+        tinted: "bg-gray-50 text-gray-900 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400",
+        green: "bg-green-50 text-green-900 placeholder-green-700 dark:text-green-400 dark:placeholder-green-500 dark:bg-gray-700",
+        red: "bg-red-50 text-red-900 placeholder-red-700 dark:text-red-500 dark:placeholder-red-500 dark:bg-gray-700"
+      };
+      let background = getContext("background");
+      let group = getContext("group");
+      const textSizes = {
+        sm: "sm:text-xs",
+        md: "text-sm",
+        lg: "sm:text-base"
+      };
+      const leftPadding = { sm: "pl-9", md: "pl-10", lg: "pl-11" };
+      const rightPadding = { sm: "pr-9", md: "pr-10", lg: "pr-11" };
+      const inputPadding = { sm: "p-2", md: "p-2.5", lg: "p-3" };
+      let inputClass;
+      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
+        $$bindings.type(type);
+      if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+        $$bindings.value(value);
+      if ($$props.size === void 0 && $$bindings.size && size !== void 0)
+        $$bindings.size(size);
+      if ($$props.defaultClass === void 0 && $$bindings.defaultClass && defaultClass !== void 0)
+        $$bindings.defaultClass(defaultClass);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.floatClass === void 0 && $$bindings.floatClass && floatClass !== void 0)
+        $$bindings.floatClass(floatClass);
+      _size = size || clampSize(group?.size) || "md";
+      {
+        {
+          const _color = color === "base" && background ? "tinted" : color;
+          inputClass = twMerge([
+            defaultClass,
+            $$slots.left && leftPadding[_size] || $$slots.right && rightPadding[_size] || inputPadding[_size],
+            ringClasses[color],
+            colorClasses[_color],
+            borderClasses[_color],
+            textSizes[_size],
+            group || "rounded-lg",
+            group && "first:rounded-l-lg last:rounded-r-lg",
+            group && "border-l-0 first:border-l last:border-r",
+            $$props.class
+          ]);
+        }
+      }
+      return `${validate_component(Wrapper, "Wrapper").$$render(
+        $$result,
+        {
+          class: "relative w-full",
+          show: $$slots.left || $$slots.right
+        },
+        {},
+        {
+          default: () => {
+            return `${$$slots.left ? `<div class="${escape(twMerge(floatClass, $$props.classLeft), true) + " left-0 pl-2.5 pointer-events-none"}">${slots.left ? slots.left({}) : ``}</div>` : ``} ${slots.default ? slots.default({
+              props: { ...$$restProps, class: inputClass }
+            }) : ` <input${spread(
+              [
+                escape_object($$restProps),
+                escape_object({ type }),
+                {
+                  class: escape_attribute_value(inputClass)
+                }
+              ],
+              {}
+            )}${add_attribute("value", value, 0)}> `} ${$$slots.right ? `<div class="${escape(twMerge(floatClass, $$props.classRight), true) + " right-0 pr-2.5"}">${slots.right ? slots.right({}) : ``}</div>` : ``}`;
+          }
+        }
+      )} `;
     });
     Modal = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, [
@@ -3854,7 +3987,7 @@ var init_page_svelte = __esm({
             },
             {},
             {}
-          )}` : ``}`}  <div class="p-6 space-y-6 flex-1 overflow-y-auto overscroll-contain" role="document">${slots.default ? slots.default({}) : ``}</div>  ${$$slots.footer ? `${validate_component(Frame, "Frame").$$render(
+          )}` : ``}`}  <div${add_attribute("class", twMerge("p-6 space-y-6 flex-1 overflow-y-auto overscroll-contain", $$props.bodyClass), 0)} role="document">${slots.default ? slots.default({}) : ``}</div>  ${$$slots.footer ? `${validate_component(Frame, "Frame").$$render(
             $$result,
             {
               color: $$restProps.color,
@@ -4087,52 +4220,214 @@ var init_page_svelte = __esm({
         {}
       )}><ul${add_attribute("class", _ulClass, 0)}>${slots.default ? slots.default({}) : ``}</ul></div>`} `;
     });
-    Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+    OVERFLOW_ANIMATION_TIME = 2e3;
+    Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let headerClass;
+      let $page, $$unsubscribe_page;
+      $$unsubscribe_page = subscribe(page, (value) => $page = value);
       let defaultModal = false;
+      let hideOverflow = true;
+      setTimeout(
+        () => {
+          hideOverflow = false;
+        },
+        OVERFLOW_ANIMATION_TIME
+      );
       let $$settled;
       let $$rendered;
       do {
         $$settled = true;
-        $$rendered = `${validate_component(Navbar, "Navbar").$$render($$result, { rounded: true, color: "form" }, {}, {
-          default: ({ hidden, toggle }) => {
-            return `${validate_component(NavBrand, "NavBrand").$$render($$result, { href: "/" }, {}, {
-              default: () => {
-                return `<img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo"> <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white" data-svelte-h="svelte-145jnga">Simple Reads Books</span>`;
-              }
-            })} ${validate_component(NavHamburger, "NavHamburger").$$render($$result, {}, {}, {})} ${validate_component(NavUl, "NavUl").$$render($$result, { hidden }, {}, {
-              default: () => {
-                return `${validate_component(NavLi, "NavLi").$$render($$result, { href: "/", active: true }, {}, {
-                  default: () => {
-                    return `Home`;
-                  }
-                })} ${validate_component(NavLi, "NavLi").$$render($$result, { href: "/about" }, {}, {
-                  default: () => {
-                    return `About`;
-                  }
-                })} ${validate_component(NavLi, "NavLi").$$render($$result, { href: "/services" }, {}, {
-                  default: () => {
-                    return `Services`;
-                  }
-                })} ${validate_component(NavLi, "NavLi").$$render($$result, { href: "/pricing" }, {}, {
-                  default: () => {
-                    return `Pricing`;
-                  }
-                })} ${validate_component(NavLi, "NavLi").$$render($$result, { href: "/contact" }, {}, {
-                  default: () => {
-                    return `Contact`;
-                  }
-                })}`;
-              }
-            })}`;
-          }
-        })} <div class="max-w-screen-2xl m-auto"><img src="/images/banner.png" width="100%" alt="Simple Reads Books Banner" loading="lazy" style="aspect-ratio:288/85"> <div class="p-10"><h1 data-svelte-h="svelte-1b1csk2">Test UI Components</h1> <hr> <br> ${validate_component(Button, "Button").$$render($$result, { class: "mb-5" }, {}, {
-          default: () => {
-            return `Default modal`;
-          }
-        })} ${validate_component(Modal, "Modal").$$render(
+        headerClass = hideOverflow ? "w-full relative overflow-hidden relative" : "w-full relative overflow-visible relative";
+        $$rendered = `<div><div class="m-auto max-w-screen-xl w-full overflow-hidden">   <header${add_attribute("class", headerClass, 0)}${add_attribute("style", $page.error && "visibility: hidden; height: 0", 0)}>${validate_component(Navbar, "Navbar").$$render(
           $$result,
           {
-            title: "Terms of Service",
+            color: "form",
+            navClass: "w-full md:absolute md:bg-transparent bg-[#FF5A1F] text-white p-3",
+            navDivClass: "mx-auto flex flex-wrap justify-between items-center max-w-screen-xl animate-flipInX",
+            class: "max-w-screen-xl"
+          },
+          {},
+          {
+            default: ({ hidden, toggle }) => {
+              return `${validate_component(NavBrand, "NavBrand").$$render($$result, { href: "/" }, {}, {
+                default: () => {
+                  return `<div class="md:hidden flex flex-row justify-center items-center min-w-min" data-svelte-h="svelte-1rej817"><img src="/images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy"> <span class="self-center whitespace-nowrap sm dark:text-white font-[Itim] text-md sm:text-lg">Simple Reads Books</span></div>`;
+                }
+              })} ${validate_component(NavHamburger, "NavHamburger").$$render($$result, {}, {}, {})} ${validate_component(NavUl, "NavUl").$$render(
+                $$result,
+                {
+                  hidden,
+                  nonActiveClass: "md:text-white md:font-bold",
+                  activeClass: "font-extrabold text-white underline bg-green-400 md:bg-transparent",
+                  ulClass: "flex flex-col p-3 mt-3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium bg-gray-100 md:bg-transparent",
+                  divClass: "w-full md:block md:w-auto md:bg-black md:bg-opacity-[.15] md:rounded-full md:mr-2 md:mt-2 md:[transform:perspective(250px)_translateZ(0)_rotateX(5deg)]",
+                  color: "green"
+                },
+                {},
+                {
+                  default: () => {
+                    return `${validate_component(NavLi, "NavLi").$$render(
+                      $$result,
+                      {
+                        href: "/home",
+                        active: $page.url.pathname.includes("home") || $page.url.pathname === "/",
+                        nonActiveClass: "md:hover:transform md:hover:scale-125 md:text-white md:font-bold",
+                        activeClass: "bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+                      },
+                      {},
+                      {
+                        default: () => {
+                          return `<span data-svelte-h="svelte-19qdaju">Welcome</span>`;
+                        }
+                      }
+                    )} ${validate_component(NavLi, "NavLi").$$render(
+                      $$result,
+                      {
+                        href: "/about",
+                        active: $page.url.pathname.includes("about"),
+                        class: "hover:font-bolder",
+                        nonActiveClass: "md:hover:transform md:hover:scale-125 md:text-white md:font-bold",
+                        activeClass: "bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+                      },
+                      {},
+                      {
+                        default: () => {
+                          return `<span data-svelte-h="svelte-1poeibp">About</span>`;
+                        }
+                      }
+                    )} ${validate_component(NavLi, "NavLi").$$render(
+                      $$result,
+                      {
+                        href: "/products",
+                        active: $page.url.pathname.includes("products"),
+                        nonActiveClass: "md:hover:transform md:hover:scale-125 md:text-white md:font-bold",
+                        activeClass: "bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+                      },
+                      {},
+                      {
+                        default: () => {
+                          return `<span data-svelte-h="svelte-ont76m">Books &amp; Products</span>`;
+                        }
+                      }
+                    )} ${validate_component(NavLi, "NavLi").$$render(
+                      $$result,
+                      {
+                        href: "/contact",
+                        nonActiveClass: "md:hover:transform md:hover:scale-125 md:text-white md:font-bold",
+                        activeClass: "bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
+                      },
+                      {},
+                      {
+                        default: () => {
+                          return `<span data-svelte-h="svelte-1mqhoa6">Contact</span>`;
+                        }
+                      }
+                    )}`;
+                  }
+                }
+              )}`;
+            }
+          }
+        )} <img class="max-w-screen-2xl m-auto" src="/images/banner.png" width="100%" alt="Simple Reads Books Banner" loading="lazy" style="aspect-ratio:288/85"> <img src="/images/hunnie-bunny-peering-over.png" class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp" alt="Hunnie Bunny Peering Over"> <img src="/images/hunnie-bunny-reading.png" class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-fadeIn" alt="Hunnie Bunny Peering Over"></header> ${$page.error ? `${slots.default ? slots.default({}) : ``}` : `<main>${slots.default ? slots.default({}) : ``}</main> ${validate_component(Footer, "Footer").$$render(
+          $$result,
+          {
+            footerType: "socialmedia",
+            class: "bg-[#420063]"
+          },
+          {},
+          {
+            default: () => {
+              return `<div class="m-auto max-w-screen-xl"><div class="grid grid-flow-row grid-cols-12 sm:items-center sm:justify-between gap-4 mb-2">${validate_component(FooterBrand, "FooterBrand").$$render(
+                $$result,
+                {
+                  href: "/",
+                  src: "/images/logo.png",
+                  alt: "Simple Reads Books",
+                  name: "Simple Reads Books",
+                  class: "text-white",
+                  spanClass: "text-white text-md md:text-xl font-[Itim] whitespace-nowrap hidden sm:block",
+                  imgClass: "h-10 pr-3",
+                  aClass: "flex flex-row items-center min-w-[fit-content] mr-3 col-span-3 hidden sm:flex"
+                },
+                {},
+                {}
+              )} ${validate_component(FooterLinkGroup, "FooterLinkGroup").$$render(
+                $$result,
+                {
+                  ulClass: "flex flex-wrap items-center mb-6 text-xs sm:text-sm lg:text-base text-white sm:mb-0 dark:text-gray-400 min-w-[fit-content] justify-center sm:justify-end md:justify-center col-start-1 sm:col-start-4 col-end-13 md:col-end-10 h-full"
+                },
+                {},
+                {
+                  default: () => {
+                    return `${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/terms" }, {}, {
+                      default: () => {
+                        return `Terms &amp; Conditions`;
+                      }
+                    })} ${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/privacy" }, {}, {
+                      default: () => {
+                        return `Privacy Policy`;
+                      }
+                    })} ${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/" }, {}, {
+                      default: () => {
+                        return `Reviews`;
+                      }
+                    })}`;
+                  }
+                }
+              )} <div class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13"><p class="text-white text-xs pb-1 bg-transparent" data-svelte-h="svelte-1edl2a2">Subscribe for e-mail updates!</p> ${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, { class: "rounded-none w-full" }, {}, {
+                default: () => {
+                  return `${validate_component(Input, "Input").$$render(
+                    $$result,
+                    {
+                      type: "email",
+                      placeholder: "name@gmail.com",
+                      size: "sm",
+                      class: "!rounded-none !rounded-tl !rounded-bl"
+                    },
+                    {},
+                    {
+                      left: () => {
+                        return `<svg slot="left" aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>`;
+                      }
+                    }
+                  )} ${validate_component(Button, "Button").$$render($$result, { color: "primary", size: "xs" }, {}, {
+                    default: () => {
+                      return `Subscribe`;
+                    }
+                  })}`;
+                }
+              })}</div></div>  <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"> <div class="flex flex-col sm:flex-row items-center justify-center sm:items-center sm:justify-between">${validate_component(FooterCopyright, "FooterCopyright").$$render(
+                $$result,
+                {
+                  href: "/",
+                  by: "Simple Reads Books, Inc.",
+                  spanClass: "text-xs text-white italic"
+                },
+                {},
+                {}
+              )} <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0 text-white">${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
+                default: () => {
+                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>`;
+                }
+              })} ${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
+                default: () => {
+                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path></svg>`;
+                }
+              })} ${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
+                default: () => {
+                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>`;
+                }
+              })} ${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
+                default: () => {
+                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>`;
+                }
+              })}</div></div></div>`;
+            }
+          }
+        )}`}</div> ${validate_component(Modal, "Modal").$$render(
+          $$result,
+          {
+            title: "E-mail not ready yet",
             autoclose: true,
             open: defaultModal
           },
@@ -4143,78 +4438,185 @@ var init_page_svelte = __esm({
             }
           },
           {
-            footer: () => {
-              return `${validate_component(Button, "Button").$$render($$result, {}, {}, {
-                default: () => {
-                  return `I accept`;
-                }
-              })} ${validate_component(Button, "Button").$$render($$result, { color: "alternative" }, {}, {
-                default: () => {
-                  return `Decline`;
-                }
-              })} `;
-            },
             default: () => {
-              return `<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-1ing1jd">With less than a month to go before the European Union enacts new consumer privacy laws for
-				its citizens, companies around the world are updating their terms of service agreements to
-				comply.</p> <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-95wt9w">The European Union\u2019s General Data Protection Regulation (G.D.P.R.) goes into effect on May
-				25 and is meant to ensure a common set of data rights in the European Union. It requires
-				organizations to notify users as soon as possible of high-risk data breaches that could
-				personally affect them.</p>`;
+              return `<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-hp7v1m">E-mail subscription not ready yet</p>`;
             }
           }
-        )} ${validate_component(Footer, "Footer").$$render(
-          $$result,
-          {
-            footerType: "logo",
-            class: "bg-purple-300"
-          },
-          {},
-          {
-            default: () => {
-              return `<div class="sm:flex sm:items-center sm:justify-between">${validate_component(FooterBrand, "FooterBrand").$$render(
-                $$result,
-                {
-                  href: "https://flowbite.com",
-                  src: "https://flowbite.com/docs/images/logo.svg",
-                  alt: "Flowbite Logo",
-                  name: "Simple Reads Books"
-                },
-                {},
-                {}
-              )} ${validate_component(FooterLinkGroup, "FooterLinkGroup").$$render(
-                $$result,
-                {
-                  ulClass: "flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0 dark:text-gray-400"
-                },
-                {},
-                {
-                  default: () => {
-                    return `${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/" }, {}, {
-                      default: () => {
-                        return `About`;
-                      }
-                    })} ${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/" }, {}, {
-                      default: () => {
-                        return `Privacy Policy`;
-                      }
-                    })} ${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/" }, {}, {
-                      default: () => {
-                        return `Licensing`;
-                      }
-                    })} ${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/" }, {}, {
-                      default: () => {
-                        return `Contact`;
-                      }
-                    })}`;
-                  }
-                }
-              )}</div> <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"> ${validate_component(FooterCopyright, "FooterCopyright").$$render($$result, { href: "/", by: "Flowbite\u2122" }, {}, {})}`;
-            }
-          }
-        )}</div></div>`;
+        )}</div>`;
       } while (!$$settled);
+      $$unsubscribe_page();
       return $$rendered;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/0.js
+var __exports = {};
+__export(__exports, {
+  component: () => component,
+  fonts: () => fonts,
+  imports: () => imports,
+  index: () => index,
+  stylesheets: () => stylesheets
+});
+var index, component_cache, component, imports, stylesheets, fonts;
+var init__ = __esm({
+  ".svelte-kit/output/server/nodes/0.js"() {
+    index = 0;
+    component = async () => component_cache ?? (component_cache = (await Promise.resolve().then(() => (init_layout_svelte(), layout_svelte_exports))).default);
+    imports = ["_app/immutable/nodes/0.8ddf5a39.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/chunks/stores.531f031d.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js", "_app/immutable/chunks/CloseButton.f0a25928.js"];
+    stylesheets = ["_app/immutable/assets/0.d414fc63.css", "_app/immutable/assets/Indicator.1d121e74.css"];
+    fonts = [];
+  }
+});
+
+// .svelte-kit/output/server/chunks/ButtonBack.js
+var ButtonBack;
+var init_ButtonBack = __esm({
+  ".svelte-kit/output/server/chunks/ButtonBack.js"() {
+    init_ssr();
+    init_Indicator_svelte_svelte_type_style_lang();
+    ButtonBack = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${validate_component(Button, "Button").$$render(
+        $$result,
+        {
+          class: "bg-primary-500 text-white mt-[24px]",
+          size: "lg"
+        },
+        {},
+        {
+          default: () => {
+            return `<svg class="w-4 h-4 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"></path></svg>
+	Go back`;
+          }
+        }
+      )}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/_error.svelte.js
+var error_svelte_exports = {};
+__export(error_svelte_exports, {
+  default: () => Error2
+});
+var Error2;
+var init_error_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/_error.svelte.js"() {
+    init_ssr();
+    init_Indicator_svelte_svelte_type_style_lang();
+    init_stores();
+    init_ButtonBack();
+    Error2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $page, $$unsubscribe_page;
+      $$unsubscribe_page = subscribe(page, (value) => $page = value);
+      $$unsubscribe_page();
+      return `${$$result.head += `<!-- HEAD_svelte-170ftj0_START --><script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" data-svelte-h="svelte-16ujy84"><\/script><!-- HEAD_svelte-170ftj0_END -->`, ""} <section class="bg-white dark:bg-gray-900 h-[100vh] flex flex-col items-center">${$page?.error?.message !== "Not Found" ? `<h1 class="rounded-sm shadow p-5 w-full text-center bold bg-red-500 text-white">Error: ${escape($page?.error?.message)}</h1>` : ``} <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 my-auto h-[100%] flex items-center"><div class="mx-auto max-w-screen-sm text-center"><lottie-player src="https://lottie.host/5824a45e-3640-4d4f-8085-c82b1a40ca91/4RT9fuVtBk.json" background="#fff" speed="1" class="sm:w-[600px] sm:h-[600px]" loop autoplay direction="1" mode="normal"></lottie-player> <h1 class="mb-4 text-2xl font-extrabold text-red-600 dark:text-red-500" data-svelte-h="svelte-moli4v">Page Not Found</h1> <p class="mb-10 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white" data-svelte-h="svelte-oui917">Uh oh! That page doesn\u2019t exist \u{1F632}</p> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</div></div></section>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/1.js
+var __exports2 = {};
+__export(__exports2, {
+  component: () => component2,
+  fonts: () => fonts2,
+  imports: () => imports2,
+  index: () => index2,
+  stylesheets: () => stylesheets2
+});
+var index2, component_cache2, component2, imports2, stylesheets2, fonts2;
+var init__2 = __esm({
+  ".svelte-kit/output/server/nodes/1.js"() {
+    index2 = 1;
+    component2 = async () => component_cache2 ?? (component_cache2 = (await Promise.resolve().then(() => (init_error_svelte(), error_svelte_exports))).default);
+    imports2 = ["_app/immutable/nodes/1.f025dd9a.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js", "_app/immutable/chunks/stores.531f031d.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/chunks/ButtonBack.b029eeee.js", "_app/immutable/chunks/navigation.8cadd3df.js"];
+    stylesheets2 = ["_app/immutable/assets/Indicator.1d121e74.css"];
+    fonts2 = [];
+  }
+});
+
+// .svelte-kit/output/server/chunks/ButtonAmazon.js
+var ButtonAmazon;
+var init_ButtonAmazon = __esm({
+  ".svelte-kit/output/server/chunks/ButtonAmazon.js"() {
+    init_ssr();
+    init_Indicator_svelte_svelte_type_style_lang();
+    ButtonAmazon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let buttonClass;
+      let { fullWidth = false } = $$props;
+      let { disabled = true } = $$props;
+      let { size = "xl" } = $$props;
+      if ($$props.fullWidth === void 0 && $$bindings.fullWidth && fullWidth !== void 0)
+        $$bindings.fullWidth(fullWidth);
+      if ($$props.disabled === void 0 && $$bindings.disabled && disabled !== void 0)
+        $$bindings.disabled(disabled);
+      if ($$props.size === void 0 && $$bindings.size && size !== void 0)
+        $$bindings.size(size);
+      buttonClass = `${fullWidth && "w-full"}`;
+      return `${validate_component(Button, "Button").$$render(
+        $$result,
+        {
+          disabled: true,
+          color: "primary",
+          size,
+          class: buttonClass
+        },
+        {},
+        {
+          default: () => {
+            return `<svg class="mr-3" style="color: white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><title>ionicons-v5_logos</title><path d="M48.48,378.73a300.52,300.52,0,0,0,152.89,95.92,262.57,262.57,0,0,0,159.3-17.25,225.52,225.52,0,0,0,66.79-47,6.36,6.36,0,0,0-2-8.53,11.76,11.76,0,0,0-8-.05,401.92,401.92,0,0,1-116.55,39.34,358.13,358.13,0,0,1-127.29-8.83,446.73,446.73,0,0,1-119.1-60.49,5,5,0,0,0-6.06,6.9Z" fill="white"></path><path d="M387.15,388.44a168.11,168.11,0,0,1,48.94-2.23l.67.13a10,10,0,0,1,7.37,12.05A204.71,204.71,0,0,1,429,444.47a2.55,2.55,0,0,0,1.66,3.18,2.51,2.51,0,0,0,2.23-.37A83.31,83.31,0,0,0,464,382.86a12.44,12.44,0,0,0-10.22-13.22A95.75,95.75,0,0,0,384.91,384a2.55,2.55,0,0,0-.57,3.55A2.52,2.52,0,0,0,387.15,388.44Z" fill="white"></path><path d="M304.24,324.92a164,164,0,0,1-28.92,25.3A135.16,135.16,0,0,1,208.63,369a99.49,99.49,0,0,1-57.49-19.85,97.25,97.25,0,0,1-27.36-100.28,112.35,112.35,0,0,1,65.3-69.06,367.67,367.67,0,0,1,104.7-15.55V127A37.82,37.82,0,0,0,261,94.72a59.9,59.9,0,0,0-31.17,4.08,48.89,48.89,0,0,0-27.13,34.67,12,12,0,0,1-12.58,6.72l-50.9-4.5a11.38,11.38,0,0,1-8.38-10.16,103.66,103.66,0,0,1,36.61-63.45A143.86,143.86,0,0,1,257.85,32a146.24,146.24,0,0,1,84.27,27.67,86.82,86.82,0,0,1,30.7,70.22V258.8a84.46,84.46,0,0,0,8,31.28l15.87,23.23a13,13,0,0,1,0,11.23L349.7,364.25a12.5,12.5,0,0,1-12.68-.44A244.84,244.84,0,0,1,304.24,324.92Zm-10.6-116.83a257.68,257.68,0,0,0-44,2.89A63,63,0,0,0,208,242.54a63,63,0,0,0,3.07,54,40.6,40.6,0,0,0,47.11,12.19,78.61,78.61,0,0,0,35.46-55.58V208.09" fill="white"></path></svg>
+	Buy on Amazon \xA0
+
+	<svg aria-hidden="true" class="mr-2 ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>`;
+          }
+        }
+      )}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/home/_page.svelte.js
+var page_svelte_exports = {};
+__export(page_svelte_exports, {
+  default: () => Page
+});
+var css, Page;
+var init_page_svelte = __esm({
+  ".svelte-kit/output/server/entries/pages/home/_page.svelte.js"() {
+    init_ssr();
+    init_ButtonAmazon();
+    init_Indicator_svelte_svelte_type_style_lang();
+    css = {
+      code: "@keyframes svelte-8wrmk9-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}.animate-bounce-custom.svelte-8wrmk9{animation:svelte-8wrmk9-bounce 1s infinite steps(50)}@keyframes svelte-8wrmk9-rotate{0%{transform:scaleX(1)}50%{transform:scaleX(0.98)}100%{transform:scaleX(1)}}.animate-rotate-custom.svelte-8wrmk9{animation:svelte-8wrmk9-rotate 2s ease-in-out infinite}",
+      map: null
+    };
+    Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      $$result.css.add(css);
+      return `<section class="w-full py-10 md:py-20 px-4 md:px-5 bg-[#009933] bg-opacity-40 flex-col justify-start items-center inline-flex font-[Itim]" data-svelte-h="svelte-zlw5rg"><div class="justify-start items-center inline-flex"><div class="self-stretch justify-between items-start gap-2.5 inline-flex"><div class="text-center text-gray-900 lg:text-4xl xs:text-normal sm:text-2xl md:text-3xl font-normal md:px-10">Simple Reads Books encourages children to explore nature through entertaining stories filled
+				with colorful illustrations</div></div></div></section>  <section><div class="flex flex-row flex-wrap font-[Itim]"> <div class="p-4 md:basis-7/12" role="button" tabindex="0" data-svelte-h="svelte-vrblg4"><a href="/products/hunnie-bunnys-garden"><img class="rounded-lg w-full" src="images/hunnie-bunnys-garden-mockup.png" alt="book mockup cover"> <div class="self-stretch text-center text-gray-900 md:text-xl lg:text-2xl text-xl p-3"><p class="mb-2">Hunnie Bunny\u2019s Garden is a delightful blend of entertainment and education that provides
+						endless opportunities for learning and discovery.</p> <p class="mb-2">This charming story is a wonderful testament to the beauty of nature and the joy that
+						gardening can bring.</p> <p class="pt-3 text-shadow-black-xs text-black">Add Hunnie Bunny\u2019s Garden to your child\u2019s library today!</p></div></a></div> <div class="p-4 basis-full md:basis-5/12 flex flex-col justify-start items-center"><div class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal mb-10" data-svelte-h="svelte-118b3i3">Release Date <mark class="px-2 bg-[#B9D6B8] rounded">August 15, 2023</mark></div> ${validate_component(ButtonAmazon, "ButtonAmazon").$$render($$result, {}, {}, {})} <img style="scale:1.25" src="/images/hunnie-bunny-reading-book.png" class="mt-10"></div></div></section> <section class="w-full font-[Itim]" data-svelte-h="svelte-3g4fox"><div class="bg-[rgba(0,102,204,0.44)] p-2.5 flex flex-row items-center justify-between w-full relative"><img class="hidden sm:flex col-span-3 max-w-[20%] animate-rotate-custom svelte-8wrmk9" src="images/mr_squirrel_sitting.png" loading="lazy"> <div class="flex flex-row gap-2.5 items-center justify-center col-span-6 m-auto"><div class="flex flex-col gap-0 items-center justify-start"><div class="text-gray-900 text-center relative self-stretch"><span><p class="text-xl md:text-2xl lg:text-3xl text-normal text-shadow-sm mb-5">Coming Soon!</p> <div class="mt-30"><span class="md:text-xl lg:text-2xl">Hunnie Bunny\u2019s Garden Mystery
+								<br>
+								Hunnie Bunny\u2019s Special Gift
+								<br>
+								Hunnie Bunny\u2019s Christmas Wish</span></div></span></div></div></div> <img class="hidden sm:flex col-span-3 max-w-[20%] animate-bounce-custom svelte-8wrmk9" src="images/mr_frog_sitting.png" loading="lazy" alt="Mr. Frog sitting"></div> </section>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/_page.svelte.js
+var page_svelte_exports2 = {};
+__export(page_svelte_exports2, {
+  default: () => Page_1
+});
+var Page_1;
+var init_page_svelte2 = __esm({
+  ".svelte-kit/output/server/entries/pages/_page.svelte.js"() {
+    init_ssr();
+    init_page_svelte();
+    Page_1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `${validate_component(Page, "Page").$$render($$result, {}, {}, {})}`;
     });
   }
 });
@@ -4232,10 +4634,934 @@ var index3, component_cache3, component3, imports3, stylesheets3, fonts3;
 var init__3 = __esm({
   ".svelte-kit/output/server/nodes/2.js"() {
     index3 = 2;
-    component3 = async () => component_cache3 ?? (component_cache3 = (await Promise.resolve().then(() => (init_page_svelte(), page_svelte_exports))).default);
-    imports3 = ["_app/immutable/nodes/2.d5ba0da4.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"];
-    stylesheets3 = ["_app/immutable/assets/2.1d121e74.css"];
+    component3 = async () => component_cache3 ?? (component_cache3 = (await Promise.resolve().then(() => (init_page_svelte2(), page_svelte_exports2))).default);
+    imports3 = ["_app/immutable/nodes/2.91154737.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/nodes/4.43a96ecd.js", "_app/immutable/chunks/navigation.8cadd3df.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/chunks/ButtonAmazon.2bfa844b.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js"];
+    stylesheets3 = ["_app/immutable/assets/4.5eb213e4.css", "_app/immutable/assets/Indicator.1d121e74.css"];
     fonts3 = [];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/about/_page.svelte.js
+var page_svelte_exports3 = {};
+__export(page_svelte_exports3, {
+  default: () => Page2
+});
+var Page2;
+var init_page_svelte3 = __esm({
+  ".svelte-kit/output/server/entries/pages/about/_page.svelte.js"() {
+    init_ssr();
+    Page2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `<article class="prose prose-lg sm:prose-xl md:prose-2xl w-full m-auto max-w-4xl p-2 md:p-0 pt-5 md:pt-8" data-svelte-h="svelte-1jq6h43"><h1 class="text-center">About Us</h1> <div><img src="/images/dcm-author.png" class="sm:float-right sm:max-w-[50%] sm:rounded-bl-[75px] align-bottom rounded-br-[50px] rounded-bl-[50px]" alt="author"> <p class="font-medium -mt-[30px]">Welcome to Simple Reads Books!<br></p> <p class="font-medium">My name is Deborah Martin and I am the author of the Hunnie Bunny book series.</p> <p>I have always enjoyed writing children\u2019s stories and decided to finally publish Hunnie Bunny\u2019s Garden after my grandson\u2019s birth In August of 2022. Even though I wrote Hunnie Bunny\u2019s Garden in 1985 when my son was two years old, I
+            never forgot about the story and recently was able to find the perfect illustrator to bring the story to life.</p> <p>Growing up in Roanoke, Virginia, we had lots of pets, including cats, dogs, bunnies, birds and fish, all at the same time. So, it was natural for me to write about animals as I grew older. I believe that children learn empathy,
+            respect and responsibility when pets are part of the family.</p> <p>Horses have always been my first love and true passion, and I was fortunate to buy my first horse when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows.</p> <p>When I moved to California, I gave up riding to raise my family and didn\u2019t buy another horse until our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named Crimson Sky, a black German
+            warmblood gelding named San Fransisko, and a bay Oldenburg gelding named Santana. All three are trained in dressage and have done extremely well at shows with their professional rider.</p> <p>Besides my horses, I have two other four-legged children: a fifteen-year-old Bluepoint Balinese cat named Zoie (who is quite the diva in our house) and an eight-year-old Bluepoint Birman/Siamese mix named Rascal (who definitely
+            lives up to his name). They are wonderful companions, and my home wouldn\u2019t be the same without them!</p> <p>I hope you will join the Simple Reads Books community and share my books with your family and friends. Enjoy!</p>
+        Horses have always been my first love and true passion, and I was fortunate to buy my first horse when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows. When I moved to California, I
+        gave up riding to raise my family and didn\u2019t buy another horse until our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named Crimson Sky, a black German warmblood gelding named San
+        Fransisko, and a bay Oldenburg gelding named Santana. All three are trained in dressage and have done extremely well at shows with their professional rider.
+
+        <h2>Mission Statement</h2> <p>Simple Reads Books is dedicated to presenting children\u2019s stories with a positive message using colorful illustrations to build self-esteem and a love of animals and nature.</p></div></article>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/3.js
+var __exports4 = {};
+__export(__exports4, {
+  component: () => component4,
+  fonts: () => fonts4,
+  imports: () => imports4,
+  index: () => index4,
+  stylesheets: () => stylesheets4
+});
+var index4, component_cache4, component4, imports4, stylesheets4, fonts4;
+var init__4 = __esm({
+  ".svelte-kit/output/server/nodes/3.js"() {
+    index4 = 3;
+    component4 = async () => component_cache4 ?? (component_cache4 = (await Promise.resolve().then(() => (init_page_svelte3(), page_svelte_exports3))).default);
+    imports4 = ["_app/immutable/nodes/3.99418403.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js"];
+    stylesheets4 = [];
+    fonts4 = [];
+  }
+});
+
+// .svelte-kit/output/server/nodes/4.js
+var __exports5 = {};
+__export(__exports5, {
+  component: () => component5,
+  fonts: () => fonts5,
+  imports: () => imports5,
+  index: () => index5,
+  stylesheets: () => stylesheets5
+});
+var index5, component_cache5, component5, imports5, stylesheets5, fonts5;
+var init__5 = __esm({
+  ".svelte-kit/output/server/nodes/4.js"() {
+    index5 = 4;
+    component5 = async () => component_cache5 ?? (component_cache5 = (await Promise.resolve().then(() => (init_page_svelte(), page_svelte_exports))).default);
+    imports5 = ["_app/immutable/nodes/4.43a96ecd.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/chunks/navigation.8cadd3df.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/chunks/ButtonAmazon.2bfa844b.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js"];
+    stylesheets5 = ["_app/immutable/assets/4.5eb213e4.css", "_app/immutable/assets/Indicator.1d121e74.css"];
+    fonts5 = [];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/privacy/_page.svelte.js
+var page_svelte_exports4 = {};
+__export(page_svelte_exports4, {
+  default: () => Page3
+});
+var h2Class, h3Class, pClass, Page3;
+var init_page_svelte4 = __esm({
+  ".svelte-kit/output/server/entries/pages/privacy/_page.svelte.js"() {
+    init_ssr();
+    init_Indicator_svelte_svelte_type_style_lang();
+    init_ButtonBack();
+    h2Class = "text-gray-900 text-2xl font-bold";
+    h3Class = "text-gray-900 text-xl font-semibold pb-0.5 leading-normal";
+    pClass = "text-gray-500 text-sm font-normal leading-normal";
+    Page3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `<div class="max-w-2xl m-auto mb-5"><section class="w-full flex flex-col justify-center items-center my-10"><h1 class="text-4xl font-extrabold" data-svelte-h="svelte-1nh32uq">Privacy Policy</h1> <h6 class="text-gray-500" data-svelte-h="svelte-1lv66r3">Last updated on July 26th, 2023</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</section> <p class="font-normal text-gray-900 pb-5" data-svelte-h="svelte-r2h0nv">At <a href="simplereadsbooks.com" class="text-blue-400">simplereadsbooks.com</a>, we take your
+		privacy seriously. This Privacy Policy outlines the types of personal information we collect
+		from visitors to our website and how we use, disclose, and protect that information.
+		<br><br>
+		By accessing or using simplereadsbooks.com, you consent to the collection, use, and disclosure of
+		your personal information in accordance with this policy.</p> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>1. Information We Collect</h2> <div class="pb-2"><div class="pl-5"><h3${add_attribute("class", h3Class, 0)}>1.1 Personal Information</h3> <p${add_attribute("class", pClass, 0)}>We may collect certain personally identifiable information, such as your name, email
+					address, and any additional information you voluntarily provide to us through contact
+					forms or subscription forms.</p> <h3${add_attribute("class", h3Class, 0)}>1.2 Log Files</h3> <p${add_attribute("class", pClass, 0)}>Like many other websites, we automatically gather certain non-personal information about
+					your visit. This information may include your IP address, browser type, operating system,
+					referring website, pages visited, and the date and time of your visit. This data is used
+					to analyze trends, administer the site, and track user engagement, but it does not
+					personally identify you.</p></div></div></div> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>2. Use of Collected Information</h2> <div class="pb-2"><div class="pl-5"><h3${add_attribute("class", h3Class, 0)}>2.1 Personal Information</h3> <p${add_attribute("class", pClass, 0)}>We may use your personal information to respond to your inquiries, provide the services
+					you request, and communicate with you about our website, products, and services. We may
+					also use this information to send you promotional materials or newsletters, but you will
+					always have the option to opt-out of receiving such communications.</p> <h3${add_attribute("class", h3Class, 0)}>2.2 Log Files</h3> <p${add_attribute("class", pClass, 0)}>The non-personal information collected is used to improve our website&#39;s content and
+					functionality, enhance user experience, and analyze user trends. It may also be used for
+					troubleshooting purposes and to ensure the security and integrity of our website.</p></div></div></div> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>3. Sharing of Collected Information</h2> <div class="pb-2"><div class="pl-5"><h3${add_attribute("class", h3Class, 0)}>3.1 Third-Party Service Providers</h3> <p${add_attribute("class", pClass, 0)}>We may share your personal information with third-party service providers who assist us in
+					operating our website, conducting our business, or providing services to you. These
+					service providers have access to your personal information only as necessary to perform
+					their functions and are obligated to protect its confidentiality.</p> <h3${add_attribute("class", h3Class, 0)}>3.2 Legal Requirements</h3> <p${add_attribute("class", pClass, 0)}>We may disclose your personal information if required to do so by law or if we believe
+					that such action is necessary to comply with legal obligations, protect and defend our
+					rights or property, prevent fraud, or ensure the safety of our users.</p></div></div></div> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>4. Security</h2> <p${add_attribute("class", pClass, 0)}>We implement reasonable security measures to protect your personal information from
+			unauthorized access, disclosure, alteration, or destruction. However, no data transmission
+			over the internet or electronic storage method is 100% secure, and we cannot guarantee
+			absolute security.</p></div> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>5. External Links</h2> <p${add_attribute("class", pClass, 0)}>Our website may contain links to third-party websites. We have no control over the content,
+			privacy practices, or security of these websites. Therefore, we encourage you to review the
+			privacy policies of any third-party sites you visit.</p></div> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>6. Children&#39;s Privacy</h2> <p${add_attribute("class", pClass, 0)}>Our website is not intended for individuals under the age of 13. We do not knowingly collect
+			personal information from children. If you are a parent or guardian and believe that your
+			child has provided us with personal information, please contact us, and we will promptly
+			remove that information from our records.</p></div> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>7. Changes to the Privacy Policy</h2> <p${add_attribute("class", pClass, 0)}>We reserve the right to modify or update this Privacy Policy at any time. Any changes will be
+			effective immediately upon posting the revised policy on our website. We encourage you to
+			review this policy periodically for any updates.</p></div> <div class="p-1"><h2${add_attribute("class", h2Class, 0)}>8. Contact Us</h2> <p${add_attribute("class", pClass, 0)}>If you have any questions, concerns, or requests regarding this Privacy Policy or our privacy
+			practices, please contact us at <a href="mailto:debbie@simplereadsbooks.com" class="text-blue-400" data-svelte-h="svelte-1hee0it">debbie@simplereadsbooks.com</a>.</p></div></div>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/5.js
+var __exports6 = {};
+__export(__exports6, {
+  component: () => component6,
+  fonts: () => fonts6,
+  imports: () => imports6,
+  index: () => index6,
+  stylesheets: () => stylesheets6
+});
+var index6, component_cache6, component6, imports6, stylesheets6, fonts6;
+var init__6 = __esm({
+  ".svelte-kit/output/server/nodes/5.js"() {
+    index6 = 5;
+    component6 = async () => component_cache6 ?? (component_cache6 = (await Promise.resolve().then(() => (init_page_svelte4(), page_svelte_exports4))).default);
+    imports6 = ["_app/immutable/nodes/5.a943770f.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js", "_app/immutable/chunks/ButtonBack.b029eeee.js", "_app/immutable/chunks/navigation.8cadd3df.js"];
+    stylesheets6 = ["_app/immutable/assets/Indicator.1d121e74.css"];
+    fonts6 = [];
+  }
+});
+
+// .svelte-kit/output/server/chunks/Badge.js
+function fade(node, { delay = 0, duration = 400, easing = identity } = {}) {
+  const o = +getComputedStyle(node).opacity;
+  return {
+    delay,
+    duration,
+    easing,
+    css: (t) => `opacity: ${t * o}`
+  };
+}
+var baseClass, Badge;
+var init_Badge = __esm({
+  ".svelte-kit/output/server/chunks/Badge.js"() {
+    init_ssr();
+    init_tailwind_merge();
+    init_CloseButton();
+    baseClass = "font-medium inline-flex items-center justify-center px-2.5 py-0.5";
+    Badge = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["color", "large", "dismissable"]);
+      let { color = "primary" } = $$props;
+      let { large = false } = $$props;
+      let { dismissable = false } = $$props;
+      const colors = {
+        primary: "bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300",
+        blue: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
+        dark: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+        gray: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+        red: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
+        green: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+        yellow: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+        indigo: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-300",
+        purple: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
+        pink: "bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300",
+        none: ""
+      };
+      const borderedColors = {
+        primary: "bg-primary-100 text-primary-800 dark:bg-gray-700 dark:text-primary-400 border-primary-400 dark:border-primary-400",
+        blue: "bg-blue-100 text-blue-800 dark:bg-gray-700 dark:text-blue-400 border-blue-400 dark:border-blue-400",
+        dark: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-400 border-gray-500 dark:border-gray-500",
+        red: "bg-red-100 text-red-800 dark:bg-gray-700 dark:text-red-400 border-red-400 dark:border-red-400",
+        green: "bg-green-100 text-green-800 dark:bg-gray-700 dark:text-green-400 border-green-400 dark:border-green-400",
+        yellow: "bg-yellow-100 text-yellow-800 dark:bg-gray-700 dark:text-yellow-300 border-yellow-300 dark:border-yellow-300",
+        indigo: "bg-indigo-100 text-indigo-800 dark:bg-gray-700 dark:text-indigo-400 border-indigo-400 dark:border-indigo-400",
+        purple: "bg-purple-100 text-purple-800 dark:bg-gray-700 dark:text-purple-400 border-purple-400 dark:border-purple-400",
+        pink: "bg-pink-100 text-pink-800 dark:bg-gray-700 dark:text-pink-400 border-pink-400 dark:border-pink-400",
+        none: ""
+      };
+      const hoverColors = {
+        primary: "hover:bg-primary-200",
+        blue: "hover:bg-blue-200",
+        dark: "hover:bg-gray-200",
+        red: "hover:bg-red-200",
+        green: "hover:bg-green-200",
+        yellow: "hover:bg-yellow-200",
+        indigo: "hover:bg-indigo-200",
+        purple: "hover:bg-purple-200",
+        pink: "hover:bg-pink-200",
+        none: ""
+      };
+      let badgeClass;
+      let open = true;
+      const dispatch = createEventDispatcher();
+      const close = (e) => {
+        e.stopPropagation();
+        open = false;
+        dispatch("dismiss");
+      };
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.large === void 0 && $$bindings.large && large !== void 0)
+        $$bindings.large(large);
+      if ($$props.dismissable === void 0 && $$bindings.dismissable && dismissable !== void 0)
+        $$bindings.dismissable(dismissable);
+      {
+        {
+          if (dismissable)
+            $$restProps.transition = $$restProps.transition ?? fade;
+        }
+      }
+      badgeClass = twMerge(
+        baseClass,
+        large ? "text-sm" : "text-xs",
+        $$restProps.border ? `border ${borderedColors[color]}` : colors[color],
+        $$restProps.href && hoverColors[color],
+        $$restProps.rounded ? "rounded-full" : "rounded",
+        $$props.class
+      );
+      return `${open ? `${validate_component(Frame, "Frame").$$render($$result, Object.assign({}, $$restProps, { class: badgeClass }), {}, {
+        default: () => {
+          return `${slots.default ? slots.default({}) : ``} ${dismissable ? `${slots["close-button"] ? slots["close-button"]({ close }) : ` ${validate_component(CloseButton, "CloseButton").$$render(
+            $$result,
+            {
+              color,
+              size: large ? "sm" : "xs",
+              name: "Remove badge",
+              class: "ml-1.5 -mr-1.5"
+            },
+            {},
+            {}
+          )} `}` : ``}`;
+        }
+      })}` : ``} `;
+    });
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/products/_page.svelte.js
+var page_svelte_exports5 = {};
+__export(page_svelte_exports5, {
+  default: () => Page4
+});
+var Card, Heading, Span, AvailableInFormat, Page4;
+var init_page_svelte5 = __esm({
+  ".svelte-kit/output/server/entries/pages/products/_page.svelte.js"() {
+    init_ssr();
+    init_tailwind_merge();
+    init_CloseButton();
+    init_Indicator_svelte_svelte_type_style_lang();
+    init_ButtonAmazon();
+    init_Badge();
+    Card = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let innerPadding;
+      let $$restProps = compute_rest_props($$props, ["href", "horizontal", "reverse", "img", "padding", "size"]);
+      let { href = void 0 } = $$props;
+      let { horizontal = false } = $$props;
+      let { reverse = false } = $$props;
+      let { img = void 0 } = $$props;
+      let { padding = "lg" } = $$props;
+      let { size = "sm" } = $$props;
+      const paddings = {
+        none: "p-0",
+        sm: "p-4 sm:p-6 md:p-8",
+        md: "p-4 sm:p-5",
+        lg: "p-4 sm:p-6",
+        xl: "p-4 sm:p-8"
+      };
+      const sizes = {
+        xs: "max-w-xs",
+        sm: "max-w-sm",
+        md: "max-w-lg",
+        lg: "max-w-2xl",
+        xl: "max-w-screen-xl"
+      };
+      let cardClass;
+      let imgClass;
+      if ($$props.href === void 0 && $$bindings.href && href !== void 0)
+        $$bindings.href(href);
+      if ($$props.horizontal === void 0 && $$bindings.horizontal && horizontal !== void 0)
+        $$bindings.horizontal(horizontal);
+      if ($$props.reverse === void 0 && $$bindings.reverse && reverse !== void 0)
+        $$bindings.reverse(reverse);
+      if ($$props.img === void 0 && $$bindings.img && img !== void 0)
+        $$bindings.img(img);
+      if ($$props.padding === void 0 && $$bindings.padding && padding !== void 0)
+        $$bindings.padding(padding);
+      if ($$props.size === void 0 && $$bindings.size && size !== void 0)
+        $$bindings.size(size);
+      innerPadding = paddings[padding];
+      cardClass = twMerge(
+        "flex",
+        sizes[size],
+        reverse ? "flex-col-reverse" : "flex-col",
+        horizontal && (reverse ? "md:flex-row-reverse md:max-w-xl" : "md:flex-row md:max-w-xl"),
+        href && "hover:bg-gray-100 dark:hover:bg-gray-700",
+        !img && innerPadding,
+        $$props.class
+      );
+      imgClass = twMerge(reverse ? "rounded-b-lg" : "rounded-t-lg", horizontal && "object-cover w-full h-96 md:h-auto md:w-48 md:rounded-none", horizontal && (reverse ? "md:rounded-r-lg" : "md:rounded-l-lg"));
+      return `${validate_component(Frame, "Frame").$$render($$result, Object.assign({}, { tag: href ? "a" : "div" }, { rounded: true }, { shadow: true }, { border: true }, { href }, $$restProps, { class: cardClass }), {}, {
+        default: () => {
+          return `${img ? `<img${add_attribute("class", imgClass, 0)}${add_attribute("src", img, 0)} alt=""> <div${add_attribute("class", innerPadding, 0)}>${slots.default ? slots.default({}) : ``}</div>` : `${slots.default ? slots.default({}) : ``}`}`;
+        }
+      })} `;
+    });
+    Heading = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["tag", "color", "customSize"]);
+      let { tag = "h1" } = $$props;
+      let { color = "text-gray-900 dark:text-white" } = $$props;
+      let { customSize = "" } = $$props;
+      const textSizes = {
+        h1: "text-5xl font-extrabold",
+        h2: "text-4xl font-bold",
+        h3: "text-3xl font-bold",
+        h4: "text-2xl font-bold",
+        h5: "text-xl font-bold",
+        h6: "text-lg font-bold"
+      };
+      if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
+        $$bindings.tag(tag);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.customSize === void 0 && $$bindings.customSize && customSize !== void 0)
+        $$bindings.customSize(customSize);
+      return `${((tag$1) => {
+        return tag$1 ? `<${tag}${spread(
+          [
+            escape_object($$restProps),
+            {
+              class: escape_attribute_value(twMerge(customSize ? customSize : textSizes[tag], color, "w-full", $$props.class))
+            }
+          ],
+          {}
+        )}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
+      })(tag)} `;
+    });
+    Span = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, [
+        "italic",
+        "underline",
+        "linethrough",
+        "uppercase",
+        "gradient",
+        "highlight",
+        "highlightClass",
+        "decorationClass",
+        "gradientClass"
+      ]);
+      let { italic = false } = $$props;
+      let { underline = false } = $$props;
+      let { linethrough = false } = $$props;
+      let { uppercase = false } = $$props;
+      let { gradient = false } = $$props;
+      let { highlight = false } = $$props;
+      let { highlightClass = "text-blue-600 dark:text-blue-500" } = $$props;
+      let { decorationClass = "decoration-2 decoration-blue-400 dark:decoration-blue-600" } = $$props;
+      let { gradientClass = "text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400" } = $$props;
+      let underlineClass = twMerge("underline", decorationClass);
+      let classSpan = twMerge(
+        italic && "italic",
+        underline && underlineClass,
+        linethrough && "line-through",
+        uppercase && "uppercase",
+        gradient ? gradientClass : "font-semibold text-gray-900 dark:text-white",
+        highlight && highlightClass,
+        $$props.class
+      );
+      if ($$props.italic === void 0 && $$bindings.italic && italic !== void 0)
+        $$bindings.italic(italic);
+      if ($$props.underline === void 0 && $$bindings.underline && underline !== void 0)
+        $$bindings.underline(underline);
+      if ($$props.linethrough === void 0 && $$bindings.linethrough && linethrough !== void 0)
+        $$bindings.linethrough(linethrough);
+      if ($$props.uppercase === void 0 && $$bindings.uppercase && uppercase !== void 0)
+        $$bindings.uppercase(uppercase);
+      if ($$props.gradient === void 0 && $$bindings.gradient && gradient !== void 0)
+        $$bindings.gradient(gradient);
+      if ($$props.highlight === void 0 && $$bindings.highlight && highlight !== void 0)
+        $$bindings.highlight(highlight);
+      if ($$props.highlightClass === void 0 && $$bindings.highlightClass && highlightClass !== void 0)
+        $$bindings.highlightClass(highlightClass);
+      if ($$props.decorationClass === void 0 && $$bindings.decorationClass && decorationClass !== void 0)
+        $$bindings.decorationClass(decorationClass);
+      if ($$props.gradientClass === void 0 && $$bindings.gradientClass && gradientClass !== void 0)
+        $$bindings.gradientClass(gradientClass);
+      return `<span${spread([escape_object($$restProps), { class: escape_attribute_value(classSpan) }], {})}>${slots.default ? slots.default({}) : ``}</span> `;
+    });
+    AvailableInFormat = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { showText = true } = $$props;
+      let { color = "green" } = $$props;
+      let { divClass = "" } = $$props;
+      if ($$props.showText === void 0 && $$bindings.showText && showText !== void 0)
+        $$bindings.showText(showText);
+      if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+        $$bindings.color(color);
+      if ($$props.divClass === void 0 && $$bindings.divClass && divClass !== void 0)
+        $$bindings.divClass(divClass);
+      return `<div${add_attribute("class", divClass, 0)}>${showText ? `<span class="text-xs font-light align-middle" data-svelte-h="svelte-1s6rzpl">Available in</span>` : ``} ${validate_component(Badge, "Badge").$$render($$result, { color }, {}, {
+        default: () => {
+          return `Hardcover`;
+        }
+      })} ${validate_component(Badge, "Badge").$$render($$result, { color }, {}, {
+        default: () => {
+          return `Paperback`;
+        }
+      })} ${validate_component(Badge, "Badge").$$render($$result, { color }, {}, {
+        default: () => {
+          return `Kindle`;
+        }
+      })}</div>`;
+    });
+    Page4 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `<h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-extrabold mt-4 md:mt-10" data-svelte-h="svelte-1akjuma">Books</h1> <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-4 md:gap-8 justify-items-center mt-4 sm:mt-6 md:mt-8 mx-3 sm:mx-4 md:mx-6">${each(Array.from({ length: 4 }, (_, i) => i + 1), (number) => {
+        return `${validate_component(Card, "Card").$$render(
+          $$result,
+          {
+            padding: "none",
+            class: "disabled " + (number > 1 ? "opacity-40" : "")
+          },
+          {},
+          {
+            default: () => {
+              return `<a href="/products/hunnie-bunnys-garden" data-svelte-h="svelte-h1pvjn"><img class="rounded-t-lg" src="/images/hunnie-bunnys-garden-book-cover-front-1.png" alt="product 1"></a> <div class="px-5 py-5 pt-2"><h1 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Hunnie Bunny\u2019s Garden
+					${`${validate_component(AvailableInFormat, "AvailableInFormat").$$render(
+                $$result,
+                {
+                  divClass: "pt-0 -mt-[8px]",
+                  showText: false
+                },
+                {},
+                {}
+              )}`}</h1> <p class="text-sm text-gray-400 mt-1" data-svelte-h="svelte-5i4ft9">Hunnie Bunny\u2019s Garden is an enchanting picture book that brings children closer to nature,
+					instills valuable virtues and ignites a sense of responsibility towards our environment.</p> <div class="flex justify-between items-center mt-4"><span class="text-xl font-medium text-gray-900 dark:text-white" data-svelte-h="svelte-11ei184">$20.99</span> ${validate_component(ButtonAmazon, "ButtonAmazon").$$render($$result, { size: "sm" }, {}, {})} </div></div> `;
+            }
+          }
+        )}`;
+      })}</div> <h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-extrabold mt-4 md:mt-10 mb-4 lg:mb-8" data-svelte-h="svelte-dyafdk">Products</h1> ${validate_component(Heading, "Heading").$$render(
+        $$result,
+        {
+          tag: "h1",
+          class: "mb-0 animate-bounce text-center",
+          customSize: "text-2xl font-extrabold sm:text-4xl md:text-5xl"
+        },
+        {},
+        {
+          default: () => {
+            return `${validate_component(Span, "Span").$$render($$result, { gradient: true }, {}, {
+              default: () => {
+                return `Coming soon...`;
+              }
+            })}`;
+          }
+        }
+      )} <img src="/images/hunnie-bunny-reading-a-book-to-mr-squirrel.png" class="w-full p-1 sm:p-8 md:p-32 block -mt-4 sm:-mt-8 md:-mt-32 !mb-0 !pb-0">`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/6.js
+var __exports7 = {};
+__export(__exports7, {
+  component: () => component7,
+  fonts: () => fonts7,
+  imports: () => imports7,
+  index: () => index7,
+  stylesheets: () => stylesheets7
+});
+var index7, component_cache7, component7, imports7, stylesheets7, fonts7;
+var init__7 = __esm({
+  ".svelte-kit/output/server/nodes/6.js"() {
+    index7 = 6;
+    component7 = async () => component_cache7 ?? (component_cache7 = (await Promise.resolve().then(() => (init_page_svelte5(), page_svelte_exports5))).default);
+    imports7 = ["_app/immutable/nodes/6.dbe6d724.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/chunks/Badge.e068a686.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js", "_app/immutable/chunks/CloseButton.f0a25928.js", "_app/immutable/chunks/ButtonAmazon.2bfa844b.js"];
+    stylesheets7 = ["_app/immutable/assets/Indicator.1d121e74.css"];
+    fonts7 = [];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/products/_id_/_page.svelte.js
+var page_svelte_exports6 = {};
+__export(page_svelte_exports6, {
+  default: () => Page5
+});
+function getProductById(id) {
+  return products.find((product) => product.id === id);
+}
+function wrapTextInParagraphTags(text2) {
+  return text2.split("\n").map((line) => `<p>${line}</p>`).join("");
+}
+var Slide, css$1, Thumbnail, Caption, css2, Indicator, Carousel, products, ExclamationCircleSolid, Page5;
+var init_page_svelte6 = __esm({
+  ".svelte-kit/output/server/entries/pages/products/_id_/_page.svelte.js"() {
+    init_ssr();
+    init_Badge();
+    init_tailwind_merge();
+    init_Indicator_svelte_svelte_type_style_lang();
+    init_ButtonAmazon();
+    init_stores();
+    init_ButtonBack();
+    Slide = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { image = "" } = $$props;
+      let { altTag = "" } = $$props;
+      let { attr = "" } = $$props;
+      let { slideClass = "" } = $$props;
+      let { imgClass = "" } = $$props;
+      if ($$props.image === void 0 && $$bindings.image && image !== void 0)
+        $$bindings.image(image);
+      if ($$props.altTag === void 0 && $$bindings.altTag && altTag !== void 0)
+        $$bindings.altTag(altTag);
+      if ($$props.attr === void 0 && $$bindings.attr && attr !== void 0)
+        $$bindings.attr(attr);
+      if ($$props.slideClass === void 0 && $$bindings.slideClass && slideClass !== void 0)
+        $$bindings.slideClass(slideClass);
+      if ($$props.imgClass === void 0 && $$bindings.imgClass && imgClass !== void 0)
+        $$bindings.imgClass(imgClass);
+      return `<div${add_attribute("class", slideClass, 0)}><img${add_attribute("src", image, 0)}${add_attribute("alt", altTag, 0)}${add_attribute("title", attr, 0)}${add_attribute("class", imgClass, 0)}></div> `;
+    });
+    css$1 = {
+      code: ".active.svelte-1o2b5yq{opacity:1}",
+      map: null
+    };
+    Thumbnail = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { thumbImg = "" } = $$props;
+      let { altTag = "" } = $$props;
+      let { titleLink = "" } = $$props;
+      let { id } = $$props;
+      let { thumbWidth = 100 } = $$props;
+      let { selected = false } = $$props;
+      let { thumbClass = "" } = $$props;
+      let { thumbBtnClass = "" } = $$props;
+      if ($$props.thumbImg === void 0 && $$bindings.thumbImg && thumbImg !== void 0)
+        $$bindings.thumbImg(thumbImg);
+      if ($$props.altTag === void 0 && $$bindings.altTag && altTag !== void 0)
+        $$bindings.altTag(altTag);
+      if ($$props.titleLink === void 0 && $$bindings.titleLink && titleLink !== void 0)
+        $$bindings.titleLink(titleLink);
+      if ($$props.id === void 0 && $$bindings.id && id !== void 0)
+        $$bindings.id(id);
+      if ($$props.thumbWidth === void 0 && $$bindings.thumbWidth && thumbWidth !== void 0)
+        $$bindings.thumbWidth(thumbWidth);
+      if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
+        $$bindings.selected(selected);
+      if ($$props.thumbClass === void 0 && $$bindings.thumbClass && thumbClass !== void 0)
+        $$bindings.thumbClass(thumbClass);
+      if ($$props.thumbBtnClass === void 0 && $$bindings.thumbBtnClass && thumbBtnClass !== void 0)
+        $$bindings.thumbBtnClass(thumbBtnClass);
+      $$result.css.add(css$1);
+      return ` <button aria-label="Click to view image" class="${escape(null_to_empty(thumbBtnClass), true) + " svelte-1o2b5yq"}"><img class="${[
+        escape(null_to_empty(thumbClass), true) + " svelte-1o2b5yq",
+        selected ? "active" : ""
+      ].join(" ").trim()}"${add_attribute("id", id.toString(), 0)}${add_attribute("src", thumbImg, 0)}${add_attribute("alt", altTag, 0)} title="${"Image from " + escape(titleLink, true)}" width="${escape(thumbWidth, true) + "%"}"></button> `;
+    });
+    Caption = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { caption = "" } = $$props;
+      let { captionClass = "" } = $$props;
+      let { pClass: pClass3 = "text-gray-900 dark:text-white" } = $$props;
+      if ($$props.caption === void 0 && $$bindings.caption && caption !== void 0)
+        $$bindings.caption(caption);
+      if ($$props.captionClass === void 0 && $$bindings.captionClass && captionClass !== void 0)
+        $$bindings.captionClass(captionClass);
+      if ($$props.pClass === void 0 && $$bindings.pClass && pClass3 !== void 0)
+        $$bindings.pClass(pClass3);
+      return `<div${add_attribute("class", captionClass, 0)}><p id="caption"${add_attribute("class", pClass3, 0)}>${escape(caption)}</p></div> `;
+    });
+    css2 = {
+      code: ".active.svelte-1o2b5yq{opacity:1}",
+      map: null
+    };
+    Indicator = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let { name = "" } = $$props;
+      let { selected = false } = $$props;
+      let { indicatorClass = "" } = $$props;
+      if ($$props.name === void 0 && $$bindings.name && name !== void 0)
+        $$bindings.name(name);
+      if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
+        $$bindings.selected(selected);
+      if ($$props.indicatorClass === void 0 && $$bindings.indicatorClass && indicatorClass !== void 0)
+        $$bindings.indicatorClass(indicatorClass);
+      $$result.css.add(css2);
+      return `<button type="button" class="${[
+        escape(null_to_empty(indicatorClass), true) + " svelte-1o2b5yq",
+        selected ? "active" : ""
+      ].join(" ").trim()}"${add_attribute("aria-label", name, 0)}></button> `;
+    });
+    Carousel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let image;
+      let $$slots = compute_slots(slots);
+      let { id = "default-carousel" } = $$props;
+      let { showIndicators = true } = $$props;
+      let { showCaptions = true } = $$props;
+      let { showThumbs = true } = $$props;
+      let { images } = $$props;
+      let { slideControls = true } = $$props;
+      let { loop = false } = $$props;
+      let { duration = 2e3 } = $$props;
+      let { divClass = "overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96" } = $$props;
+      let divCls = twMerge(divClass, $$props.classDiv);
+      let { indicatorDivClass = "flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2" } = $$props;
+      let indicatorDivCls = twMerge(indicatorDivClass, $$props.classIndicatorDiv);
+      let { captionClass = "h-10 bg-gray-300 dark:bg-gray-700 dark:text-white p-2 my-2 text-center" } = $$props;
+      let captionCls = twMerge(captionClass, $$props.classCaption);
+      let { indicatorClass = "w-3 h-3 rounded-full bg-gray-100 hover:bg-gray-300 opacity-60" } = $$props;
+      let indicatorCls = twMerge(indicatorClass, $$props.classIndicator);
+      let { slideClass = "bg-purple-500" } = $$props;
+      let slideCls = twMerge(slideClass, $$props.classSlide);
+      let { imgClass = "object-contain" } = $$props;
+      let imgCls = twMerge(imgClass, $$props.classImg);
+      let { thumbClass = "opacity-40" } = $$props;
+      let thumbCls = twMerge(thumbClass, $$props.classThumb);
+      let { thumbDivClass = "flex flex-row justify-center bg-gray-100 w-full" } = $$props;
+      let thumbDivCls = twMerge(thumbDivClass, $$props.classThumbDiv);
+      let { thumbBtnClass = "" } = $$props;
+      let thumbBtnCls = twMerge(thumbBtnClass, $$props.classBtnThumb);
+      let imageShowingIndex = 0;
+      const nextSlide = () => {
+        if (imageShowingIndex === images.length - 1) {
+          imageShowingIndex = 0;
+        } else {
+          imageShowingIndex += 1;
+        }
+      };
+      if (loop) {
+        setInterval(
+          () => {
+            nextSlide();
+          },
+          duration
+        );
+      }
+      if ($$props.id === void 0 && $$bindings.id && id !== void 0)
+        $$bindings.id(id);
+      if ($$props.showIndicators === void 0 && $$bindings.showIndicators && showIndicators !== void 0)
+        $$bindings.showIndicators(showIndicators);
+      if ($$props.showCaptions === void 0 && $$bindings.showCaptions && showCaptions !== void 0)
+        $$bindings.showCaptions(showCaptions);
+      if ($$props.showThumbs === void 0 && $$bindings.showThumbs && showThumbs !== void 0)
+        $$bindings.showThumbs(showThumbs);
+      if ($$props.images === void 0 && $$bindings.images && images !== void 0)
+        $$bindings.images(images);
+      if ($$props.slideControls === void 0 && $$bindings.slideControls && slideControls !== void 0)
+        $$bindings.slideControls(slideControls);
+      if ($$props.loop === void 0 && $$bindings.loop && loop !== void 0)
+        $$bindings.loop(loop);
+      if ($$props.duration === void 0 && $$bindings.duration && duration !== void 0)
+        $$bindings.duration(duration);
+      if ($$props.divClass === void 0 && $$bindings.divClass && divClass !== void 0)
+        $$bindings.divClass(divClass);
+      if ($$props.indicatorDivClass === void 0 && $$bindings.indicatorDivClass && indicatorDivClass !== void 0)
+        $$bindings.indicatorDivClass(indicatorDivClass);
+      if ($$props.captionClass === void 0 && $$bindings.captionClass && captionClass !== void 0)
+        $$bindings.captionClass(captionClass);
+      if ($$props.indicatorClass === void 0 && $$bindings.indicatorClass && indicatorClass !== void 0)
+        $$bindings.indicatorClass(indicatorClass);
+      if ($$props.slideClass === void 0 && $$bindings.slideClass && slideClass !== void 0)
+        $$bindings.slideClass(slideClass);
+      if ($$props.imgClass === void 0 && $$bindings.imgClass && imgClass !== void 0)
+        $$bindings.imgClass(imgClass);
+      if ($$props.thumbClass === void 0 && $$bindings.thumbClass && thumbClass !== void 0)
+        $$bindings.thumbClass(thumbClass);
+      if ($$props.thumbDivClass === void 0 && $$bindings.thumbDivClass && thumbDivClass !== void 0)
+        $$bindings.thumbDivClass(thumbDivClass);
+      if ($$props.thumbBtnClass === void 0 && $$bindings.thumbBtnClass && thumbBtnClass !== void 0)
+        $$bindings.thumbBtnClass(thumbBtnClass);
+      image = images[imageShowingIndex];
+      return `<div${add_attribute("id", id, 0)} class="relative"><div${add_attribute("class", divCls, 0)}>${validate_component(Slide, "Slide").$$render(
+        $$result,
+        {
+          image: image.imgurl,
+          altTag: image.name,
+          attr: image.attribution,
+          slideClass: slideCls,
+          imgClass: imgCls
+        },
+        {},
+        {}
+      )}</div> ${showIndicators ? ` <div${add_attribute("class", indicatorDivCls, 0)}>${each(images, ({ id: id2, imgurl, name, attribution }) => {
+        return `${validate_component(Indicator, "Indicator").$$render(
+          $$result,
+          {
+            name,
+            selected: imageShowingIndex === id2,
+            indicatorClass: indicatorCls
+          },
+          {},
+          {}
+        )}`;
+      })}</div>` : ``} ${slideControls ? ` <button type="button" class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev><span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">${$$slots.previous ? `${slots.previous ? slots.previous({}) : ``}` : `<svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>`} <span class="hidden" data-svelte-h="svelte-15eom22">Previous</span></span></button> <button type="button" class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next><span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">${$$slots.next ? `${slots.next ? slots.next({}) : ``}` : `<svg aria-hidden="true" class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`} <span class="hidden" data-svelte-h="svelte-1cuepzi">Next</span></span></button>` : ``}</div> ${showCaptions ? `${validate_component(Caption, "Caption").$$render(
+        $$result,
+        {
+          caption: images[imageShowingIndex].name,
+          captionClass: captionCls
+        },
+        {},
+        {}
+      )}` : ``} ${showThumbs ? `<div${add_attribute("class", thumbDivCls, 0)}>${each(images, ({ id: id2, imgurl, name, attribution }) => {
+        return `${validate_component(Thumbnail, "Thumbnail").$$render(
+          $$result,
+          {
+            thumbClass: thumbCls,
+            thumbBtnClass: thumbBtnCls,
+            thumbImg: imgurl,
+            altTag: name,
+            titleLink: attribution,
+            id: id2,
+            selected: imageShowingIndex === id2
+          },
+          {},
+          {}
+        )}`;
+      })}</div>` : ``} `;
+    });
+    products = [
+      {
+        id: "hunnie-bunnys-garden",
+        title: "Hunnie Bunny\u2019s Gardean",
+        type: "book",
+        description: `Hunnie Bunny\u2019s Garden is an enchanting picture book that brings children closer to nature, instills valuable virtues and ignites a sense of responsibility towards our environment.
+Through the endearing character of Hunnie Bunny, it\u2019s a delightful blend of entertainment and education. This book also promotes discussions about nature, gardening, sustainability, and healthy eating. If you are looking for a children\u2019s book that offers both a charming story and important life lessons, Hunnie Bunny\u2019s Garden is the book for you!`,
+        price: 20.99,
+        images: [
+          {
+            id: 0,
+            imgurl: "/images/hunnie-bunnys-garden-book-cover-front-1.png"
+          },
+          {
+            id: 1,
+            imgurl: "/images/hunnie-bunnys-garden-book-cover-back-1.png"
+          },
+          {
+            id: 2,
+            imgurl: "/images/hunnie-bunnys-garden-page-1.png"
+          },
+          {
+            id: 3,
+            imgurl: "/images/hunnie-bunnys-garden-page-2.png"
+          },
+          {
+            id: 4,
+            imgurl: "/images/hunnie-bunnys-garden-book-cover.png"
+          }
+        ]
+      }
+    ];
+    ExclamationCircleSolid = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $$restProps = compute_rest_props($$props, ["size", "role", "ariaLabel"]);
+      let { size = "md" } = $$props;
+      let { role = "img" } = $$props;
+      const sizes = {
+        xs: "w-3 h-3",
+        sm: "w-4 h-4",
+        md: "w-5 h-5",
+        lg: "w-6 h-6",
+        xl: "w-8 h-8"
+      };
+      let { ariaLabel = "exclamation circle solid" } = $$props;
+      if ($$props.size === void 0 && $$bindings.size && size !== void 0)
+        $$bindings.size(size);
+      if ($$props.role === void 0 && $$bindings.role && role !== void 0)
+        $$bindings.role(role);
+      if ($$props.ariaLabel === void 0 && $$bindings.ariaLabel && ariaLabel !== void 0)
+        $$bindings.ariaLabel(ariaLabel);
+      return `<svg${spread(
+        [
+          { xmlns: "http://www.w3.org/2000/svg" },
+          { fill: "currentColor" },
+          escape_object($$restProps),
+          {
+            class: escape_attribute_value(twMerge("shrink-0", sizes[size], $$props.class))
+          },
+          { role: escape_attribute_value(role) },
+          {
+            "aria-label": escape_attribute_value(ariaLabel)
+          },
+          { viewBox: "0 0 20 20" }
+        ],
+        {}
+      )}><path fill="currentColor" d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"></path></svg> `;
+    });
+    Page5 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let $page, $$unsubscribe_page;
+      $$unsubscribe_page = subscribe(page, (value) => $page = value);
+      const id = $page.params.id;
+      const product = getProductById(id);
+      $$unsubscribe_page();
+      return `${product ? `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-1 w-full justiy-center items-center"><div id="carousel-wrapper" class="dark m-2 sm:m-6 md:m-10">${validate_component(Carousel, "Carousel").$$render(
+        $$result,
+        {
+          images: product.images,
+          showCaptions: false,
+          showIndicators: false,
+          classSlide: "flex items-center justify-center h-[100%] w-[100%] !rounded-none !bg-transparent",
+          classDiv: "w-[100%] !h-[300px] sm:!h-[400px] !rounded-none !bg-transparent",
+          classImg: "!bg-none rounded-md animate-[fadeIn_.2s_ease-in-out_1] h-full",
+          classThumb: "p-0 rounded-md shadow-xl hover:outline hover:outline-red-500",
+          classThumbDiv: "bg-transparent",
+          thumbBtnClass: "m-2",
+          indicatorDivClass: "bg-gray-500",
+          indicatorClass: "bg-purple-500"
+        },
+        {},
+        {}
+      )}</div> <div class="bg-gray-100 m-auto p-8 sm:p-10 md:p-16 prose prose-sm sm:prose-xs h-[fit-content] sm:mb-5 md:mb-10"><h1 class="text-2xl sm:text-3xl">${escape(product.title)}</h1> ${`<div class="pt-0 mt-[-20px]"><span class="text-xs font-light align-middle" data-svelte-h="svelte-1s6rzpl">Available in</span> ${validate_component(Badge, "Badge").$$render($$result, { color: "green" }, {}, {
+        default: () => {
+          return `Hardcover`;
+        }
+      })} ${validate_component(Badge, "Badge").$$render($$result, { color: "green" }, {}, {
+        default: () => {
+          return `Paperback`;
+        }
+      })} ${validate_component(Badge, "Badge").$$render($$result, { color: "green" }, {}, {
+        default: () => {
+          return `Kindle`;
+        }
+      })}</div>`} <!-- HTML_TAG_START -->${wrapTextInParagraphTags(product.description)}<!-- HTML_TAG_END --> <h2 class="p-0 mt-[5px]">${escape(product.price.toLocaleString("en-US", { style: "currency", currency: "USD" }))}</h2> ${validate_component(ButtonAmazon, "ButtonAmazon").$$render($$result, { fullWidth: true }, {}, {})}</div></div>` : `<div class="text-center pt-2"><h1 class="text-3xl sm:text-4xl text-center text-red-500 flex flex-row justify-center items-center">${validate_component(ExclamationCircleSolid, "ExclamationCircleSolid").$$render(
+        $$result,
+        {
+          class: "inline-block w-6 h-6 sm:w-8 sm:h-8 mr-2"
+        },
+        {},
+        {}
+      )}
+			No product found</h1> <h6 class="text-md text-center" data-svelte-h="svelte-rwseym">We couldn&#39;t find a match based on the provided product ID.</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</div> <img src="/images/hunnie-bunny-reading-a-book-to-mr-squirrel.png" class="w-full">`}`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/7.js
+var __exports8 = {};
+__export(__exports8, {
+  component: () => component8,
+  fonts: () => fonts8,
+  imports: () => imports8,
+  index: () => index8,
+  stylesheets: () => stylesheets8
+});
+var index8, component_cache8, component8, imports8, stylesheets8, fonts8;
+var init__8 = __esm({
+  ".svelte-kit/output/server/nodes/7.js"() {
+    index8 = 7;
+    component8 = async () => component_cache8 ?? (component_cache8 = (await Promise.resolve().then(() => (init_page_svelte6(), page_svelte_exports6))).default);
+    imports8 = ["_app/immutable/nodes/7.4b82045f.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/chunks/Badge.e068a686.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js", "_app/immutable/chunks/CloseButton.f0a25928.js", "_app/immutable/chunks/ButtonAmazon.2bfa844b.js", "_app/immutable/chunks/stores.531f031d.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/chunks/ButtonBack.b029eeee.js", "_app/immutable/chunks/navigation.8cadd3df.js"];
+    stylesheets8 = ["_app/immutable/assets/Indicator.1d121e74.css"];
+    fonts8 = [];
+  }
+});
+
+// .svelte-kit/output/server/entries/pages/terms/_page.svelte.js
+var page_svelte_exports7 = {};
+__export(page_svelte_exports7, {
+  default: () => Page6
+});
+var pClass2, Page6;
+var init_page_svelte7 = __esm({
+  ".svelte-kit/output/server/entries/pages/terms/_page.svelte.js"() {
+    init_ssr();
+    init_ButtonBack();
+    init_Indicator_svelte_svelte_type_style_lang();
+    pClass2 = "text-sm text-gray-500 font-normal leading-normal pb-2";
+    Page6 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `<div class="m-auto max-w-2xl mt-10"><section class="w-full flex flex-col justify-center items-center mb-10"><h1 class="text-4xl font-extrabold" data-svelte-h="svelte-2lnjzc">Terms and Conditions</h1> <h6 class="text-gray-500" data-svelte-h="svelte-1lv66r3">Last updated on July 26th, 2023</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</section> <section><h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-1qodkej">Acceptance of Terms</h1> <p${add_attribute("class", pClass2, 0)}>By accessing or using the Simple Reads Books website, you acknowledge that you have read,
+			understood, and agree to be bound by these Terms and Conditions. If you do not agree to these
+			terms, please refrain from using the website.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-1pgjztr">Intellectual Property</h1> <p${add_attribute("class", pClass2, 0)}>All content on the Simple Reads Books website, including but not limited to text, graphics,
+			logos, images, and any other materials, is the intellectual property of Simple Reads Books and
+			the author, Deborah C. Martin (hereinafter referred to as \u201Cauthor\u201D), and is protected by
+			copyright laws. You may not reproduce, distribute, modify, or use any content from the website
+			without the author&#39;s prior written consent.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-qjsc9e">Use of the Website</h1> <p${add_attribute("class", pClass2, 0)}>You agree to use the Simple Reads Books website only for lawful purposes and in a manner that
+			does not infringe upon the rights of others or restrict or inhibit their use and enjoyment of
+			the website. You shall not engage in any activity that could harm, disable, or impair the
+			website or interfere with any other party&#39;s use of the website.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-1agc4a2">User-Generated Content</h1> <p${add_attribute("class", pClass2, 0)}>You may have the opportunity to contribute content to the Simple Reads Books website, such as
+			comments or reviews. By submitting any user-generated content, you grant Simple Reads Books
+			and the author a non-exclusive, worldwide, royalty-free, perpetual, and irrevocable right to
+			use, reproduce, modify, adapt, publish, translate, distribute, and display such content in any
+			media. You represent and warrant that you have the necessary rights to grant this license and
+			that your content does not infringe upon any third-party rights.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-4u49ni">Links to Third-Party Websites</h1> <p${add_attribute("class", pClass2, 0)}>The Simple Reads Books website may contain links to third-party websites for your convenience
+			and reference. The inclusion of any link does not imply endorsement or approval by Simple
+			Reads Books or the author of the linked website. You acknowledge and agree that Simple Reads
+			Books and the author are not responsible for the availability or accuracy of such third-party
+			websites, and your use of them is at your own risk.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-1g3e7t4">Limitation of Liability</h1> <p${add_attribute("class", pClass2, 0)}>In no event shall Simple Reads Books or the author be liable for any direct, indirect,
+			incidental, special, or consequential damages arising out of or in connection with your use of
+			the website or its content. This includes, but is not limited to, any loss or damage caused by
+			viruses, bugs, errors, omissions, or inaccuracies in the content or the transmission of
+			information to or from the website.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-mdj4up">Indemnification</h1> <p${add_attribute("class", pClass2, 0)}>You agree to indemnify and hold harmless Simple Reads Books and the author and their
+			affiliates, officers, directors, employees, and agents from any claim, demand, or damage,
+			including reasonable attorneys&#39; fees, arising out of or in connection with your use of the
+			Simple Reads Books website, your violation of these Terms and Conditions, or your violation of
+			any rights of another party.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-17ovjkt">Modifications</h1> <p${add_attribute("class", pClass2, 0)}>Simple Reads Books and the author reserve the right to modify or update these Terms and
+			Conditions at any time without prior notice. Your continued use of the website after any
+			changes signifies your acceptance of the modified Terms and Conditions.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-eolwnh">Governing Law</h1> <p${add_attribute("class", pClass2, 0)}>These Terms and Conditions shall be governed by and construed in accordance with the laws of
+			the State of California. Any legal action or proceeding arising out of or relating to these
+			Terms and Conditions or your use of the Simple Reads Books website shall be exclusively
+			brought in the courts located in Orange County, California.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-uym095">Severability</h1> <p${add_attribute("class", pClass2, 0)}>If any provision of these Terms and Conditions is found to be invalid or unenforceable, the
+			remaining provisions shall continue to be valid and enforceable to the fullest extent
+			permitted by law.</p> <p${add_attribute("class", pClass2 + " mb-2 mt-4 text-xs", 0)}>By using the Simple Reads Books website, you acknowledge that you have read, understood, and
+			agree to these Terms and Conditions. If you have any questions or concerns, please contact
+			<a href="mailto:debbie@simplereadsbooks.com" class="text-blue-400" data-svelte-h="svelte-1ggi43n">debbie@simplereadsbooks.com.</a></p></section></div>`;
+    });
+  }
+});
+
+// .svelte-kit/output/server/nodes/8.js
+var __exports9 = {};
+__export(__exports9, {
+  component: () => component9,
+  fonts: () => fonts9,
+  imports: () => imports9,
+  index: () => index9,
+  stylesheets: () => stylesheets9
+});
+var index9, component_cache9, component9, imports9, stylesheets9, fonts9;
+var init__9 = __esm({
+  ".svelte-kit/output/server/nodes/8.js"() {
+    index9 = 8;
+    component9 = async () => component_cache9 ?? (component_cache9 = (await Promise.resolve().then(() => (init_page_svelte7(), page_svelte_exports7))).default);
+    imports9 = ["_app/immutable/nodes/8.5fecd6cd.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js", "_app/immutable/chunks/ButtonBack.b029eeee.js", "_app/immutable/chunks/navigation.8cadd3df.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.adff3578.js"];
+    stylesheets9 = ["_app/immutable/assets/Indicator.1d121e74.css"];
+    fonts9 = [];
   }
 });
 
@@ -4341,7 +5667,7 @@ var options = {
   root: Root,
   service_worker: false,
   templates: {
-    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets2 + '/favicon.png" />\n		<meta name="viewport" content="width=device-width" />\n		' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
+    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\n<html lang="en">\n\n<head>\n	<meta charset="utf-8" />\n	<link\n		rel="icon"\n		href="' + assets2 + '/favicon.png"\n	/>\n\n	<link\n		rel="preconnect"\n		href="https://fonts.googleapis.com"\n	>\n	<link\n		rel="preconnect"\n		href="https://fonts.gstatic.com"\n		crossorigin\n	>\n	<link\n		href="https://fonts.googleapis.com/css2?family=Itim&display=swap"\n		rel="stylesheet"\n	>\n\n	<meta\n		name="viewport"\n		content="width=device-width"\n	/>\n	' + head + '\n</head>\n\n<body data-sveltekit-preload-data="hover">\n	<div style="display: contents">' + body + "</div>\n</body>\n\n</html>",
     error: ({ status, message }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
 
 		<style>
@@ -4403,7 +5729,7 @@ var options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "15yhmqe"
+  version_hash: "y0z3gz"
 };
 function get_hooks() {
   return {};
@@ -4743,13 +6069,13 @@ function stringify(value, reducers) {
       return NEGATIVE_INFINITY;
     if (thing === 0 && 1 / thing < 0)
       return NEGATIVE_ZERO;
-    const index5 = p++;
-    indexes.set(thing, index5);
+    const index11 = p++;
+    indexes.set(thing, index11);
     for (const { key: key2, fn } of custom) {
       const value2 = fn(thing);
       if (value2) {
-        stringified[index5] = `["${key2}",${flatten(value2)}]`;
-        return index5;
+        stringified[index11] = `["${key2}",${flatten(value2)}]`;
+        return index11;
       }
     }
     let str = "";
@@ -4841,12 +6167,12 @@ function stringify(value, reducers) {
           }
       }
     }
-    stringified[index5] = str;
-    return index5;
+    stringified[index11] = str;
+    return index11;
   }
-  const index4 = flatten(value);
-  if (index4 < 0)
-    return `${index4}`;
+  const index10 = flatten(value);
+  if (index10 < 0)
+    return `${index10}`;
   return `[${stringified.join(",")}]`;
 }
 function stringify_primitive2(thing) {
@@ -6191,8 +7517,8 @@ async function render_response({
   }
   const { client } = manifest2._;
   const modulepreloads = new Set(client.imports);
-  const stylesheets4 = new Set(client.stylesheets);
-  const fonts4 = new Set(client.fonts);
+  const stylesheets10 = new Set(client.stylesheets);
+  const fonts10 = new Set(client.fonts);
   const link_header_preloads = /* @__PURE__ */ new Set();
   const inline_styles = /* @__PURE__ */ new Map();
   let rendered;
@@ -6246,9 +7572,9 @@ async function render_response({
       for (const url of node.imports)
         modulepreloads.add(url);
       for (const url of node.stylesheets)
-        stylesheets4.add(url);
+        stylesheets10.add(url);
       for (const url of node.fonts)
-        fonts4.add(url);
+        fonts10.add(url);
       if (node.inline_styles) {
         Object.entries(await node.inline_styles()).forEach(([k, v]) => inline_styles.set(k, v));
       }
@@ -6276,7 +7602,7 @@ async function render_response({
     head += `
 	<style${attributes.join("")}>${content}</style>`;
   }
-  for (const dep of stylesheets4) {
+  for (const dep of stylesheets10) {
     const path = prefixed(dep);
     const attributes = ['rel="stylesheet"'];
     if (inline_styles.has(dep)) {
@@ -6290,7 +7616,7 @@ async function render_response({
     head += `
 		<link href="${path}" ${attributes.join(" ")}>`;
   }
-  for (const dep of fonts4) {
+  for (const dep of fonts10) {
     const path = prefixed(dep);
     if (resolve_opts.preload({ type: "font", path })) {
       const ext = dep.slice(dep.lastIndexOf(".") + 1);
@@ -6999,11 +8325,11 @@ async function render_page(event, page2, options2, manifest2, state, resolve_opt
           const error2 = await handle_error_and_jsonify(event, options2, err);
           while (i--) {
             if (page2.errors[i]) {
-              const index4 = (
+              const index10 = (
                 /** @type {number} */
                 page2.errors[i]
               );
-              const node2 = await manifest2._.nodes[index4]();
+              const node2 = await manifest2._.nodes[index10]();
               let j = i;
               while (!branch[j])
                 j -= 1;
@@ -7787,14 +9113,20 @@ var manifest = (() => {
   return {
     appDir: "_app",
     appPath: "_app",
-    assets: /* @__PURE__ */ new Set(["favicon.png", "images/banner.png"]),
-    mimeTypes: { ".png": "image/png" },
+    assets: /* @__PURE__ */ new Set(["favicon.png", "images/banner.png", "images/dcm-author.png", "images/hunnie-bunny-2-transparent.png", "images/hunnie-bunny-peering-over.png", "images/hunnie-bunny-reading-a-book-to-mr-squirrel.png", "images/hunnie-bunny-reading-book.png", "images/hunnie-bunny-reading.png", "images/hunnie-bunnys-garden-book-cover-back-1.png", "images/hunnie-bunnys-garden-book-cover-front-1.png", "images/hunnie-bunnys-garden-book-cover.png", "images/hunnie-bunnys-garden-mockup.png", "images/hunnie-bunnys-garden-page-1.png", "images/hunnie-bunnys-garden-page-2.png", "images/logo.png", "images/mr_frog_sitting.png", "images/mr_frog_sitting.svg", "images/mr_squirrel_sitting.png", "images/mr_squirrel_sitting.svg"]),
+    mimeTypes: { ".png": "image/png", ".svg": "image/svg+xml" },
     _: {
-      client: { "start": "_app/immutable/entry/start.8b8740bc.js", "app": "_app/immutable/entry/app.86c0dceb.js", "imports": ["_app/immutable/entry/start.8b8740bc.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/singletons.64c52ef0.js", "_app/immutable/entry/app.86c0dceb.js", "_app/immutable/chunks/scheduler.2fc0bdf8.js", "_app/immutable/chunks/index.6f34d2a9.js"], "stylesheets": [], "fonts": [] },
+      client: { "start": "_app/immutable/entry/start.8ca32f44.js", "app": "_app/immutable/entry/app.2aa6e52c.js", "imports": ["_app/immutable/entry/start.8ca32f44.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/singletons.bd22cf5f.js", "_app/immutable/entry/app.2aa6e52c.js", "_app/immutable/chunks/scheduler.fecb2b1c.js", "_app/immutable/chunks/index.8321caee.js"], "stylesheets": [], "fonts": [] },
       nodes: [
         __memo(() => Promise.resolve().then(() => (init__(), __exports))),
         __memo(() => Promise.resolve().then(() => (init__2(), __exports2))),
-        __memo(() => Promise.resolve().then(() => (init__3(), __exports3)))
+        __memo(() => Promise.resolve().then(() => (init__3(), __exports3))),
+        __memo(() => Promise.resolve().then(() => (init__4(), __exports4))),
+        __memo(() => Promise.resolve().then(() => (init__5(), __exports5))),
+        __memo(() => Promise.resolve().then(() => (init__6(), __exports6))),
+        __memo(() => Promise.resolve().then(() => (init__7(), __exports7))),
+        __memo(() => Promise.resolve().then(() => (init__8(), __exports8))),
+        __memo(() => Promise.resolve().then(() => (init__9(), __exports9)))
       ],
       routes: [
         {
@@ -7802,6 +9134,48 @@ var manifest = (() => {
           pattern: /^\/$/,
           params: [],
           page: { layouts: [0], errors: [1], leaf: 2 },
+          endpoint: null
+        },
+        {
+          id: "/about",
+          pattern: /^\/about\/?$/,
+          params: [],
+          page: { layouts: [0], errors: [1], leaf: 3 },
+          endpoint: null
+        },
+        {
+          id: "/home",
+          pattern: /^\/home\/?$/,
+          params: [],
+          page: { layouts: [0], errors: [1], leaf: 4 },
+          endpoint: null
+        },
+        {
+          id: "/privacy",
+          pattern: /^\/privacy\/?$/,
+          params: [],
+          page: { layouts: [0], errors: [1], leaf: 5 },
+          endpoint: null
+        },
+        {
+          id: "/products",
+          pattern: /^\/products\/?$/,
+          params: [],
+          page: { layouts: [0], errors: [1], leaf: 6 },
+          endpoint: null
+        },
+        {
+          id: "/products/[id]",
+          pattern: /^\/products\/([^/]+?)\/?$/,
+          params: [{ "name": "id", "optional": false, "rest": false, "chained": false }],
+          page: { layouts: [0], errors: [1], leaf: 7 },
+          endpoint: null
+        },
+        {
+          id: "/terms",
+          pattern: /^\/terms\/?$/,
+          params: [],
+          page: { layouts: [0], errors: [1], leaf: 8 },
           endpoint: null
         }
       ],

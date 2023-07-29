@@ -1,91 +1,54 @@
 <script>
-	import { CarouselTransition, Carousel, Badge } from 'flowbite-svelte';
-	import ButtonAmazon from '../home/ButtonAmazon.svelte';
+	import { Card, Heading, Span } from 'flowbite-svelte';
+	import ButtonAmazon from '../../lib/components/ButtonAmazon.svelte';
+	import AvailableInFormat from '$lib/components/AvailableInFormat.svelte';
 
-	const images = [
-		{
-			id: 0,
-			imgurl: '/images/hunnie-bunnys-garden-book-cover-front-1.png'
-		},
-		{
-			id: 1,
-			imgurl: '/images/hunnie-bunnys-garden-book-cover-back-1.png'
-		},
-		{
-			id: 2,
-			imgurl: '/images/hunnie-bunnys-garden-page-1.png'
-		},
-
-		{
-			id: 3,
-			imgurl: '/images/hunnie-bunnys-garden-page-2.png'
-		},
-		{
-			id: 4,
-			imgurl: '/images/hunnie-bunnys-garden-book-cover.png'
-		}
-	];
-
-	function generateTestImage(randomSizeLimit = 400, fixedSizeLimit = 200) {
-		const id = Math.random() * 100000000;
-
-		return {
-			id,
-			name: 'Test image ' + id,
-			imgurl: `https://picsum.photos/${
-				Math.floor(Math.random() * randomSizeLimit) + fixedSizeLimit
-			}/${Math.floor(Math.random() * randomSizeLimit) + fixedSizeLimit}?random=6`,
-			attribution: 'picsum photos'
-		};
-	}
+	import { products } from '$lib/products';
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-1 w-full justiy-center items-center">
-	<div id="carousel-wrapper" class="dark m-2 sm:m-6 md:m-10">
-		<!-- <CarouselTransition -->
-		<Carousel
-			{images}
-			showCaptions={false}
-			showIndicators={false}
-			transitionType="fade"
-			transitionParams={{ delay: 300, duration: 500 }}
-			classSlide="flex items-center justify-center h-[100%] w-[100%] !rounded-none !bg-transparent"
-			classDiv="w-[100%] !h-[300px] sm:!h-[400px] !rounded-none !bg-transparent"
-			classImg="!bg-none rounded-md animate-[fadeIn_.2s_ease-in-out_1] h-full"
-			_thumbClass="p-1 rounded-lg"
-			classThumb="p-0 rounded-md shadow-xl hover:outline hover:outline-red-500"
-			classThumbDiv="bg-transparent"
-			thumbBtnClass="m-2"
-			indicatorDivClass="bg-gray-500"
-			indicatorClass="bg-purple-500"
-		/>
-	</div>
+<h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-bold mt-4 md:mt-10">Books</h1>
+<div
+	class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-4 md:gap-8 justify-items-center mt-4 sm:mt-6 md:mt-8 mx-3 sm:mx-4 md:mx-6"
+>
+	{#each products as product, i}
+		<Card padding="none" class={'h-fit' + ' ' + (i > 1 ? 'opacity-40' : '')}>
+			<a href={'/products/' + product.id} class="flex justify-center items-center">
+				<img
+					class="rounded-t-lg object-cover w-full"
+					src={product.images[0].imgurl}
+					alt={'Product image' + i}
+				/>
+			</a>
+			<div class="px-5 py-5 pt-2">
+				<h1 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+					{product.title}
+					<AvailableInFormat divClass="pt-0 -mt-[8px]" showText={false} />
+				</h1>
 
-	<div
-		class="bg-gray-100 m-auto p-8 sm:p-10 md:p-16 prose prose-sm sm:prose-xs h-[fit-content] sm:mb-5 md:mb-10"
-	>
-		<h1 class="text-2xl sm:text-3xl">Hunnie Bunny's Garden</h1>
-		<div class="pt-0 mt-[-20px]">
-			<span class="text-xs font-light align-middle">Available in </span>
-			<Badge color="green">Hardcover</Badge>
-			<Badge color="green">Paperback</Badge>
-			<Badge color="green">Kindle</Badge>
-		</div>
+				<p class="text-sm text-gray-400 mt-1 sm:mt-2">
+					{product.description.split('\n')[0]}
+				</p>
 
-		<p>
-			Hunnie Bunny’s Garden is an enchanting picture book that brings children closer to nature,
-			instills valuable virtues and ignites a sense of responsibility towards our environment.
-		</p>
-
-		<p>
-			Through the endearing character of Hunnie Bunny, it’s a delightful blend of entertainment and
-			education. This book also promotes discussions about nature, gardening, sustainability, and
-			healthy eating. If you are looking for a children’s book that offers both a charming story and
-			important life lessons, Hunnie Bunny’s Garden is the book for you!
-		</p>
-
-		<h2 class="p-0 mt-[5px]">$20.99</h2>
-
-		<ButtonAmazon fullWidth />
-	</div>
+				<div class="flex justify-between items-center mt-4">
+					<span class="text-xl font-medium text-gray-900 dark:text-white">$20.99</span>
+					<ButtonAmazon size="sm" />
+				</div>
+			</div>
+		</Card>
+	{/each}
 </div>
+
+<h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-bold mt-4 md:mt-10 mb-4 lg:mb-8">
+	Products
+</h1>
+<Heading
+	tag="h1"
+	class="mb-0 animate-bounce text-center"
+	customSize="text-2xl font-extrabold sm:text-4xl md:text-5xl"
+>
+	<Span gradient>Coming soon...</Span>
+</Heading>
+<img
+	src="/images/hunnie-bunny-reading-a-book-to-mr-squirrel.png"
+	class="w-full p-1 sm:p-8 md:p-32 block -mt-4 sm:-mt-8 md:-mt-32 !mb-0 !pb-0"
+/>
