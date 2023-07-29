@@ -12,8 +12,8 @@ dependencies:
     specifier: ^1.7.0
     version: 1.7.0
   flowbite-svelte:
-    specifier: ^0.40.1
-    version: 0.40.2(svelte@4.1.1)
+    specifier: github:jsonMartin/flowbite-svelte
+    version: github.com/jsonMartin/flowbite-svelte/75e5cea266546db06240f63047a5fdaf54a1a0df(svelte@4.1.1)
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -1337,18 +1337,6 @@ packages:
   /flatted@3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
     dev: true
-
-  /flowbite-svelte@0.40.2(svelte@4.1.1):
-    resolution: {integrity: sha512-dRiBOCCxm3nkABlmdyngMhrDnFl5FrhWDJhMChTTirsLd/j1tdelzUAeIeGZUK8H2dvnjW2/K1XZDoFP4Fxn4Q==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    peerDependencies:
-      svelte: ^3.55.1 || ^4.0.0
-    dependencies:
-      '@floating-ui/dom': 1.4.5
-      flowbite: 1.7.0
-      svelte: 4.1.1
-      tailwind-merge: 1.14.0
-    dev: false
 
   /flowbite@1.7.0:
     resolution: {integrity: sha512-OTTmnhRgv85Rs+mcMaVU7zB6EvRQs7BaQziyMUsZLRjW9aUpeQyqKjLmxsVMMCdr8isYPCLd6UL7X1IaSVI0WQ==}
@@ -2677,3 +2665,18 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  github.com/jsonMartin/flowbite-svelte/75e5cea266546db06240f63047a5fdaf54a1a0df(svelte@4.1.1):
+    resolution: {tarball: https://codeload.github.com/jsonMartin/flowbite-svelte/tar.gz/75e5cea266546db06240f63047a5fdaf54a1a0df}
+    id: github.com/jsonMartin/flowbite-svelte/75e5cea266546db06240f63047a5fdaf54a1a0df
+    name: flowbite-svelte
+    version: 0.40.2
+    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
+    peerDependencies:
+      svelte: ^3.55.1 || ^4.0.0
+    dependencies:
+      '@floating-ui/dom': 1.4.5
+      flowbite: 1.7.0
+      svelte: 4.1.1
+      tailwind-merge: 1.14.0
+    dev: false
