@@ -91,20 +91,12 @@
 					</NavLi>
 
 					<NavLi
-						href="/pricing"
-						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
-						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
-					>
-						<span>Books</span>
-					</NavLi>
-
-					<NavLi
 						href="/products"
 						active={$page.url.pathname.includes('products')}
 						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
 						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
 					>
-						<span>Products</span>
+						<span>Books & Products</span>
 					</NavLi>
 
 					<NavLi

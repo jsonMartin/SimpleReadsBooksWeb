@@ -72,7 +72,7 @@
 			<div
 				class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal mb-10"
 			>
-				Release Date <mark class="px-2 bg-[#B9D6B8] rounded">August 1, 2023</mark>
+				Release Date <mark class="px-2 bg-[#B9D6B8] rounded">August 15, 2023</mark>
 			</div>
 
 			<ButtonAmazon />

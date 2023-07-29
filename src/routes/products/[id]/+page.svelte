@@ -1,6 +1,6 @@
 <script>
 	import { CarouselTransition, Carousel, Badge } from 'flowbite-svelte';
-	import ButtonAmazon from '../home/ButtonAmazon.svelte';
+	import ButtonAmazon from '../../home/ButtonAmazon.svelte';
 
 	const images = [
 		{
@@ -38,6 +38,8 @@
 			attribution: 'picsum photos'
 		};
 	}
+
+	const isBook = true; // TODO: Make dynamic based on route
 </script>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-1 w-full justiy-center items-center">
@@ -65,12 +67,15 @@
 		class="bg-gray-100 m-auto p-8 sm:p-10 md:p-16 prose prose-sm sm:prose-xs h-[fit-content] sm:mb-5 md:mb-10"
 	>
 		<h1 class="text-2xl sm:text-3xl">Hunnie Bunny's Garden</h1>
-		<div class="pt-0 mt-[-20px]">
-			<span class="text-xs font-light align-middle">Available in </span>
-			<Badge color="green">Hardcover</Badge>
-			<Badge color="green">Paperback</Badge>
-			<Badge color="green">Kindle</Badge>
-		</div>
+
+		{#if isBook}
+			<div class="pt-0 mt-[-20px]">
+				<span class="text-xs font-light align-middle">Available in </span>
+				<Badge color="green">Hardcover</Badge>
+				<Badge color="green">Paperback</Badge>
+				<Badge color="green">Kindle</Badge>
+			</div>
+		{/if}
 
 		<p>
 			Hunnie Bunny’s Garden is an enchanting picture book that brings children closer to nature,
