@@ -47,7 +47,6 @@
 <!-- TODO: Refactor into component -->
 <section>
 	<div class="flex flex-row flex-wrap font-[Itim]">
-		<!-- <div class="p-4 basis-7/12 md:basis-full"> -->
 		<div
 			class="p-4 md:basis-7/12"
 			role="button"

@@ -2,15 +2,18 @@
 	import { Carousel, Badge } from 'flowbite-svelte';
 	import ButtonAmazon from '../../../lib/components/ButtonAmazon.svelte';
 	import { page } from '$app/stores';
-	import { getProductById } from '$lib/stores/products';
-	import { goto } from '$app/navigation';
+	import { getProductById } from '$lib/database/products';
 	import ButtonBack from '../../terms/ButtonBack.svelte';
 	import { ExclamationCircleSolid } from 'flowbite-svelte-icons';
 	import { wrapTextInParagraphTags } from '$lib/helpers';
 
-	const id = $page.params.id;
-	const product: any = getProductById(id);
-	const isBook = true; // TODO: Make dynamic based on route
+	export let data;
+
+	const { id } = $page.params;
+	const { products } = data;
+	const product: any = getProductById(products, id);
+
+	$: isBook = product?.type === 'book';
 </script>
 
 {#if product}
