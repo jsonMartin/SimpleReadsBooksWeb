@@ -1,5 +1,14 @@
-<script>
+<script lang="ts">
 	import '../app.postcss';
+
+	import type { LayoutData } from './$types';
+	import { products } from '$lib/stores/products';
+
+	export let data: LayoutData;
+
+	products.set(data.products); // Update products store
+
+	console.info('Loaded Products from store:', data);
 
 	import { page } from '$app/stores';
 

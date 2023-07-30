@@ -1,7 +1,8 @@
-import { generateTestImage } from "./helpers";
+import { get, writable } from 'svelte/store';
+import { csv } from 'csvtojson';
+import { generateTestImage } from "../helpers";
 
-// TODO: Make this into a store, that will import from Google Sheets
-export const products: any[] = [
+const TEST_PRODUCTS = [
   {
     id: 'hunnie-bunnys-garden',
     title: 'Hunnie Bunny’s Garden',
@@ -71,9 +72,43 @@ Through the endearing character of Hunnie Bunny, it’s a delightful blend of en
       };
     })
   }
-
 ]
 
+export const products = writable([]);
+
+// Use exported functions with the simple store API, since we don't need to overwrite set or update functions
+// // const { subscribe, set, update } = writable([]);
+
+// // export const products = {
+// //   subscribe,
+// //   set,
+// //   fetchProductData,
+// //   getProductById,
+// //   update,
+// // }
+
 export function getProductById(id: string) {
-  return products.find(product => product.id === id)
+  return get(products).find(product => product.id === id)
+}
+
+export async function fetchProductData(googleSheetsUrl?: string) { // Takes a public Google Sheets URL and syncs the data to the products store
+  if (!googleSheetsUrl) throw new Error("URL is required to sync product data");
+
+  const results = await fetch(googleSheetsUrl);
+  const body = await results.text();
+
+  console.log("Body from syncProductData:", body);
+
+  const spreadsheetData = await csv().fromString(body);
+
+  const productData = spreadsheetData.map((row: any) => ({
+    ...row,
+    images: JSON.parse(row.images)
+  }));
+
+
+  console.log("Data:", spreadsheetData);
+  console.log("Product Data:", productData);
+
+  return productData;
 }

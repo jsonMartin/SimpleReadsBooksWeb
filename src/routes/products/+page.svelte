@@ -3,15 +3,15 @@
 	import ButtonAmazon from '../../lib/components/ButtonAmazon.svelte';
 	import AvailableInFormat from '$lib/components/AvailableInFormat.svelte';
 
-	import { products } from '$lib/products';
+	import { products } from '$lib/stores/products';
 </script>
 
 <h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-bold mt-4 md:mt-10">Books</h1>
 <div
 	class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-4 md:gap-8 justify-items-center mt-4 sm:mt-6 md:mt-8 mx-3 sm:mx-4 md:mx-6"
 >
-	{#each products as product, i}
-		<Card padding="none" class={'h-fit' + ' ' + (i > 1 ? 'opacity-40' : '')}>
+	{#each $products as product, i}
+		<Card padding="none" class={'h-fit' + ' ' + (i > 0 ? 'opacity-40' : '')}>
 			<a href={'/products/' + product.id} class="flex justify-center items-center">
 				<img
 					class="rounded-t-lg object-cover w-full"
@@ -25,12 +25,14 @@
 					<AvailableInFormat divClass="pt-0 -mt-[8px]" showText={false} />
 				</h1>
 
-				<p class="text-sm text-gray-400 mt-1 sm:mt-2">
+				<p class="text-sm text-gray-400 mt-1.5 sm:mt-3">
 					{product.description.split('\n')[0]}
 				</p>
 
-				<div class="flex justify-between items-center mt-4">
-					<span class="text-xl font-medium text-gray-900 dark:text-white">$20.99</span>
+				<div class="flex justify-between items-center mt-5">
+					<span class="text-xl font-medium text-gray-900 dark:text-white">
+						${product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+					</span>
 					<ButtonAmazon size="sm" />
 				</div>
 			</div>

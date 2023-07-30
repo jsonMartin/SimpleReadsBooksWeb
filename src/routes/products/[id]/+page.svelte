@@ -2,24 +2,11 @@
 	import { Carousel, Badge } from 'flowbite-svelte';
 	import ButtonAmazon from '../../../lib/components/ButtonAmazon.svelte';
 	import { page } from '$app/stores';
-	import { getProductById } from '$lib/products';
+	import { getProductById } from '$lib/stores/products';
 	import { goto } from '$app/navigation';
 	import ButtonBack from '../../terms/ButtonBack.svelte';
 	import { ExclamationCircleSolid } from 'flowbite-svelte-icons';
 	import { wrapTextInParagraphTags } from '$lib/helpers';
-
-	function generateTestImage(randomSizeLimit = 400, fixedSizeLimit = 200) {
-		const id = Math.random() * 100000000;
-
-		return {
-			id,
-			name: 'Test image ' + id,
-			imgurl: `https://picsum.photos/${
-				Math.floor(Math.random() * randomSizeLimit) + fixedSizeLimit
-			}/${Math.floor(Math.random() * randomSizeLimit) + fixedSizeLimit}?random=6`,
-			attribution: 'picsum photos'
-		};
-	}
 
 	const id = $page.params.id;
 	const product: any = getProductById(id);
@@ -61,7 +48,7 @@
 			{@html wrapTextInParagraphTags(product.description)}
 
 			<h2 class="p-0 mt-[5px]">
-				{product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+				${product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
 			</h2>
 
 			<ButtonAmazon fullWidth />
