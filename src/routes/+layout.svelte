@@ -1,17 +1,6 @@
 <script lang="ts">
 	import '../app.postcss';
-
-	import type { LayoutData } from './$types';
-	import { products } from '$lib/stores/products';
-
-	export let data: LayoutData;
-
-	products.set(data.products); // Update products store
-
-	console.info('Loaded Products from store:', data);
-
 	import { page } from '$app/stores';
-
 	import {
 		Navbar,
 		NavBrand,
@@ -21,9 +10,7 @@
 		Button,
 		Modal,
 		ButtonGroup,
-		Input
-	} from 'flowbite-svelte';
-	import {
+		Input,
 		Footer,
 		FooterCopyright,
 		FooterLinkGroup,
