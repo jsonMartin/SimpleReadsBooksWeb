@@ -1,6 +1,9 @@
-<script>
-	import { Input, Label, Textarea } from 'flowbite-svelte';
-	import { PenSolid } from 'flowbite-svelte-icons';
+<script lang="ts">
+	import { Button, Input, Label, Modal, Textarea } from 'flowbite-svelte';
+	import { CheckSolid, PenSolid } from 'flowbite-svelte-icons';
+
+	const WEB3_FORM_PUBLIC_ACCESS_KEY = '0fd2108d-3b99-42ca-8a98-513ad5957009';
+	const WEB3_FORM_URL = 'https://api.web3forms.com/submit';
 
 	const form = {
 		email: '',
@@ -15,11 +18,62 @@
 		return re.test(String(email).toLowerCase());
 	};
 
+	let confirmModal = false;
+
 	$: isEmailValid = isValidEmail(form.email);
 	$: isSubjectValid = form.subject.length > 3;
 	$: isMessageValid = form.message.length > 5;
 	$: isFormValid = isEmailValid && isSubjectValid && isMessageValid;
+
+	function resetForm() {
+		form.email = '';
+		form.subject = '';
+		form.message = '';
+	}
+
+	function handleSubmit(e: Event) {
+		const json = JSON.stringify({
+			access_key: WEB3_FORM_PUBLIC_ACCESS_KEY,
+			...form
+		});
+
+		fetch(WEB3_FORM_URL, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json'
+			},
+			body: json
+		})
+			.then((response: any) => {
+				if (response.status >= 400) {
+					alert(`Error sending form... \n\n[${response.status}] ${response.statusText}`);
+					return;
+				}
+
+				console.log('Form successfully submitted');
+				console.log(response);
+				resetForm();
+				confirmModal = true;
+			})
+			.catch((error) => {
+				console.error(JSON.stringify(error));
+				alert('Unknown error encounted submitting form');
+			});
+	}
 </script>
+
+<Modal bind:open={confirmModal} size="xs" autoclose>
+	<div class="text-center">
+		<CheckSolid class="mx-auto mb-4 w-14 h-14 text-green-600 dark:text-green-400" />
+		<h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+			Your message has been sent successfully.
+			<br /><br />
+			We will get back to you soon 😊
+		</h3>
+		<Button color="green" class="mr-2">OK</Button>
+	</div>
+</Modal>
 
 <section class="bg-white dark:bg-gray-900">
 	<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
@@ -31,7 +85,14 @@
 		<p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
 			Have any questions or comments? Let me know how we can help.
 		</p>
-		<form action="#" class="space-y-8">
+
+		<form
+			id="contact-form"
+			name="contact"
+			method="POST"
+			class="space-y-8"
+			on:submit|preventDefault={(e) => handleSubmit(e)}
+		>
 			<div>
 				<label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 					>Your email</label
@@ -39,6 +100,7 @@
 				<Label class="space-y-2">
 					<Input
 						type="email"
+						name="email"
 						placeholder="yourname@gmail.com"
 						size="md"
 						color={form.email.length === 0 ? 'base' : isEmailValid ? 'green' : 'red'}
@@ -62,11 +124,11 @@
 				<label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
 					>Subject</label
 				>
-
 				<Label class="space-y-2">
 					<Input
-						type="email"
-						placeholder="name@flowbite.com"
+						type="text"
+						name="subject"
+						placeholder="Subject"
 						size="md"
 						color={form.subject.length === 0 ? 'base' : isSubjectValid ? 'green' : 'red'}
 						bind:value={form.subject}
@@ -81,6 +143,7 @@
 				>
 				<Textarea
 					type="text"
+					name="message"
 					id="message"
 					rows="6"
 					placeholder="Leave a comment..."
@@ -93,7 +156,7 @@
 					' ' +
 					(!isFormValid && 'opacity-40')}
 				color="primary"
-				disabled={isFormValid}>Send message</button
+				disabled={!isFormValid}>Send message</button
 			>
 		</form>
 	</div>
