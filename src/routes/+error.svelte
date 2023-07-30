@@ -2,18 +2,23 @@
 	import { Button } from 'flowbite-svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import ButtonBack from './terms/ButtonBack.svelte';
 </script>
 
 <svelte:head>
 	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </svelte:head>
 
-<section class="bg-white dark:bg-gray-900 h-[100vh] flex items-center">
+<section class="bg-white dark:bg-gray-900 h-[100vh] flex flex-col items-center">
 	{#if $page?.error?.message !== 'Not Found'}
-		<h1 class="rounded-sm shadow p-5 w-full text-center bold">Error: {$page?.error?.message}</h1>
+		<h1 class="rounded-sm shadow p-5 w-full text-center bold bg-red-500 text-white">
+			Error: {$page?.error?.message}
+		</h1>
 	{/if}
 
-	<div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 my-auto h-[100%] flex items-center">
+	<div
+		class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 my-auto h-[100%] flex items-center"
+	>
 		<div class="mx-auto max-w-screen-sm text-center">
 			<lottie-player
 				src="https://lottie.host/5824a45e-3640-4d4f-8085-c82b1a40ca91/4RT9fuVtBk.json"
@@ -30,28 +35,7 @@
 				Uh oh! That page doesn’t exist 😲
 			</p>
 
-			<Button
-				class="bg-primary-500 !text-white hover:bg-[#BDFD4F] hover:!text-black"
-				size="lg"
-				on:click={() => goto('/home')}
-			>
-				<svg
-					class="w-4 h-4 mr-2"
-					aria-hidden="true"
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 14 10"
-				>
-					<path
-						stroke="currentColor"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M13 5H1m0 0 4 4M1 5l4-4"
-					/>
-				</svg>
-				Go back
-			</Button>
+			<ButtonBack />
 		</div>
 	</div>
 </section>

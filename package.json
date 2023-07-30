@@ -26,6 +26,7 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.30.0",
+		"flowbite-svelte-icons": "^0.2.6",
 		"postcss": "^8.4.24",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.0",
@@ -41,8 +42,9 @@
 	"type": "module",
 	"dependencies": {
 		"@popperjs/core": "^2.11.8",
+		"csvtojson": "^2.0.10",
 		"flowbite": "^1.7.0",
-		"flowbite-svelte": "^0.40.1",
+		"flowbite-svelte": "github:jsonMartin/flowbite-svelte",
 		"tailwind-merge": "^1.14.0"
 	}
 }
