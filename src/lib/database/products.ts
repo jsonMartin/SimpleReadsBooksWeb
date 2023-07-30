@@ -1,5 +1,5 @@
 import { get, writable } from 'svelte/store';
-import { csv } from 'csvtojson';
+import csv from 'csvtojson';
 import { generateTestImage } from "../helpers";
 
 
