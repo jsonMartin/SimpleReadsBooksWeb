@@ -88,7 +88,12 @@
 			</div>
 
 			<ButtonAmazon />
-			<img style="scale:1.25" src="/images/hunnie-bunny-reading-book.png" class="mt-10" />
+			<img
+				style="scale:1.25"
+				src="/images/hunnie-bunny-reading-book.png"
+				alt="hunnie bunny reading"
+				class="mt-10"
+			/>
 		</div>
 	</div>
 </section>
@@ -101,6 +106,7 @@
 			class="hidden sm:flex col-span-3 max-w-[20%] animate-rotate-custom"
 			src="images/mr_squirrel_sitting.png"
 			loading="lazy"
+			alt="Mr. Squirrel sitting"
 		/>
 
 		<div class="flex flex-row gap-2.5 items-center justify-center col-span-6 m-auto">

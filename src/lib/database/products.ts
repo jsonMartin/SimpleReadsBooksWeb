@@ -1,7 +1,5 @@
-import { get, writable } from 'svelte/store';
 import csv from 'csvtojson';
 import { generateTestImage } from "../helpers";
-
 
 const TEST_PRODUCTS = [
   {
@@ -74,10 +72,6 @@ Through the endearing character of Hunnie Bunny, it’s a delightful blend of en
     })
   }
 ]
-
-export function getProductById(products: any[], id: string) {
-  return products.find(product => product.id === id)
-}
 
 export async function fetchProductData(googleSheetsUrl: string) { // Takes a public Google Sheets URL and syncs the data to the products store
   const results = await fetch(googleSheetsUrl);

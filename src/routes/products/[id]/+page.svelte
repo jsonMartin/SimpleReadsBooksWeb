@@ -2,7 +2,7 @@
 	import { Carousel, Badge } from 'flowbite-svelte';
 	import ButtonAmazon from '../../../lib/components/ButtonAmazon.svelte';
 	import { page } from '$app/stores';
-	import { getProductById } from '$lib/database/products';
+	import { getProductById } from '$lib/data/products';
 	import ButtonBack from '../../terms/ButtonBack.svelte';
 	import { ExclamationCircleSolid } from 'flowbite-svelte-icons';
 	import { wrapTextInParagraphTags } from '$lib/helpers';

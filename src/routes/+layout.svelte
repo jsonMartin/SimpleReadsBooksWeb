@@ -33,6 +33,19 @@
 		: 'w-full relative overflow-visible relative';
 </script>
 
+<svelte:head>
+	<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'G-9YTEE5C1YT');
+	</script>
+</svelte:head>
+
 <div>
 	<div class="m-auto max-w-screen-xl w-full overflow-hidden">
 		<!-- Use visibility:hidden instead of conditionally rendering -->
