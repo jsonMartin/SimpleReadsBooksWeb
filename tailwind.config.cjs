@@ -75,6 +75,10 @@ const config = {
           '0%': { opacity: 0 },
           '100%': { opacity: 1 },
         },
+        slideInFromLeft: {
+          '0%': { scale: 0.25, transform: `translateX(-100%)` },
+          '100%': { scale: 1, transform: `translateX(0%)` },
+        },
         bouncefrog: {
           "0%": {
             "transform": "translateY(0)"
@@ -97,14 +101,16 @@ const config = {
             "transform": "scaleX(1)"
           }
         },
-        animation: {
-          flipInX: 'flipInX .8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1',
-          slideUp: 'slideUp 2s ease-in-out 1',
-          fadeIn: 'fadeIn 2s ease-in-out 1',
-          bouncefrog: 'bouncefrog 1s infinite steps(50)',
-          rotateSlow: 'rotate 2s ease-in-out infinite'
-        }
       },
+      animation: {
+        flipInX: 'flipInX .8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1',
+        slideUp: 'slideUp 2s ease-in-out 1',
+        fadeIn: 'fadeIn 2s ease-in-out 1',
+        slideInFromLeft: 'slideInFromLeft 2s ease-in-out 1',
+        bouncefrog: 'bouncefrog 1s infinite steps(50)',
+        rotateSlow: 'rotate 2s ease-in-out infinite'
+      }
+
     }
   }
 }

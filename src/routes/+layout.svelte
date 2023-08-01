@@ -49,8 +49,8 @@
 	</script>
 </svelte:head> -->
 
-<div>
-	<div class="m-auto max-w-screen-xl w-full overflow-hidden">
+<div id="page-container">
+	<div id="header-container" class="m-auto max-w-screen-xl w-full overflow-hidden">
 		<!-- Use visibility:hidden instead of conditionally rendering -->
 		<!-- This is to prevent the animation from firing unnecessarily -->
 		<!-- TODO: Extract this to component-->
@@ -154,7 +154,7 @@
 				aspectRatio={7 / 5}
 				height="100%"
 				alt="Hunnie Bunny Reading"
-				class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-fadeIn !w-fit"
+				class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-slideInFromLeft !w-fit"
 			/>
 		</header>
 
