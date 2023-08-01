@@ -76,9 +76,9 @@
 </Modal>
 
 <section class="bg-white dark:bg-gray-900">
-	<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+	<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md !pt-8">
 		<h2
-			class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white"
+			class="mb-4 text-5xl sm:text-6xl md:text-7xl tracking-tight font-bold text-center text-gray-900 dark:text-white"
 		>
 			Contact Us
 		</h2>

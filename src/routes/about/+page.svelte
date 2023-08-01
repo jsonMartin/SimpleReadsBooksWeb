@@ -5,7 +5,7 @@
 <article
 	class="prose prose-lg sm:prose-xl md:prose-2xl w-full m-auto max-w-4xl p-2 md:p-0 pt-5 md:pt-8"
 >
-	<h1 class="text-center">About Us</h1>
+	<h1 class="text-center font-bold text-5xl sm:text-6xl md:text-7xl">About Us</h1>
 
 	<div>
 		<CldImage
