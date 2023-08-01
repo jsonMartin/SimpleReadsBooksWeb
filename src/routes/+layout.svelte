@@ -266,7 +266,7 @@
 							<FooterIcon
 								href="https://facebook.com/deborah.martin.3154"
 								target="_blank"
-								class="text-white"
+								class="text-white hover:text-primary-500"
 							>
 								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 									<path
@@ -279,7 +279,7 @@
 							<FooterIcon
 								href="https://instagram.com/debbiemartin064"
 								target="_blank"
-								class="text-white"
+								class="text-white hover:text-primary-500"
 							>
 								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 									<path
@@ -292,7 +292,7 @@
 							<FooterIcon
 								href="https://twitter.com/DeborahCMartin"
 								target="_blank"
-								class="text-white"
+								class="text-white hover:text-primary-500"
 							>
 								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 									<path
@@ -313,8 +313,6 @@
 			width="540"
 			height="540"
 			src="https://cb8831b5.sibforms.com/serve/MUIFAAlGMe78lSVFkIYUCGSb2MNQDS5_DdlDLsckCsxmqSUdh2yo0ZkJsUu0II_U0BSAwsPnzkxTmUW5kLyZmIr2EWtSk4V1sDYqKe4yV6xBlyPnFMqIPrjlvJqZBx_7Smqhxr1q_30uur1_-joez43hUw1ucLcu_zp7FnrJn1zJZ8B3qgCIMxPaxlhAKZvLSeaEh3O0Qlumw18x"
-			frameborder="0"
-			scrolling="auto"
 			allowfullscreen
 			style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"
 			class="-mx-10"

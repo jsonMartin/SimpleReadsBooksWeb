@@ -1,4 +1,5 @@
 <script lang="ts">
+	/* eslint svelte/no-at-html-tags: "off" */
 	import { Carousel, Badge } from 'flowbite-svelte';
 	import ButtonAmazon from '../../../lib/components/ButtonAmazon.svelte';
 	import { page } from '$app/stores';
@@ -35,7 +36,7 @@
 				classSlide="flex items-center justify-center h-[100%] w-[100%] !rounded-none !bg-transparent"
 				classDiv="w-[100%] !h-[300px] sm:!h-[400px] !rounded-none !bg-transparent"
 				classImg="!bg-none rounded-md animate-[fadeIn_.2s_ease-in-out_1] h-full"
-				classThumb="p-0 rounded-md shadow-xl hover:outline hover:outline-red-500"
+				classThumb="p-0 rounded-md shadow-xl hover:outline hover:outline-primary-500"
 				classThumbDiv="bg-transparent"
 				thumbBtnClass="m-2"
 				indicatorDivClass="bg-gray-500"
