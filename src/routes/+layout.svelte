@@ -21,7 +21,7 @@
 	import { CldImage } from 'svelte-cloudinary';
 	import { MAX_PAGE_WIDTH } from '$lib/style';
 
-	let defaultModal = false;
+	let emailSubscribeModal = false;
 
 	// Hide allow overflow from the banner to overlap other parts of the page.
 	const OVERFLOW_ANIMATION_TIME = 2000;
@@ -212,12 +212,24 @@
 							<FooterLink href="/" aClass="hidden">Reviews</FooterLink>
 						</FooterLinkGroup>
 
-						<div class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13">
+						<div
+							class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13"
+							on:click={() => (emailSubscribeModal = true)}
+							on:keydown={(e) => {
+								if (e.key === 'Enter') {
+									emailSubscribeModal = true;
+								}
+							}}
+							role="button"
+							tabindex="0"
+						>
 							<p class="text-white text-xs pb-1 bg-transparent">Subscribe for e-mail updates!</p>
 
 							<ButtonGroup class="rounded-none w-full">
 								<Input
 									type="email"
+									id="EMAIL"
+									name="EMAIL"
 									placeholder="name@gmail.com"
 									size="sm"
 									class="!rounded-none !rounded-tl !rounded-bl"
@@ -237,9 +249,7 @@
 									</svg>
 								</Input>
 
-								<Button color="primary" size="xs" on:click={() => (defaultModal = true)}
-									>Subscribe
-								</Button>
+								<Button color="primary" size="xs">Subscribe</Button>
 							</ButtonGroup>
 						</div>
 					</div>
@@ -299,9 +309,17 @@
 		{/if}
 	</div>
 
-	<Modal title="E-mail not ready yet" bind:open={defaultModal} autoclose>
-		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-			E-mail subscription not ready yet
-		</p>
+	<Modal bind:open={emailSubscribeModal} class="w-fit h-fit pt-10" autoclose>
+		<iframe
+			title="email subscribe"
+			width="540"
+			height="540"
+			src="https://cb8831b5.sibforms.com/serve/MUIFAAlGMe78lSVFkIYUCGSb2MNQDS5_DdlDLsckCsxmqSUdh2yo0ZkJsUu0II_U0BSAwsPnzkxTmUW5kLyZmIr2EWtSk4V1sDYqKe4yV6xBlyPnFMqIPrjlvJqZBx_7Smqhxr1q_30uur1_-joez43hUw1ucLcu_zp7FnrJn1zJZ8B3qgCIMxPaxlhAKZvLSeaEh3O0Qlumw18x"
+			frameborder="0"
+			scrolling="auto"
+			allowfullscreen
+			style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"
+			class="-mx-10"
+		/>
 	</Modal>
 </div>
