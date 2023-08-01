@@ -18,8 +18,10 @@
 		FooterLink,
 		FooterIcon
 	} from 'flowbite-svelte';
+	import { CldImage } from 'svelte-cloudinary';
+	import { MAX_PAGE_WIDTH } from '$lib/style';
 
-	let defaultModal = false;
+	let emailSubscribeModal = false;
 
 	// Hide allow overflow from the banner to overlap other parts of the page.
 	const OVERFLOW_ANIMATION_TIME = 2000;
@@ -34,6 +36,27 @@
 </script>
 
 <svelte:head>
+	<meta
+		name="description"
+		content="bunny garden animals nature squirrel frog vegetables woods spring summer children books picture book"
+	/>
+	<meta
+		property="og:title"
+		content="bunny garden animals nature squirrel frog vegetables woods spring summer children books picture book"
+	/>
+	<meta property="og:description" content="Simple Reads Books and Hunnie Bunny's Garden" />
+	<meta
+		property="og:image"
+		content="https://res.cloudinary.com/simple-reads-books/image/upload/c_limit,w_2880/f_auto/q_auto/banner?_a=BBEHUxAE0"
+	/>
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="My Page Title" />
+	<meta name="twitter:description" content="This is a description of my page for SEO purposes." />
+	<meta
+		name="twitter:image"
+		content="https://res.cloudinary.com/simple-reads-books/image/upload/c_limit,w_2880/f_auto/q_auto/banner?_a=BBEHUxAE0"
+	/>
+
 	<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
@@ -46,8 +69,8 @@
 	</script>
 </svelte:head>
 
-<div>
-	<div class="m-auto max-w-screen-xl w-full overflow-hidden">
+<div id="page-container">
+	<div id="header-container" class="m-auto max-w-screen-xl w-full overflow-hidden">
 		<!-- Use visibility:hidden instead of conditionally rendering -->
 		<!-- This is to prevent the animation from firing unnecessarily -->
 		<!-- TODO: Extract this to component-->
@@ -62,7 +85,15 @@
 			>
 				<NavBrand href="/">
 					<div class="md:hidden flex flex-row justify-center items-center min-w-min">
-						<img src="/images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" />
+						<CldImage
+							width={128}
+							height={104}
+							src="logo"
+							class="mr-3 h-6 sm:h-9"
+							alt="logo"
+							loading="eager"
+						/>
+
 						<span
 							class="self-center whitespace-nowrap sm dark:text-white font-[Itim] text-md sm:text-lg"
 						>
@@ -118,25 +149,33 @@
 				</NavUl>
 			</Navbar>
 
-			<img
-				class="max-w-screen-2xl m-auto"
-				src="/images/banner.png"
-				width="100%"
+			<CldImage
+				src="banner"
+				width={MAX_PAGE_WIDTH * 2}
+				aspectRatio={338 / 100}
+				height="100%"
 				alt="Simple Reads Books Banner"
-				loading="lazy"
-				style="aspect-ratio:288/85"
+				sizes="100vw"
+				class="max-w-screen-2xl m-auto"
+				loading="eager"
 			/>
 
-			<img
-				src="/images/hunnie-bunny-peering-over.png"
-				class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp"
+			<CldImage
+				src="hunnie-bunnie-peering-over"
+				width={450}
+				aspectRatio={7 / 5}
+				height="100%"
 				alt="Hunnie Bunny Peering Over"
+				class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp !w-fit"
 			/>
 
-			<img
-				src="/images/hunnie-bunny-reading.png"
-				class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-fadeIn"
-				alt="Hunnie Bunny Peering Over"
+			<CldImage
+				src="hunnie-bunnie-reading"
+				width={450}
+				aspectRatio={7 / 5}
+				height="100%"
+				alt="Hunnie Bunny Reading"
+				class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-slideInFromLeft !w-fit"
 			/>
 		</header>
 
@@ -154,12 +193,12 @@
 					>
 						<FooterBrand
 							href="/"
-							src="/images/logo.png"
+							src="https://res.cloudinary.com/simple-reads-books/image/upload/w_128,h_104,f_webp,q_auto/SRBooksLogo_uyvnpj.png"
 							alt="Simple Reads Books"
 							name="Simple Reads Books"
 							class="text-white"
 							spanClass="text-white text-md md:text-xl font-[Itim] whitespace-nowrap hidden sm:block"
-							imgClass="h-10 pr-3"
+							imgClass="h-10 pr-3 sm:w-20 h-fit"
 							aClass="flex flex-row items-center min-w-[fit-content] mr-3 col-span-3 hidden sm:flex"
 						/>
 
@@ -168,15 +207,27 @@
 						>
 							<FooterLink href="/terms">Terms & Conditions</FooterLink>
 							<FooterLink href="/privacy">Privacy Policy</FooterLink>
-							<FooterLink href="/">Reviews</FooterLink>
+							<FooterLink href="/" aClass="hidden">Reviews</FooterLink>
 						</FooterLinkGroup>
 
-						<div class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13">
+						<div
+							class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13"
+							on:click={() => (emailSubscribeModal = true)}
+							on:keydown={(e) => {
+								if (e.key === 'Enter') {
+									emailSubscribeModal = true;
+								}
+							}}
+							role="button"
+							tabindex="0"
+						>
 							<p class="text-white text-xs pb-1 bg-transparent">Subscribe for e-mail updates!</p>
 
 							<ButtonGroup class="rounded-none w-full">
 								<Input
 									type="email"
+									id="EMAIL"
+									name="EMAIL"
 									placeholder="name@gmail.com"
 									size="sm"
 									class="!rounded-none !rounded-tl !rounded-bl"
@@ -196,9 +247,7 @@
 									</svg>
 								</Input>
 
-								<Button color="primary" size="xs" on:click={() => (defaultModal = true)}
-									>Subscribe
-								</Button>
+								<Button color="primary" size="xs">Subscribe</Button>
 							</ButtonGroup>
 						</div>
 					</div>
@@ -214,7 +263,11 @@
 							spanClass="text-xs text-white italic"
 						/>
 						<div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0 text-white">
-							<FooterIcon href="/" class="text-white">
+							<FooterIcon
+								href="https://facebook.com/deborah.martin.3154"
+								target="_blank"
+								class="text-white"
+							>
 								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 									<path
 										fill-rule="evenodd"
@@ -223,7 +276,11 @@
 									/>
 								</svg>
 							</FooterIcon>
-							<FooterIcon href="/" class="text-white">
+							<FooterIcon
+								href="https://instagram.com/debbiemartin064"
+								target="_blank"
+								class="text-white"
+							>
 								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 									<path
 										fill-rule="evenodd"
@@ -232,19 +289,14 @@
 									/>
 								</svg>
 							</FooterIcon>
-							<FooterIcon href="/" class="text-white">
+							<FooterIcon
+								href="https://twitter.com/DeborahCMartin"
+								target="_blank"
+								class="text-white"
+							>
 								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 									<path
 										d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"
-									/>
-								</svg>
-							</FooterIcon>
-							<FooterIcon href="/" class="text-white">
-								<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-									<path
-										fill-rule="evenodd"
-										d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-										clip-rule="evenodd"
 									/>
 								</svg>
 							</FooterIcon>
@@ -255,9 +307,17 @@
 		{/if}
 	</div>
 
-	<Modal title="E-mail not ready yet" bind:open={defaultModal} autoclose>
-		<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-			E-mail subscription not ready yet
-		</p>
+	<Modal bind:open={emailSubscribeModal} class="w-fit h-fit pt-10" autoclose>
+		<iframe
+			title="email subscribe"
+			width="540"
+			height="540"
+			src="https://cb8831b5.sibforms.com/serve/MUIFAAlGMe78lSVFkIYUCGSb2MNQDS5_DdlDLsckCsxmqSUdh2yo0ZkJsUu0II_U0BSAwsPnzkxTmUW5kLyZmIr2EWtSk4V1sDYqKe4yV6xBlyPnFMqIPrjlvJqZBx_7Smqhxr1q_30uur1_-joez43hUw1ucLcu_zp7FnrJn1zJZ8B3qgCIMxPaxlhAKZvLSeaEh3O0Qlumw18x"
+			frameborder="0"
+			scrolling="auto"
+			allowfullscreen
+			style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;"
+			class="-mx-10"
+		/>
 	</Modal>
 </div>

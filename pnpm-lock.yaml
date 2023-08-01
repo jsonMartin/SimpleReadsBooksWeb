@@ -17,6 +17,9 @@ dependencies:
   flowbite-svelte:
     specifier: github:jsonMartin/flowbite-svelte
     version: github.com/jsonMartin/flowbite-svelte/75e5cea266546db06240f63047a5fdaf54a1a0df(svelte@4.1.1)
+  svelte-cloudinary:
+    specifier: ^1.0.3
+    version: 1.0.3(svelte@4.1.1)
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -110,6 +113,29 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.3
       '@jridgewell/trace-mapping': 0.3.18
+
+  /@cloudinary-util/url-loader@3.9.0:
+    resolution: {integrity: sha512-DJiu+a3Mr2GEyjAo4Gy2KWX0YoXoP0CFp2jvw8+3gJj7wvmIb7mcjRk1yHSGIyJcolb0uR+tWGO6KVhStpreMg==}
+    dependencies:
+      '@cloudinary-util/util': 2.1.0
+      '@cloudinary/url-gen': 1.11.0
+    dev: false
+
+  /@cloudinary-util/util@2.1.0:
+    resolution: {integrity: sha512-PGjVxyhhOP8IaD6uawXzfDnI8ArPqpiLfIXc8TEjhv3CGhDFBAM3dCT3xeAgg+92sQsx/AN74j+qckdWPfoO6w==}
+    dev: false
+
+  /@cloudinary/transformation-builder-sdk@1.4.0:
+    resolution: {integrity: sha512-atU25SFAmR4aXlPHDs7fERmcl0OSnwQl80b5Fy3unvwHSj10fnqHBdLeeOEBNaOXdF3WQLmNSGMkOV8IlDPfMA==}
+    dependencies:
+      '@cloudinary/url-gen': 1.11.0
+    dev: false
+
+  /@cloudinary/url-gen@1.11.0:
+    resolution: {integrity: sha512-jShJoh+5JQfsMnh/NUqe8Z2EzZo/++BQ/CuF/VND4hA7zNpXn6vYi5JMIZ4YvLGRrqHuMtqCFahaTe1RBsLJJQ==}
+    dependencies:
+      '@cloudinary/transformation-builder-sdk': 1.4.0
+    dev: false
 
   /@esbuild/android-arm64@0.18.16:
     resolution: {integrity: sha512-wsCqSPqLz+6Ov+OM4EthU43DyYVVyfn15S4j1bJzylDpc1r1jZFFfJQNfDuT8SlgwuqpmpJXK4uPlHGw6ve7eA==}
@@ -716,6 +742,23 @@ packages:
       '@typescript-eslint/types': 5.62.0
       eslint-visitor-keys: 3.4.1
     dev: true
+
+  /@unpic/core@0.0.24:
+    resolution: {integrity: sha512-HFa7ry3iNYfIOkaWGb0N/w1sxt6MAyUfoXXOvjyz50vtomDUbxK4krcRcQWIca64bORQKncxeJbGETRQLF20WQ==}
+    dependencies:
+      unpic: 3.9.0
+    dev: false
+
+  /@unpic/svelte@0.0.25(svelte@4.1.1):
+    resolution: {integrity: sha512-jXyOl9BDfspJ03/kAeozy69eHjLtKIZjsZ4257mz8J/sn5Il3xsRD4vR701NjEC0fkkLQg9Xol+v92o0LGImtw==}
+    peerDependencies:
+      svelte: '*'
+    dependencies:
+      '@unpic/core': 0.0.24
+      style-object-to-css-string: 1.0.1
+      svelte: 4.1.1
+      unpic: 3.9.0
+    dev: false
 
   /@vitest/expect@0.32.4:
     resolution: {integrity: sha512-m7EPUqmGIwIeoU763N+ivkFjTzbaBn0n9evsTOcde03ugy2avPs3kZbYmw3DkcH1j5mxhMhdamJkLQ6dM1bk/A==}
@@ -2233,6 +2276,10 @@ packages:
       acorn: 8.10.0
     dev: true
 
+  /style-object-to-css-string@1.0.1:
+    resolution: {integrity: sha512-ci7tySCofUqq86WziXoEsIE/aGZ2rkw7mmz6Afklhbmk7i05Z1d8hSUaJMUWUOJPbsvK+7TW5ulklZm55/S44Q==}
+    dev: false
+
   /sucrase@3.34.0:
     resolution: {integrity: sha512-70/LQEZ07TEcxiU2dz51FKaE6hCTWC6vr7FOk3Gr0U60C3shtAN+H+BFr9XlYe5xqf3RA8nrc+VIwzCfnxuXJw==}
     engines: {node: '>=8'}
@@ -2285,6 +2332,18 @@ packages:
       - stylus
       - sugarss
     dev: true
+
+  /svelte-cloudinary@1.0.3(svelte@4.1.1):
+    resolution: {integrity: sha512-QVzldz0tr/XezxbMwyIrTvSTC5g6o/aO9/OBXtTVp9NEgXN4/5cixJi1HX9TSfZnFtQvGmTBeQbX0mu4mdPqrQ==}
+    peerDependencies:
+      svelte: ^3.0.0 || ^4.0.0
+    dependencies:
+      '@cloudinary-util/url-loader': 3.9.0
+      '@cloudinary-util/util': 2.1.0
+      '@unpic/core': 0.0.24
+      '@unpic/svelte': 0.0.25(svelte@4.1.1)
+      svelte: 4.1.1
+    dev: false
 
   /svelte-eslint-parser@0.32.2(svelte@4.1.1):
     resolution: {integrity: sha512-Ok9D3A4b23iLQsONrjqtXtYDu5ZZ/826Blaw2LeFZVTg1pwofKDG4mz3/GYTax8fQ0plRGHI6j+d9VQYy5Lo/A==}
@@ -2511,6 +2570,10 @@ packages:
     dependencies:
       busboy: 1.6.0
     dev: true
+
+  /unpic@3.9.0:
+    resolution: {integrity: sha512-BnNI9lme7SrhPBzBF+XSkiyiVLza0bSRvIg09xsOnzv9rImcW1+OcBSJBUB+JOWxVLUu5LecjTclMtJTwbUYMw==}
+    dev: false
 
   /update-browserslist-db@1.0.11(browserslist@4.21.9):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}

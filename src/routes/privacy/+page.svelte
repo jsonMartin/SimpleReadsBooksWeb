@@ -8,6 +8,10 @@
 	import ButtonBack from '../terms/ButtonBack.svelte';
 </script>
 
+<svelte:head>
+	<title>Privacy</title>
+</svelte:head>
+
 <div class="max-w-2xl m-auto mb-5">
 	<section class="w-full flex flex-col justify-center items-center my-10">
 		<h1 class="text-4xl font-extrabold">Privacy Policy</h1>

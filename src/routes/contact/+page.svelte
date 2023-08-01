@@ -2,7 +2,7 @@
 	import { Button, Input, Label, Modal, Textarea } from 'flowbite-svelte';
 	import { CheckSolid, PenSolid } from 'flowbite-svelte-icons';
 
-	const WEB3_FORM_PUBLIC_ACCESS_KEY = '0fd2108d-3b99-42ca-8a98-513ad5957009';
+	const WEB3_FORM_PUBLIC_ACCESS_KEY = '7915d9f2-0f8d-4606-be62-fb349ea54199';
 	const WEB3_FORM_URL = 'https://api.web3forms.com/submit';
 
 	const form = {
@@ -75,10 +75,14 @@
 	</div>
 </Modal>
 
+<svelte:head>
+	<title>Contact</title>
+</svelte:head>
+
 <section class="bg-white dark:bg-gray-900">
-	<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+	<div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md !pt-8">
 		<h2
-			class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white"
+			class="mb-4 text-5xl sm:text-6xl md:text-7xl tracking-tight font-bold text-center text-gray-900 dark:text-white"
 		>
 			Contact Us
 		</h2>
