@@ -56,7 +56,6 @@ const config = {
         },
       },
       screens: {
-        // 'sm': '576px',
         'md': '960px',
         'lg': '1280px',
         'xl': '1440px',

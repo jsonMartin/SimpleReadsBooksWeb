@@ -57,9 +57,7 @@
 		content="https://res.cloudinary.com/simple-reads-books/image/upload/c_limit,w_2880/f_auto/q_auto/banner?_a=BBEHUxAE0"
 	/>
 
-	<!-- Google Analytics -->
-	<!--
-		<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
@@ -69,7 +67,6 @@
 
 		gtag('config', 'G-9YTEE5C1YT');
 	</script>
-	-->
 </svelte:head>
 
 <div id="page-container">
@@ -90,11 +87,11 @@
 					<div class="md:hidden flex flex-row justify-center items-center min-w-min">
 						<CldImage
 							width={128}
-							height="fit-content"
-							aspectRatio={1750 / 1424}
+							height={104}
 							src="logo"
 							class="mr-3 h-6 sm:h-9"
 							alt="logo"
+							loading="eager"
 						/>
 
 						<span
@@ -160,6 +157,7 @@
 				alt="Simple Reads Books Banner"
 				sizes="100vw"
 				class="max-w-screen-2xl m-auto"
+				loading="eager"
 			/>
 
 			<CldImage
@@ -195,12 +193,12 @@
 					>
 						<FooterBrand
 							href="/"
-							src="https://res.cloudinary.com/simple-reads-books/image/upload/w_128,f_webp,q_auto/SRBooksLogo_uyvnpj.png"
+							src="https://res.cloudinary.com/simple-reads-books/image/upload/w_128,h_104,f_webp,q_auto/SRBooksLogo_uyvnpj.png"
 							alt="Simple Reads Books"
 							name="Simple Reads Books"
 							class="text-white"
 							spanClass="text-white text-md md:text-xl font-[Itim] whitespace-nowrap hidden sm:block"
-							imgClass="h-10 pr-3"
+							imgClass="h-10 pr-3 sm:w-20 h-fit"
 							aClass="flex flex-row items-center min-w-[fit-content] mr-3 col-span-3 hidden sm:flex"
 						/>
 

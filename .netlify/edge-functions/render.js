@@ -12,8 +12,8 @@ var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
+  for (var name2 in all)
+    __defProp(target, name2, { get: all[name2], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
@@ -79,12 +79,12 @@ function subscribe(store, ...callbacks) {
   const unsub = store.subscribe(...callbacks);
   return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
-function compute_rest_props(props, keys) {
+function compute_rest_props(props15, keys) {
   const rest = {};
   keys = new Set(keys);
-  for (const k in props)
+  for (const k in props15)
     if (!keys.has(k) && k[0] !== "$")
-      rest[k] = props[k];
+      rest[k] = props15[k];
   return rest;
 }
 function compute_slots(slots) {
@@ -97,8 +97,8 @@ function compute_slots(slots) {
 function null_to_empty(value) {
   return value == null ? "" : value;
 }
-function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
-  return new CustomEvent(type, { detail, bubbles, cancelable });
+function custom_event(type2, detail, { bubbles = false, cancelable = false } = {}) {
+  return new CustomEvent(type2, { detail, bubbles, cancelable });
 }
 function set_current_component(component12) {
   current_component = component12;
@@ -110,12 +110,12 @@ function get_current_component() {
 }
 function createEventDispatcher() {
   const component12 = get_current_component();
-  return (type, detail, { cancelable = false } = {}) => {
-    const callbacks = component12.$$.callbacks[type];
+  return (type2, detail, { cancelable = false } = {}) => {
+    const callbacks = component12.$$.callbacks[type2];
     if (callbacks) {
       const event = custom_event(
         /** @type {string} */
-        type,
+        type2,
         detail,
         { cancelable }
       );
@@ -160,17 +160,17 @@ function spread(args, attrs_to_add) {
     }
   }
   let str = "";
-  Object.keys(attributes).forEach((name) => {
-    if (invalid_attribute_name_character.test(name))
+  Object.keys(attributes).forEach((name2) => {
+    if (invalid_attribute_name_character.test(name2))
       return;
-    const value = attributes[name];
+    const value = attributes[name2];
     if (value === true)
-      str += " " + name;
-    else if (boolean_attributes.has(name.toLowerCase())) {
+      str += " " + name2;
+    else if (boolean_attributes.has(name2.toLowerCase())) {
       if (value)
-        str += " " + name;
+        str += " " + name2;
     } else if (value != null) {
-      str += ` ${name}="${value}"`;
+      str += ` ${name2}="${value}"`;
     }
   });
   return str;
@@ -179,18 +179,18 @@ function merge_ssr_styles(style_attribute, style_directive) {
   const style_object = {};
   for (const individual_style of style_attribute.split(";")) {
     const colon_index = individual_style.indexOf(":");
-    const name = individual_style.slice(0, colon_index).trim();
+    const name2 = individual_style.slice(0, colon_index).trim();
     const value = individual_style.slice(colon_index + 1).trim();
-    if (!name)
+    if (!name2)
       continue;
-    style_object[name] = value;
+    style_object[name2] = value;
   }
-  for (const name in style_directive) {
-    const value = style_directive[name];
+  for (const name2 in style_directive) {
+    const value = style_directive[name2];
     if (value) {
-      style_object[name] = value;
+      style_object[name2] = value;
     } else {
-      delete style_object[name];
+      delete style_object[name2];
     }
   }
   return style_object;
@@ -228,18 +228,18 @@ function each(items, fn) {
   }
   return str;
 }
-function validate_component(component12, name) {
+function validate_component(component12, name2) {
   if (!component12 || !component12.$$render) {
-    if (name === "svelte:component")
-      name += " this={...}";
+    if (name2 === "svelte:component")
+      name2 += " this={...}";
     throw new Error(
-      `<${name}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules. Otherwise you may need to fix a <${name}>.`
+      `<${name2}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules. Otherwise you may need to fix a <${name2}>.`
     );
   }
   return component12;
 }
 function create_ssr_component(fn) {
-  function $$render(result, props, bindings, slots, context) {
+  function $$render(result, props15, bindings, slots, context) {
     const parent_component = current_component;
     const $$ = {
       on_destroy,
@@ -251,20 +251,20 @@ function create_ssr_component(fn) {
       callbacks: blank_object()
     };
     set_current_component({ $$ });
-    const html = fn(result, props, bindings, slots);
+    const html = fn(result, props15, bindings, slots);
     set_current_component(parent_component);
     return html;
   }
   return {
-    render: (props = {}, { $$slots = {}, context = /* @__PURE__ */ new Map() } = {}) => {
+    render: (props15 = {}, { $$slots = {}, context = /* @__PURE__ */ new Map() } = {}) => {
       on_destroy = [];
       const result = { title: "", head: "", css: /* @__PURE__ */ new Set() };
-      const html = $$render(result, props, {}, $$slots, context);
+      const html = $$render(result, props15, {}, $$slots, context);
       run_all(on_destroy);
       return {
         html,
         css: {
-          code: Array.from(result.css).map((css3) => css3.code).join("\n"),
+          code: Array.from(result.css).map((css2) => css2.code).join("\n"),
           map: null
           // TODO
         },
@@ -274,11 +274,11 @@ function create_ssr_component(fn) {
     $$render
   };
 }
-function add_attribute(name, value, boolean) {
+function add_attribute(name2, value, boolean) {
   if (value == null || boolean && !value)
     return "";
   const assignment = boolean && value === true ? "" : `="${escape(value, true)}"`;
-  return ` ${name}${assignment}`;
+  return ` ${name2}${assignment}`;
 }
 function style_object_to_string(style_object) {
   return Object.keys(style_object).filter((key2) => style_object[key2]).map((key2) => `${key2}: ${escape_attribute_value(style_object[key2])};`).join(" ");
@@ -327,13 +327,13 @@ var init_ssr = __esm({
 
 // node_modules/cookie/index.js
 var require_cookie = __commonJS({
-  "node_modules/cookie/index.js"(exports) {
+  "node_modules/cookie/index.js"(exports2) {
     "use strict";
-    exports.parse = parse3;
-    exports.serialize = serialize2;
+    exports2.parse = parse4;
+    exports2.serialize = serialize2;
     var __toString = Object.prototype.toString;
     var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
-    function parse3(str, options2) {
+    function parse4(str, options2) {
       if (typeof str !== "string") {
         throw new TypeError("argument str must be a string");
       }
@@ -365,20 +365,20 @@ var require_cookie = __commonJS({
       }
       return obj;
     }
-    function serialize2(name, val, options2) {
+    function serialize2(name2, val, options2) {
       var opt = options2 || {};
       var enc = opt.encode || encode2;
       if (typeof enc !== "function") {
         throw new TypeError("option encode is invalid");
       }
-      if (!fieldContentRegExp.test(name)) {
+      if (!fieldContentRegExp.test(name2)) {
         throw new TypeError("argument name is invalid");
       }
       var value = enc(val);
       if (value && !fieldContentRegExp.test(value)) {
         throw new TypeError("argument val is invalid");
       }
-      var str = name + "=" + value;
+      var str = name2 + "=" + value;
       if (null != opt.maxAge) {
         var maxAge = opt.maxAge - 0;
         if (isNaN(maxAge) || !isFinite(maxAge)) {
@@ -469,7 +469,7 @@ var require_cookie = __commonJS({
 
 // node_modules/set-cookie-parser/lib/set-cookie.js
 var require_set_cookie = __commonJS({
-  "node_modules/set-cookie-parser/lib/set-cookie.js"(exports, module) {
+  "node_modules/set-cookie-parser/lib/set-cookie.js"(exports2, module2) {
     "use strict";
     var defaultParseOptions = {
       decodeValues: true,
@@ -483,7 +483,7 @@ var require_set_cookie = __commonJS({
       var parts = setCookieValue.split(";").filter(isNonEmptyString);
       var nameValuePairStr = parts.shift();
       var parsed = parseNameValuePair(nameValuePairStr);
-      var name = parsed.name;
+      var name2 = parsed.name;
       var value = parsed.value;
       options2 = options2 ? Object.assign({}, defaultParseOptions, options2) : defaultParseOptions;
       try {
@@ -495,7 +495,7 @@ var require_set_cookie = __commonJS({
         );
       }
       var cookie = {
-        name,
+        name: name2,
         value
       };
       parts.forEach(function(part) {
@@ -519,18 +519,18 @@ var require_set_cookie = __commonJS({
       return cookie;
     }
     function parseNameValuePair(nameValuePairStr) {
-      var name = "";
+      var name2 = "";
       var value = "";
       var nameValueArr = nameValuePairStr.split("=");
       if (nameValueArr.length > 1) {
-        name = nameValueArr.shift();
+        name2 = nameValueArr.shift();
         value = nameValueArr.join("=");
       } else {
         value = nameValuePairStr;
       }
-      return { name, value };
+      return { name: name2, value };
     }
-    function parse3(input, options2) {
+    function parse4(input, options2) {
       options2 = options2 ? Object.assign({}, defaultParseOptions, options2) : defaultParseOptions;
       if (!input) {
         if (!options2.map) {
@@ -628,10 +628,10 @@ var require_set_cookie = __commonJS({
       }
       return cookiesStrings;
     }
-    module.exports = parse3;
-    module.exports.parse = parse3;
-    module.exports.parseString = parseString2;
-    module.exports.splitCookiesString = splitCookiesString2;
+    module2.exports = parse4;
+    module2.exports.parse = parse4;
+    module2.exports.parseString = parseString2;
+    module2.exports.splitCookiesString = splitCookiesString2;
   }
 });
 
@@ -3216,8 +3216,8 @@ var init_tailwind_merge = __esm({
 });
 
 // .svelte-kit/output/server/chunks/Indicator.svelte_svelte_type_style_lang.js
-function is_void(name) {
-  return void_element_names.test(name) || name.toLowerCase() === "!doctype";
+function is_void(name2) {
+  return void_element_names.test(name2) || name2.toLowerCase() === "!doctype";
 }
 var void_element_names, Button;
 var init_Indicator_svelte_svelte_type_style_lang = __esm({
@@ -3232,7 +3232,7 @@ var init_Indicator_svelte_svelte_type_style_lang = __esm({
       let { outline = false } = $$props;
       let { size = group ? "sm" : "md" } = $$props;
       let { href = void 0 } = $$props;
-      let { type = "button" } = $$props;
+      let { type: type2 = "button" } = $$props;
       let { color = group ? outline ? "dark" : "alternative" : "primary" } = $$props;
       let { shadow = false } = $$props;
       const colorClasses = {
@@ -3300,8 +3300,8 @@ var init_Indicator_svelte_svelte_type_style_lang = __esm({
         $$bindings.size(size);
       if ($$props.href === void 0 && $$bindings.href && href !== void 0)
         $$bindings.href(href);
-      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-        $$bindings.type(type);
+      if ($$props.type === void 0 && $$bindings.type && type2 !== void 0)
+        $$bindings.type(type2);
       if ($$props.color === void 0 && $$bindings.color && color !== void 0)
         $$bindings.color(color);
       if ($$props.shadow === void 0 && $$bindings.shadow && shadow !== void 0)
@@ -3327,7 +3327,7 @@ var init_Indicator_svelte_svelte_type_style_lang = __esm({
         return tag ? `<${href ? "a" : "button"}${spread(
           [
             {
-              type: escape_attribute_value(href ? void 0 : type)
+              type: escape_attribute_value(href ? void 0 : type2)
             },
             { href: escape_attribute_value(href) },
             escape_object($$restProps),
@@ -3484,7 +3484,7 @@ var init_CloseButton = __esm({
       let $$restProps = compute_rest_props($$props, ["color", "name", "ariaLabel", "size", "href"]);
       const background = getContext("background");
       let { color = "default" } = $$props;
-      let { name = void 0 } = $$props;
+      let { name: name2 = void 0 } = $$props;
       let { ariaLabel = void 0 } = $$props;
       let { size = "md" } = $$props;
       let { href = void 0 } = $$props;
@@ -3516,8 +3516,8 @@ var init_CloseButton = __esm({
       };
       if ($$props.color === void 0 && $$bindings.color && color !== void 0)
         $$bindings.color(color);
-      if ($$props.name === void 0 && $$bindings.name && name !== void 0)
-        $$bindings.name(name);
+      if ($$props.name === void 0 && $$bindings.name && name2 !== void 0)
+        $$bindings.name(name2);
       if ($$props.ariaLabel === void 0 && $$bindings.ariaLabel && ariaLabel !== void 0)
         $$bindings.ariaLabel(ariaLabel);
       if ($$props.size === void 0 && $$bindings.size && size !== void 0)
@@ -3539,11 +3539,11 @@ var init_CloseButton = __esm({
             class: escape_attribute_value(buttonClass)
           },
           {
-            "aria-label": escape_attribute_value(ariaLabel ?? name)
+            "aria-label": escape_attribute_value(ariaLabel ?? name2)
           }
         ],
         {}
-      )}>${name ? `<span class="sr-only">${escape(name)}</span>` : ``} ${slots.default ? slots.default({ svgSize: svgSizes[size] }) : ``}</a>` : `<button${spread(
+      )}>${name2 ? `<span class="sr-only">${escape(name2)}</span>` : ``} ${slots.default ? slots.default({ svgSize: svgSizes[size] }) : ``}</a>` : `<button${spread(
         [
           { type: "button" },
           escape_object($$restProps),
@@ -3551,18 +3551,18 @@ var init_CloseButton = __esm({
             class: escape_attribute_value(buttonClass)
           },
           {
-            "aria-label": escape_attribute_value(ariaLabel ?? name)
+            "aria-label": escape_attribute_value(ariaLabel ?? name2)
           }
         ],
         {}
-      )}>${name ? `<span class="sr-only">${escape(name)}</span>` : ``} ${slots.default ? slots.default({ svgSize: svgSizes[size] }) : ``}</button>`} `;
+      )}>${name2 ? `<span class="sr-only">${escape(name2)}</span>` : ``} ${slots.default ? slots.default({ svgSize: svgSizes[size] }) : ``}</button>`} `;
     });
     CloseButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["name"]);
-      let { name = "Close" } = $$props;
-      if ($$props.name === void 0 && $$bindings.name && name !== void 0)
-        $$bindings.name(name);
-      return `${validate_component(ToolbarButton, "ToolbarButton").$$render($$result, Object.assign({}, { name }, $$restProps, { class: twMerge("ml-auto", $$props.class) }), {}, {
+      let { name: name2 = "Close" } = $$props;
+      if ($$props.name === void 0 && $$bindings.name && name2 !== void 0)
+        $$bindings.name(name2);
+      return `${validate_component(ToolbarButton, "ToolbarButton").$$render($$result, Object.assign({}, { name: name2 }, $$restProps, { class: twMerge("ml-auto", $$props.class) }), {}, {
         default: ({ svgSize }) => {
           return `<svg${add_attribute("class", svgSize, 0)} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>`;
         }
@@ -3602,7 +3602,7 @@ var init_Modal = __esm({
       let _size;
       let $$restProps = compute_rest_props($$props, ["type", "value", "size", "defaultClass", "color", "floatClass"]);
       let $$slots = compute_slots(slots);
-      let { type = "text" } = $$props;
+      let { type: type2 = "text" } = $$props;
       let { value = void 0 } = $$props;
       let { size = void 0 } = $$props;
       let { defaultClass = "block w-full disabled:cursor-not-allowed disabled:opacity-50" } = $$props;
@@ -3636,8 +3636,8 @@ var init_Modal = __esm({
       const rightPadding = { sm: "pr-9", md: "pr-10", lg: "pr-11" };
       const inputPadding = { sm: "p-2", md: "p-2.5", lg: "p-3" };
       let inputClass;
-      if ($$props.type === void 0 && $$bindings.type && type !== void 0)
-        $$bindings.type(type);
+      if ($$props.type === void 0 && $$bindings.type && type2 !== void 0)
+        $$bindings.type(type2);
       if ($$props.value === void 0 && $$bindings.value && value !== void 0)
         $$bindings.value(value);
       if ($$props.size === void 0 && $$bindings.size && size !== void 0)
@@ -3680,7 +3680,7 @@ var init_Modal = __esm({
             }) : ` <input${spread(
               [
                 escape_object($$restProps),
-                escape_object({ type }),
+                escape_object({ type: type2 }),
                 {
                   class: escape_attribute_value(inputClass)
                 }
@@ -3819,6 +3819,4035 @@ var init_Modal = __esm({
   }
 });
 
+// .svelte-kit/output/server/chunks/CldImage.js
+function parseUrl(src) {
+  var _a, _b, _c, _d;
+  if (typeof src !== "string") {
+    throw new Error(`Failed to parse URL: Invalid src of type ${typeof src}`);
+  }
+  const hasVersion = REGEX_VERSION.test(src);
+  if (!hasVersion) {
+    throw new Error(`Invalid src: Does not include version (Ex: /v1234/)`);
+  }
+  const [baseUrlWithExtension, queryString] = src.split("?");
+  const formatMatches = baseUrlWithExtension.match(REGEX_FORMAT);
+  let baseUrl = baseUrlWithExtension;
+  let format;
+  if (formatMatches !== null) {
+    format = `${formatMatches[0]}`;
+    baseUrl = baseUrlWithExtension.replace(new RegExp(`${format}$`), "");
+  }
+  const results = baseUrl.match(REGEX_URL);
+  const transformations = (_b = (_a = results == null ? void 0 : results.groups) == null ? void 0 : _a.transformations) == null ? void 0 : _b.split("/").filter((t) => !!t);
+  const parts = {
+    ...results == null ? void 0 : results.groups,
+    format,
+    seoSuffix: void 0,
+    transformations: transformations || [],
+    queryParams: {},
+    version: ((_c = results == null ? void 0 : results.groups) == null ? void 0 : _c.version) ? parseInt(results.groups.version.replace("v", "")) : void 0
+  };
+  if (queryString) {
+    parts.queryParams = queryString.split("&").reduce((prev, curr) => {
+      const [key2, value] = curr.split("=");
+      prev[key2] = value;
+      return prev;
+    }, {});
+  }
+  if (parts.assetType && ASSET_TYPES_SEO.includes(parts.assetType)) {
+    const publicIdParts = ((_d = parts.publicId) == null ? void 0 : _d.split("/")) || [];
+    parts.seoSuffix = publicIdParts.pop();
+    parts.publicId = publicIdParts.join("/");
+  }
+  return parts;
+}
+function getTransformations(src) {
+  const { transformations = [] } = parseUrl(src) || {};
+  return transformations.map((t) => t.split(","));
+}
+function testColorIsHex(value) {
+  if (typeof value !== "string")
+    return false;
+  return !!value.startsWith("#");
+}
+function convertColorHexToRgb(value) {
+  return `rgb:${value.replace("#", "")}`;
+}
+function encodeBase64(value) {
+  if (typeof btoa === "function") {
+    return btoa(value);
+  }
+  if (typeof Buffer !== "undefined") {
+    return Buffer.from(value).toString("base64");
+  }
+}
+function objectHasKey(obj, key2) {
+  return Object.prototype.hasOwnProperty.call(obj, key2);
+}
+function sortByKey(array2 = [], key2, type2 = "asc") {
+  function compare(a, b) {
+    let keyA = a[key2];
+    let keyB = b[key2];
+    if (typeof keyA === "string") {
+      keyA = keyA.toLowerCase();
+    }
+    if (typeof keyB === "string") {
+      keyB = keyB.toLowerCase();
+    }
+    if (keyA < keyB) {
+      return -1;
+    }
+    if (keyA > keyB) {
+      return 1;
+    }
+    return 0;
+  }
+  let newArray = [...array2];
+  if (typeof key2 !== "string")
+    return newArray;
+  newArray = newArray.sort(compare);
+  if (type2 === "desc") {
+    return newArray.reverse();
+  }
+  return newArray;
+}
+function isObject(a) {
+  if (typeof a !== "object" || a instanceof Array) {
+    return false;
+  } else {
+    return true;
+  }
+}
+function createUnsupportedError(message) {
+  return new UnsupportedError(message);
+}
+function qualifierToJson() {
+  return this._qualifierModel || { error: createUnsupportedError(`unsupported qualifier ${this.constructor.name}`) };
+}
+function mapToSortedArray(map, flags2) {
+  const array2 = Array.from(map.entries());
+  flags2.forEach((flag) => {
+    array2.push(["fl", flag]);
+  });
+  return array2.sort().map((v) => v[1]);
+}
+function actionToJson() {
+  var _a, _b, _c;
+  const actionModelIsNotEmpty = this._actionModel && Object.keys(this._actionModel).length;
+  const sourceTransformationError = (_c = (_b = (_a = this._actionModel) === null || _a === void 0 ? void 0 : _a.source) === null || _b === void 0 ? void 0 : _b.transformation) === null || _c === void 0 ? void 0 : _c.error;
+  if (sourceTransformationError && sourceTransformationError instanceof Error) {
+    return { error: sourceTransformationError };
+  }
+  if (actionModelIsNotEmpty) {
+    return this._actionModel;
+  }
+  return { error: createUnsupportedError(`unsupported action ${this.constructor.name}`) };
+}
+function prepareColor(color) {
+  if (color) {
+    return color.match(/^#/) ? `rgb:${color.substr(1)}` : color;
+  } else {
+    return color;
+  }
+}
+function isErrorObject(obj) {
+  const errorObj = obj;
+  return "error" in errorObj && !!errorObj.error;
+}
+function lossy() {
+  return new FlagQualifier("lossy");
+}
+function preserveTransparency() {
+  return new FlagQualifier("preserve_transparency");
+}
+function progressive(mode) {
+  return new FlagQualifier("progressive", mode);
+}
+function objectFlip(obj) {
+  const result = {};
+  Object.keys(obj).forEach((key2) => {
+    result[obj[key2]] = key2;
+  });
+  return result;
+}
+function isUrl2(publicID) {
+  return publicID.match(/^https?:\//);
+}
+function isFileName(publicID) {
+  return publicID.indexOf("/") < 0;
+}
+function publicIDContainsVersion(publicID) {
+  return publicID.match(/^v[0-9]+/);
+}
+function getUrlPrefix(cloudName, urlConfig) {
+  const secure = urlConfig.secure;
+  const privateCDN = urlConfig.privateCdn;
+  const cname = urlConfig.cname;
+  const secureDistribution = urlConfig.secureDistribution;
+  if (!secure && !cname) {
+    return `http://res.cloudinary.com/${cloudName}`;
+  }
+  if (secure && !secureDistribution && privateCDN) {
+    return `https://${cloudName}-res.cloudinary.com`;
+  }
+  if (secure && !secureDistribution) {
+    return `https://res.cloudinary.com/${cloudName}`;
+  }
+  if (secure && secureDistribution && privateCDN) {
+    return `https://${secureDistribution}`;
+  }
+  if (secure && secureDistribution) {
+    return `https://${secureDistribution}/${cloudName}`;
+  }
+  if (!secure && cname) {
+    return `http://${cname}/${cloudName}`;
+  } else {
+    return "ERROR";
+  }
+}
+function handleAssetType(assetType) {
+  if (!assetType) {
+    return "image";
+  }
+  return assetType;
+}
+function handleDeliveryType(deliveryType) {
+  if (!deliveryType) {
+    return "upload";
+  }
+  return deliveryType;
+}
+function getUrlVersion(publicID, version2, forceVersion) {
+  const shouldForceVersion = forceVersion !== false;
+  if (version2) {
+    return `v${version2}`;
+  }
+  if (publicIDContainsVersion(publicID) || isUrl2(publicID) || isFileName(publicID)) {
+    return "";
+  }
+  return shouldForceVersion ? "v1" : "";
+}
+function stringPad(value, _targetLength, _padString) {
+  let targetLength = _targetLength >> 0;
+  let padString = String(typeof _padString !== "undefined" ? _padString : " ");
+  if (value.length > targetLength) {
+    return String(value);
+  } else {
+    targetLength = targetLength - value.length;
+    if (targetLength > padString.length) {
+      padString += repeatStringNumTimes(padString, targetLength / padString.length);
+    }
+    return padString.slice(0, targetLength) + String(value);
+  }
+}
+function repeatStringNumTimes(string, _times) {
+  let times = _times;
+  let repeatedString = "";
+  while (times > 0) {
+    repeatedString += string;
+    times--;
+  }
+  return repeatedString;
+}
+function reverseVersion(semVer) {
+  if (semVer.split(".").length < 2) {
+    throw new Error("invalid semVer, must have at least two segments");
+  }
+  return semVer.split(".").reverse().map((segment) => {
+    const asNumber = +segment;
+    if (isNaN(asNumber) || asNumber < 0) {
+      throw "Invalid version number provided";
+    }
+    return stringPad(segment, 2, "0");
+  }).join(".");
+}
+function encodeVersion(semVer) {
+  let strResult = "";
+  const parts = semVer.split(".").length;
+  const paddedStringLength = parts * 6;
+  const paddedReversedSemver = reverseVersion(semVer);
+  const num2 = parseInt(paddedReversedSemver.split(".").join(""));
+  let paddedBinary = num2.toString(2);
+  paddedBinary = stringPad(paddedBinary, paddedStringLength, "0");
+  if (paddedBinary.length % 6 !== 0) {
+    throw "Version must be smaller than 43.21.26)";
+  }
+  paddedBinary.match(/.{1,6}/g).forEach((bitString) => {
+    strResult += base64Map[bitString];
+  });
+  return strResult;
+}
+function getAnalyticsOptions(options2) {
+  const analyticsOptions = {
+    sdkSemver: options2.sdkSemver,
+    techVersion: options2.techVersion,
+    sdkCode: options2.sdkCode,
+    product: options2.product,
+    feature: "0"
+  };
+  if (options2.accessibility) {
+    analyticsOptions.feature = "D";
+  }
+  if (options2.lazyload) {
+    analyticsOptions.feature = "C";
+  }
+  if (options2.responsive) {
+    analyticsOptions.feature = "A";
+  }
+  if (options2.placeholder) {
+    analyticsOptions.feature = "B";
+  }
+  return analyticsOptions;
+}
+function getNodeVersion() {
+  const failedVersion = "0.0.0";
+  if (typeof window !== "undefined") {
+    return failedVersion;
+  } else {
+    try {
+      return process.versions.node || failedVersion;
+    } catch (e) {
+      return failedVersion;
+    }
+  }
+}
+function ensureShapeOfTrackedProperties(trackedAnalytics) {
+  const defaults = {
+    techVersion: getNodeVersion(),
+    sdkCode: "T",
+    sdkSemver: packageVersion.split("-")[0],
+    product: "A",
+    responsive: false,
+    placeholder: false,
+    lazyload: false,
+    accessibility: false
+  };
+  if (!trackedAnalytics) {
+    return defaults;
+  } else {
+    return Object.assign(Object.assign({}, defaults), trackedAnalytics);
+  }
+}
+function getSDKAnalyticsSignature(_trackedAnalytics) {
+  const trackedAnalytics = ensureShapeOfTrackedProperties(_trackedAnalytics);
+  const analyticsOptions = getAnalyticsOptions(trackedAnalytics);
+  try {
+    const twoPartVersion = removePatchFromSemver(analyticsOptions.techVersion);
+    const encodedSDKVersion = encodeVersion(analyticsOptions.sdkSemver);
+    const encodedTechVersion = encodeVersion(twoPartVersion);
+    const featureCode = analyticsOptions.feature;
+    const SDKCode = analyticsOptions.sdkCode;
+    const product = analyticsOptions.product;
+    const algoVersion = "B";
+    return `${algoVersion}${product}${SDKCode}${encodedSDKVersion}${encodedTechVersion}${featureCode}`;
+  } catch (e) {
+    return "E";
+  }
+}
+function removePatchFromSemver(semVerStr) {
+  const parts = semVerStr.split(".");
+  return `${parts[0]}.${parts[1]}`;
+}
+function normalizeNumberParameter(param) {
+  if (typeof param !== "string")
+    return param;
+  return parseInt(param);
+}
+function plugin(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const {
+    width: defaultWidth,
+    height: defaultHeight,
+    widthResize: defaultWidthResize,
+    crop = "limit"
+  } = options2;
+  const overrides = {
+    width: void 0
+  };
+  let height = normalizeNumberParameter(defaultHeight);
+  let width = normalizeNumberParameter(defaultWidth);
+  let widthResize = normalizeNumberParameter(defaultWidthResize);
+  let transformationString = "";
+  if (width) {
+    transformationString = `c_${crop},w_${width}`;
+  }
+  if (!options2.gravity && cropsGravityAuto.includes(crop)) {
+    options2.gravity = "auto";
+  }
+  if (!["limit"].includes(crop)) {
+    transformationString = `${transformationString},h_${height}`;
+  }
+  if (options2.gravity) {
+    if (options2.gravity === "auto" && !cropsGravityAuto.includes(crop)) {
+      console.warn(`Auto gravity can only be used with crop modes: ${cropsGravityAuto.join(", ")}. Not applying gravity.`);
+    } else {
+      transformationString = `${transformationString},g_${options2.gravity}`;
+    }
+  }
+  if (options2.zoom) {
+    if (options2.zoom === "auto" && !cropsWithZoom.includes(crop)) {
+      console.warn(`Zoom can only be used with crop modes: ${cropsWithZoom.join(", ")}. Not applying zoom.`);
+    } else {
+      transformationString = `${transformationString},z_${options2.zoom}`;
+    }
+  }
+  cldAsset.effect(transformationString);
+  if (width && widthResize && widthResize < width) {
+    overrides.width = widthResize;
+  }
+  return {
+    options: overrides
+  };
+}
+function constructTransformation({ prefix: prefix2, qualifier, value, converters }) {
+  let transformation = "";
+  if (prefix2) {
+    transformation = `${prefix2}_`;
+  }
+  let transformationValue = value;
+  converters == null ? void 0 : converters.forEach(({ test, convert }) => {
+    if (!test(transformationValue))
+      return;
+    transformationValue = convert(transformationValue);
+  });
+  if (transformationValue === true || transformationValue === "true") {
+    return `${transformation}${qualifier}`;
+  }
+  if (typeof transformationValue === "string" || typeof transformationValue === "number") {
+    if (prefix2) {
+      return `${transformation}${qualifier}:${transformationValue}`;
+    } else {
+      return `${qualifier}_${transformationValue}`;
+    }
+  }
+}
+function plugin2(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const transformationStrings = constructTransformationString({
+    effects,
+    options: options2
+  });
+  transformationStrings.filter((t) => !!t).forEach((transformation) => cldAsset.effect(transformation));
+  if (Array.isArray(options2 == null ? void 0 : options2.effects)) {
+    options2 == null ? void 0 : options2.effects.forEach((effectsSet) => {
+      const transformationString = constructTransformationString({
+        effects,
+        options: effectsSet
+      }).filter((t) => !!t).join(",");
+      cldAsset.effect(transformationString);
+    });
+  }
+  function constructTransformationString({ effects: effects2, options: options22 }) {
+    return Object.keys(effects2).map((key2) => {
+      const { prefix: prefix2, qualifier, converters } = effects2[key2];
+      return constructTransformation({
+        qualifier,
+        prefix: prefix2,
+        value: options22 == null ? void 0 : options22[key2],
+        converters
+      });
+    });
+  }
+  return {};
+}
+function plugin3(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { flags: flags2 = [] } = options2;
+  if (Array.isArray(flags2) && flags2.length > 0) {
+    flags2.forEach((flag) => {
+      if (!supportedFlags.includes(flag))
+        return;
+      cldAsset.addFlag(flag);
+    });
+  } else if (typeof flags2 === "object") {
+    Object.entries(flags2).forEach(([qualifier, value]) => {
+      if (!supportedFlags.includes(qualifier))
+        return;
+      cldAsset.addTransformation(`fl_${qualifier}:${value}`);
+    });
+  }
+  return {};
+}
+function plugin4(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { fillBackground } = options2;
+  if (fillBackground === true) {
+    const properties = [
+      "b_gen_fill",
+      `ar_${options2.width}:${options2.height}`,
+      `w_${options2.width}`,
+      `c_${defaultCrop}`
+    ];
+    cldAsset.addTransformation(properties.join(","));
+  } else if (typeof fillBackground === "object") {
+    const { crop = defaultCrop, gravity, prompt } = fillBackground;
+    const properties = [
+      `ar_${options2.width}:${options2.height}`,
+      `w_${options2.width}`,
+      `c_${crop}`
+    ];
+    if (typeof prompt === "string") {
+      properties.unshift(`b_gen_fill:${prompt}`);
+    } else {
+      properties.unshift(`b_gen_fill`);
+    }
+    if (typeof gravity === "string") {
+      properties.push(`g_${gravity}`);
+    }
+    cldAsset.addTransformation(properties.join(","));
+  }
+  return {};
+}
+function plugin5(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { sanitize = true } = options2;
+  const shouldApplySanitizer = sanitize && (options2.format === "svg" || cldAsset.publicID.endsWith(".svg"));
+  if (shouldApplySanitizer) {
+    cldAsset.effect("fl_sanitize");
+  }
+  return {};
+}
+function plugin6(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { text: text22, overlays = [] } = options2;
+  const type2 = "overlay";
+  const typeQualifier = "l";
+  if (Array.isArray(overlays)) {
+    overlays.forEach(applyOverlay);
+  }
+  if (typeof text22 === "string") {
+    applyOverlay({
+      text: {
+        ...DEFAULT_TEXT_OPTIONS,
+        text: text22
+      }
+    });
+  } else if (typeof text22 === "object") {
+    applyOverlay({
+      text: {
+        ...DEFAULT_TEXT_OPTIONS,
+        ...text22
+      }
+    });
+  }
+  function applyOverlay({ publicId, url, position: position2, text: text3, effects: layerEffects = [], appliedEffects = [], ...options22 }) {
+    var _a;
+    const hasPublicId = typeof publicId === "string";
+    const hasUrl = typeof url === "string";
+    const hasText = typeof text3 === "object" || typeof text3 === "string";
+    const hasPosition = typeof position2 === "object";
+    if (!hasPublicId && !hasUrl && !hasText) {
+      console.warn(`An ${type2} is missing Public ID, URL, or Text`);
+      return;
+    }
+    let layerTransformation;
+    if (hasText) {
+      layerTransformation = `${typeQualifier}_text`;
+    } else if (hasPublicId) {
+      layerTransformation = `${typeQualifier}_${publicId.replace(/\//g, ":")}`;
+    } else if (hasUrl) {
+      layerTransformation = `${typeQualifier}_fetch:${encodeBase64(url)}`;
+    }
+    const primary2 = [];
+    const applied = [];
+    Object.keys(options22).forEach((key2) => {
+      if (!objectHasKey(primary, key2))
+        return;
+      const { qualifier, converters } = primary[key2];
+      const transformation = constructTransformation({
+        qualifier,
+        value: options22[key2],
+        converters
+      });
+      if (transformation) {
+        primary2.push(transformation);
+      }
+    });
+    layerEffects.forEach((effect) => {
+      Object.keys(effect).forEach((key2) => {
+        const { qualifier, prefix: prefix2, converters } = primary[key2] || effects[key2] || {};
+        const transformation = constructTransformation({
+          qualifier,
+          prefix: prefix2,
+          value: effect[key2],
+          converters
+        });
+        if (transformation) {
+          primary2.push(transformation);
+        }
+      });
+    });
+    appliedEffects.forEach((effect) => {
+      Object.keys(effect).forEach((key2) => {
+        const { qualifier, prefix: prefix2, converters } = primary[key2] || effects[key2] || {};
+        const transformation = constructTransformation({
+          qualifier,
+          prefix: prefix2,
+          value: effect[key2],
+          converters
+        });
+        if (transformation) {
+          applied.push(transformation);
+        }
+      });
+    });
+    if (hasText) {
+      if (typeof text3 === "string") {
+        text3 = {
+          ...DEFAULT_TEXT_OPTIONS,
+          text: text3
+        };
+      }
+      const textTransformations = [];
+      if (typeof text3 === "object") {
+        const textOptions = Object.keys(text3).filter((key2) => objectHasKey(text2, key2)).map((key2) => {
+          const value = text3 && objectHasKey(text3, key2) && text3[key2];
+          return {
+            ...text2[key2],
+            key: key2,
+            value,
+            order: text2[key2].order || 99
+          };
+        });
+        const sortedTextOptions = sortByKey(textOptions, "order");
+        for (const textOption of sortedTextOptions) {
+          const { key: key2, value, qualifier, location: location2, converters } = textOption;
+          let textValue = value;
+          converters == null ? void 0 : converters.forEach(({ test, convert }) => {
+            if (!test(value))
+              return;
+            textValue = convert(value);
+          });
+          if (location2 === "primary") {
+            primary2.push(`${qualifier}_${textValue}`);
+          } else if (qualifier === "self") {
+            textTransformations.push(key2);
+          } else if (qualifier) {
+            textTransformations.push(`${qualifier}_${textValue}`);
+          } else {
+            textTransformations.push(textValue);
+          }
+        }
+      }
+      const specialCharacters = {
+        ".": "%2E",
+        ",": "%2C",
+        "/": "%2F"
+      };
+      let layerText = (text3 == null ? void 0 : text3.text) || "";
+      if (typeof layerText === "string") {
+        (_a = Object.keys(specialCharacters)) == null ? void 0 : _a.forEach((character) => {
+          layerText = layerText == null ? void 0 : layerText.replace(character, specialCharacters[character]);
+        });
+      }
+      layerTransformation = `${layerTransformation}:${textTransformations.join("_")}:${layerText}`;
+    }
+    if (hasPosition) {
+      Object.keys(position2).forEach((key2) => {
+        if (!objectHasKey(position, key2))
+          return;
+        const { qualifier, converters } = position[key2];
+        const transformation = constructTransformation({
+          qualifier,
+          value: position2[key2],
+          converters
+        });
+        if (transformation) {
+          applied.push(transformation);
+        }
+      });
+    }
+    if (primary2.length > 0) {
+      layerTransformation = `${layerTransformation},${primary2.join(",")}`;
+    }
+    layerTransformation = `${layerTransformation}/fl_layer_apply,fl_no_overflow`;
+    if (applied.length > 0) {
+      layerTransformation = `${layerTransformation},${applied.join(",")}`;
+    }
+    cldAsset.addTransformation(layerTransformation);
+  }
+  return {};
+}
+function plugin7(props15) {
+  const { cldAsset, options: options2 } = props15;
+  let { transformations = [] } = options2;
+  if (!Array.isArray(transformations)) {
+    transformations = [transformations];
+  }
+  transformations.forEach((transformation) => {
+    cldAsset.addTransformation(`t_${transformation}`);
+  });
+  return {};
+}
+function plugin8(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { rawTransformations = [] } = options2;
+  rawTransformations.forEach((transformation) => {
+    cldAsset.addTransformation(transformation);
+  });
+  return {};
+}
+function plugin9(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { removeBackground = false } = options2;
+  if (removeBackground) {
+    cldAsset.effect("e_background_removal");
+  }
+  return {};
+}
+function plugin10(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { seoSuffix } = options2;
+  if (typeof seoSuffix === "string") {
+    if (options2.deliveryType === "fetch") {
+      console.warn("SEO suffix is not supported with a delivery type of fetch");
+    } else {
+      cldAsset.setSuffix(seoSuffix);
+    }
+  }
+  return {};
+}
+function plugin11(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { underlay, underlays = [] } = options2;
+  const typeQualifier = "u";
+  if (Array.isArray(underlays)) {
+    underlays.forEach(applyUnderlay);
+  }
+  if (typeof underlay === "string") {
+    const underlayOptions = {
+      publicId: underlay,
+      crop: "fill",
+      width: "1.0",
+      height: "1.0",
+      flags: ["relative"]
+    };
+    applyUnderlay(underlayOptions);
+  }
+  function applyUnderlay({ publicId, type: type2, position: position2, effects: layerEffects = [], flags: flags2 = [], ...options22 }) {
+    const hasPublicId = typeof publicId === "string";
+    const hasPosition = typeof position2 === "object";
+    if (!hasPublicId) {
+      console.warn(`An ${type2} is missing a Public ID`);
+      return;
+    }
+    let layerTransformation = `${typeQualifier}_${publicId.replace(/\//g, ":")}`;
+    const primary2 = [];
+    const applied = [];
+    Object.keys(options22).forEach((key2) => {
+      if (!objectHasKey(primary, key2))
+        return;
+      const { qualifier } = primary[key2];
+      primary2.push(`${qualifier}_${options22[key2]}`);
+    });
+    layerEffects.forEach((effect) => {
+      Object.keys(effect).forEach((key2) => {
+        if (!objectHasKey(primary, key2))
+          return;
+        const { qualifier } = primary[key2];
+        primary2.push(`${qualifier}_${effect[key2]}`);
+      });
+    });
+    if (hasPosition) {
+      Object.keys(position2).forEach((key2) => {
+        if (!objectHasKey(position, key2))
+          return;
+        const { qualifier } = position[key2];
+        applied.push(`${qualifier}_${position2[key2]}`);
+      });
+    }
+    flags2.forEach((key2) => {
+      if (!objectHasKey(flags, key2))
+        return;
+      const { qualifier, prefix: prefix2 } = flags[key2];
+      primary2.push(`${prefix2}_${qualifier}`);
+    });
+    layerTransformation = `${layerTransformation},${primary2.join(",")}`;
+    layerTransformation = `${layerTransformation}/fl_layer_apply,fl_no_overflow`;
+    if (applied.length > 0) {
+      layerTransformation = `${layerTransformation},${applied.join(",")}`;
+    }
+    cldAsset.addTransformation(layerTransformation);
+  }
+  return {};
+}
+function plugin12(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { version: version2 } = options2;
+  if (typeof version2 === "string" || typeof version2 === "number") {
+    cldAsset.setVersion(`${version2}`.replace("v", ""));
+  }
+  return {};
+}
+function plugin13(props15) {
+  const { cldAsset, options: options2 } = props15;
+  Object.keys(options2).forEach((key2) => {
+    if (!objectHasKey(video, key2))
+      return;
+    const { prefix: prefix2, qualifier, converters } = video[key2];
+    const transformation = constructTransformation({
+      prefix: prefix2,
+      qualifier,
+      value: options2[key2],
+      converters
+    });
+    cldAsset.addTransformation(transformation);
+  });
+  return {};
+}
+function plugin14(props15) {
+  const { cldAsset, options: options2 } = props15;
+  const { zoompan = false } = options2;
+  const overrides = {
+    format: void 0
+  };
+  if (zoompan === true) {
+    cldAsset.effect("e_zoompan");
+  } else if (typeof zoompan === "string") {
+    if (zoompan === "loop") {
+      cldAsset.effect("e_zoompan");
+      cldAsset.effect("e_loop");
+    } else {
+      cldAsset.effect(`e_zoompan:${zoompan}`);
+    }
+  } else if (typeof zoompan === "object") {
+    let zoompanEffect = "e_zoompan";
+    if (typeof zoompan.options === "string") {
+      zoompanEffect = `${zoompanEffect}${zoompan.options}`;
+    }
+    cldAsset.effect(zoompanEffect);
+    let loopEffect;
+    if (zoompan.loop === true) {
+      loopEffect = "e_loop";
+    } else if (typeof zoompan.loop === "string") {
+      loopEffect = `e_loop${zoompan.loop}`;
+    }
+    if (loopEffect) {
+      cldAsset.effect(loopEffect);
+    }
+  }
+  if (zoompan !== false) {
+    overrides.format = "gif";
+  }
+  return {
+    options: overrides
+  };
+}
+function constructCloudinaryUrl({ options: options2, config, analytics }) {
+  const cld = new Cloudinary(config);
+  if (typeof (options2 == null ? void 0 : options2.src) !== "string") {
+    throw Error(`Failed to construct Cloudinary URL: Missing source (src) in options`);
+  }
+  if (!(options2 == null ? void 0 : options2.assetType)) {
+    options2.assetType = "image";
+  }
+  const propsCheck = [];
+  transformationPlugins.forEach(({ props: props15 = [] }) => {
+    props15.forEach((prop) => {
+      if (propsCheck.includes(prop)) {
+        throw new Error(`Option ${prop} already exists!`);
+      }
+      propsCheck.push(prop);
+    });
+  });
+  const parsedOptions = {
+    seoSuffix: void 0,
+    version: void 0
+  };
+  let publicId;
+  if (typeof options2.src === "string" && /^https?:\/\//.test(options2.src)) {
+    try {
+      const parts = parseUrl(options2.src);
+      publicId = parts == null ? void 0 : parts.publicId;
+      parsedOptions.seoSuffix = parts == null ? void 0 : parts.seoSuffix;
+      parsedOptions.version = parts == null ? void 0 : parts.version;
+    } catch (e) {
+    }
+  }
+  if (!publicId) {
+    publicId = options2.src;
+  }
+  Object.keys(parsedOptions).forEach((key2) => {
+    if (objectHasKey(options2, key2))
+      return;
+    options2[key2] = parsedOptions[key2];
+  });
+  let cldAsset = void 0;
+  if (["image", "images"].includes(options2.assetType)) {
+    cldAsset = cld.image(publicId);
+  } else if (["video", "videos"].includes(options2.assetType)) {
+    cldAsset = cld.video(publicId);
+  }
+  if (typeof cldAsset === "undefined") {
+    throw new Error("Invalid asset type.");
+  }
+  transformationPlugins.forEach(({ plugin: plugin15, assetTypes: assetTypes15, props: props15 }) => {
+    const supportedAssetType = typeof (options2 == null ? void 0 : options2.assetType) !== "undefined" && assetTypes15.includes(options2 == null ? void 0 : options2.assetType);
+    if (!supportedAssetType) {
+      const optionsKeys = Object.keys(options2);
+      const attemptedUse = props15.map((prop) => optionsKeys.includes(prop)).filter((isUsed) => !!isUsed).length > 0;
+      if (attemptedUse) {
+        console.warn(`One of the following props [${props15.join(", ")}] was used with an unsupported asset type [${options2 == null ? void 0 : options2.assetType}]`);
+      }
+      return;
+    }
+    const results = plugin15({
+      cldAsset,
+      options: options2
+    });
+    const { options: pluginOptions } = results || { options: void 0 };
+    if ((pluginOptions == null ? void 0 : pluginOptions.format) && options2) {
+      options2.format = pluginOptions.format;
+    }
+    if ((pluginOptions == null ? void 0 : pluginOptions.width) && options2) {
+      options2.resize = {
+        width: pluginOptions == null ? void 0 : pluginOptions.width
+      };
+    }
+  });
+  if (options2 == null ? void 0 : options2.resize) {
+    const { width, crop = "scale" } = options2.resize;
+    cldAsset.effect(`c_${crop},w_${width}`);
+  }
+  cldAsset.setDeliveryType((options2 == null ? void 0 : options2.deliveryType) || "upload");
+  if ((options2 == null ? void 0 : options2.format) !== "default") {
+    cldAsset.format((options2 == null ? void 0 : options2.format) || "auto");
+  }
+  if ((options2 == null ? void 0 : options2.quality) !== "default") {
+    cldAsset.quality((options2 == null ? void 0 : options2.quality) || "auto");
+  }
+  return cldAsset.toURL({
+    trackedAnalytics: analytics
+  });
+}
+function getImageCdnForUrl(url) {
+  return getImageCdnForUrlByDomain(url) || getImageCdnForUrlByPath(url);
+}
+function getImageCdnForUrlByDomain(url) {
+  if (typeof url === "string" && !url.startsWith("https://")) {
+    return false;
+  }
+  const { hostname } = toUrl(url);
+  if (cdnDomains.has(hostname)) {
+    return cdnDomains.get(hostname);
+  }
+  for (const [subdomain, cdn] of cdnSubdomains) {
+    if (hostname.endsWith(`.${subdomain}`)) {
+      return cdn;
+    }
+  }
+  return false;
+}
+function getImageCdnForUrlByPath(url) {
+  const { pathname } = toUrl(url);
+  for (const [prefix2, cdn] of Object.entries(paths)) {
+    if (pathname.startsWith(prefix2)) {
+      return cdn;
+    }
+  }
+  return false;
+}
+function getDirective(key2) {
+  let keyArray = Object.keys(OBJECT_TO_DIRECTIVES_MAP);
+  let directive = keyArray.find((k) => OBJECT_TO_DIRECTIVES_MAP[k] === key2) || "";
+  return directive;
+}
+function getParameterArray(url) {
+  let url_string = url.toString();
+  let paramArray = [];
+  if (url_string) {
+    let splitURL = url_string.split("imgeng=");
+    if (splitURL.length > 1) {
+      paramArray = splitURL[1].split("/");
+    }
+  }
+  return paramArray;
+}
+function getBaseUrl(url) {
+  let url_string = url.toString();
+  let baseUrl = "";
+  if (url_string) {
+    let splitURL = url_string.split("imgeng=");
+    if (splitURL.length > 1) {
+      baseUrl = splitURL[0].slice(0, -1);
+    } else
+      baseUrl = url_string;
+  }
+  return baseUrl;
+}
+function build_IE_directives(directives) {
+  return Object.entries(directives).reduce((acc, [k, v]) => {
+    return acc + maybe_create_directive(k, v);
+  }, "");
+}
+function build_IE_query_string(directives_string) {
+  if (directives_string && directives_string !== "") {
+    return `imgeng=${directives_string}`;
+  }
+  return "";
+}
+function maybe_create_directive(directive, value) {
+  let translated_directive = OBJECT_TO_DIRECTIVES_MAP[directive];
+  if (translated_directive && (value || value === 0)) {
+    return `/${translated_directive}_${value}`;
+  }
+  return "";
+}
+function getDirectives(paramArray) {
+  let directives = {};
+  paramArray.forEach((para) => {
+    let keyValue = para.split("_");
+    if (keyValue.length > 1) {
+      let key2 = keyValue[0];
+      let value = keyValue[1];
+      let directiveKey = getDirective(key2);
+      if (directiveKey) {
+        directives[directiveKey] = value;
+      }
+    }
+  });
+  return directives;
+}
+function getDelegatedCdn(url, cdn) {
+  if (!(cdn in delegators)) {
+    return false;
+  }
+  const maybeDelegate = delegators[cdn];
+  if (!maybeDelegate) {
+    return false;
+  }
+  return maybeDelegate(url);
+}
+function getCanonicalCdnForUrl(url, defaultCdn) {
+  const cdn = getImageCdnForUrl(url) || defaultCdn;
+  if (!cdn) {
+    return false;
+  }
+  const maybeDelegated = getDelegatedCdn(url, cdn);
+  if (maybeDelegated) {
+    return maybeDelegated;
+  }
+  return { cdn, url };
+}
+function transformProps({
+  src,
+  width,
+  height,
+  priority,
+  layout = "constrained",
+  aspectRatio,
+  cdn,
+  transformer,
+  objectFit = "cover",
+  background,
+  breakpoints,
+  ...props15
+}) {
+  const canonical = getCanonicalCdnForUrl(src, cdn);
+  let url = src;
+  if (canonical) {
+    url = canonical.url;
+    transformer || (transformer = getTransformer(canonical.cdn));
+  }
+  width = width && Number(width) || void 0;
+  height = height && Number(height) || void 0;
+  if (priority) {
+    props15.loading || (props15.loading = "eager");
+    props15.fetchpriority || (props15.fetchpriority = "high");
+  } else {
+    props15.loading || (props15.loading = "lazy");
+    props15.decoding || (props15.decoding = "async");
+  }
+  if (props15.alt === "") {
+    props15.role || (props15.role = "presentation");
+  }
+  if (aspectRatio) {
+    if (width) {
+      if (height) {
+        console.error(
+          "Ignoring aspectRatio because width and height are both set"
+        );
+      } else {
+        height = width / aspectRatio;
+      }
+    } else if (height) {
+      width = height * aspectRatio;
+    } else if (layout !== "fullWidth") {
+      console.error(
+        "When aspectRatio is set, either width or height must also be set"
+      );
+    }
+  } else if (width && height) {
+    aspectRatio = width / height;
+  } else if (layout !== "fullWidth") {
+    console.error("Either aspectRatio or both width and height must be set");
+  }
+  if (transformer && background === "auto") {
+    const lowResHeight = aspectRatio ? Math.round(LOW_RES_WIDTH * aspectRatio) : void 0;
+    const lowResImage = transformer({
+      url,
+      width: LOW_RES_WIDTH,
+      height: lowResHeight
+    });
+    if (lowResImage) {
+      background = lowResImage.toString();
+    }
+  }
+  const styleProps = {
+    width,
+    height,
+    aspectRatio,
+    layout,
+    objectFit,
+    background
+  };
+  if (transformer) {
+    props15.sizes || (props15.sizes = getSizes(width, layout));
+    props15.style = {
+      ...getStyle(styleProps),
+      ...props15.style
+    };
+    props15.srcset = getSrcSet({
+      src: url,
+      width,
+      height,
+      aspectRatio,
+      layout,
+      breakpoints,
+      transformer,
+      cdn
+    });
+    const transformed = transformer({ url, width, height });
+    if (transformed) {
+      url = transformed;
+    }
+    if (layout === "fullWidth" || layout === "constrained") {
+      width = void 0;
+      height = void 0;
+    }
+  }
+  return {
+    ...props15,
+    src: url.toString(),
+    width,
+    height
+  };
+}
+function getDefaultExportFromCjs(x) {
+  return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
+}
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { "default": obj };
+}
+function getCldImageUrl(options2, config, analytics) {
+  return constructCloudinaryUrl({
+    options: options2,
+    config: Object.assign({
+      cloud: {
+        cloudName: "simple-reads-books"
+      }
+    }, config),
+    analytics: Object.assign({
+      sdkCode: SVELTE_CLOUDINARY_ANALYTICS_ID,
+      sdkSemver: SVELTE_CLOUDINARY_VERSION,
+      techVersion: SVELTE_VERSION,
+      product: "B"
+    }, analytics)
+  });
+}
+var globals, REGEX_VERSION, REGEX_FORMAT, REGEX_URL, ASSET_TYPES_SEO, Config, Config$1, ALLOWED_URL_CONFIG, URLConfig, URLConfig$1, QualifierValue, UnsupportedError, QualifierModel, Qualifier, FlagQualifier, ActionModel, Action, BackgroundColor, RawAction, FormatQualifier, ACTION_TYPE_TO_CROP_MODE_MAP, ACTION_TYPE_TO_DELIVERY_MODE_MAP, ACTION_TYPE_TO_EFFECT_MODE_MAP, ACTION_TYPE_TO_QUALITY_MODE_MAP, ACTION_TYPE_TO_STREAMING_PROFILE_MODE_MAP, CHROMA_VALUE_TO_CHROMA_MODEL_ENUM, COLOR_SPACE_MODEL_MODE_TO_COLOR_SPACE_MODE_MAP, DELIVERY_MODE_TO_ACTION_TYPE_MAP, DeliveryAction, ProgressiveQualifier, DeliveryFormatAction, Transformation, ImageTransformation, VideoTransformation, chars3, base64Map, num, packageVersion, SEO_TYPES, CloudinaryFile, CloudinaryTransformable, CloudinaryImage, CloudinaryVideo, Cloudinary, __defProp2, __export2, cropping_exports, cropsGravityAuto, cropsWithZoom, props, assetTypes, effects_exports, convertersColors, primary, position, text2, effects, flags, video, props2, assetTypes2, flags_exports, props3, assetTypes3, supportedFlags, fill_background_exports, props4, assetTypes4, defaultCrop, sanitize_exports, props5, assetTypes5, overlays_exports, props6, assetTypes6, DEFAULT_TEXT_OPTIONS, named_transformations_exports, props7, assetTypes7, raw_transformations_exports, props8, assetTypes8, remove_background_exports, props9, assetTypes9, seo_exports, props10, assetTypes10, underlays_exports, props11, assetTypes11, version_exports, props12, assetTypes12, video_exports, props13, assetTypes13, zoompan_exports, props14, assetTypes14, transformationPlugins, domains, subdomains, paths, roundIfNumeric, setParamIfDefined, setParamIfUndefined, getNumericParam, toRelativeUrl, toUrl, cdnDomains, cdnSubdomains, transform$g, transform$f, transform$e, shopifyRegex, parse$3, generate$4, transform$d, transform$c, cloudinaryRegex, parseTransforms$1, formatUrl$1, parse$2, generate$3, transform$b, cloudflareRegex, parseTransforms, formatUrl, parse$1, generate$2, transform$a, transform$9, storyBlokAssets, storyBlokImg2, splitFilters, generateFilters, parse3, generate$1, transform$8, transform$7, delegateUrl, generate, transform$6, transform$5, transform$4, transform$3, transform$2, OBJECT_TO_DIRECTIVES_MAP, transform$1, transform, delegators, getTransformer, getSizes, pixelate, getStyle, DEFAULT_RESOLUTIONS, LOW_RES_WIDTH, getBreakpoints, getSrcSet, dist, objToString, parsers, createParser, _createParser, camelToKebab, snakeToKebab, distExports, styleToCss, Image, name, version$1, description, type, module, main, files, exports, engines, types, repository, keywords, author, license, bugs, homepage, dependencies, devDependencies, scripts, sveltePkg, version, metadata, SVELTE_CLOUDINARY_ANALYTICS_ID, SVELTE_CLOUDINARY_VERSION, SVELTE_VERSION, Object_1, CldImage;
+var init_CldImage = __esm({
+  ".svelte-kit/output/server/chunks/CldImage.js"() {
+    init_ssr();
+    globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
+      // @ts-ignore Node typings have this
+      global
+    );
+    REGEX_VERSION = /\/v\d+\//;
+    REGEX_FORMAT = /\.(ai|avif|gif|png|webp|bmp|bw|djvu|dng|ps|ept|eps|eps3|fbx|flif|gif|glb|gltf|heif|heic|ico|indd|jpg|jpe|jpeg|jp2|wdp|jxr|hdp|obj|pdf|ply|png|psd|arw|cr2|svg|tga|tif|tiff|u3ma|usdz|webp|3g2|3gp|avi|flv|m3u8|ts|m2ts|mts|mov|mkv|mp4|mpeg|mpd|mxf|ogv|webm|wmv)$/i;
+    REGEX_URL = /https?:\/\/(?<host>[^\/]+)\/(?<cloudName>[^\/]+)\/(?<assetType>image|images|video|videos|raw|files)\/(?<deliveryType>upload|fetch|private|authenticated|sprite|facebook|twitter|youtube|vimeo)?\/?(?<signature>s\-\-[a-zA-Z0-9]+\-\-)?\/?(?<transformations>(?:[^_\/]+_[^,\/]+,?\/?)*\/)*(?<version>v\d+|\w{1,2})\/(?<publicId>[^\s]+)$/;
+    ASSET_TYPES_SEO = ["images", "videos", "files"];
+    Config = class {
+      filterOutNonSupportedKeys(userProvidedConfig, validKeys) {
+        const obj = /* @__PURE__ */ Object.create({});
+        if (isObject(userProvidedConfig)) {
+          Object.keys(userProvidedConfig).forEach((key2) => {
+            if (validKeys.indexOf(key2) >= 0) {
+              obj[key2] = userProvidedConfig[key2];
+            } else {
+              console.warn("Warning - unsupported key provided to configuration: ", key2);
+            }
+          });
+          return obj;
+        } else {
+          return /* @__PURE__ */ Object.create({});
+        }
+      }
+    };
+    Config$1 = Config;
+    ALLOWED_URL_CONFIG = [
+      "cname",
+      "secureDistribution",
+      "privateCdn",
+      "signUrl",
+      "longUrlSignature",
+      "shorten",
+      "useRootPath",
+      "secure",
+      "forceVersion",
+      "analytics",
+      "queryParams"
+    ];
+    URLConfig = class _URLConfig extends Config$1 {
+      /**
+       * @param {IURLConfig} userURLConfig
+       */
+      constructor(userURLConfig) {
+        super();
+        const urlConfig = this.filterOutNonSupportedKeys(userURLConfig, ALLOWED_URL_CONFIG);
+        Object.assign(this, {
+          secure: true
+        }, urlConfig);
+      }
+      extend(userURLConfig) {
+        const urlConfig = this.filterOutNonSupportedKeys(userURLConfig, ALLOWED_URL_CONFIG);
+        return new _URLConfig(Object.assign({}, this, urlConfig));
+      }
+      /**
+       * @param {string} value Sets the cname
+       */
+      setCname(value) {
+        this.cname = value;
+        return this;
+      }
+      /**
+       * @param {string} value Sets the secureDistribution
+       */
+      setSecureDistribution(value) {
+        this.secureDistribution = value;
+        return this;
+      }
+      /**
+       * @param {boolean} value Sets whether to use a private CDN (Removes cloudName from URL)
+       */
+      setPrivateCdn(value) {
+        this.privateCdn = value;
+        return this;
+      }
+      /**
+       * @param value Sets whether or not to sign the URL
+       */
+      setSignUrl(value) {
+        this.signUrl = value;
+        return this;
+      }
+      /**
+       * @param value Sets whether or not to use a long signature
+       */
+      setLongUrlSignature(value) {
+        this.longUrlSignature = value;
+        return this;
+      }
+      /**
+       * @param value Sets whether or not to shorten the URL
+       */
+      setShorten(value) {
+        this.shorten = value;
+        return this;
+      }
+      /**
+       * @param value Sets whether or not to use a root path
+       */
+      setUseRootPath(value) {
+        this.useRootPath = value;
+        return this;
+      }
+      /**
+       * @param value Sets whether or not to deliver the asset through https
+       */
+      setSecure(value) {
+        this.secure = value;
+        return this;
+      }
+      /**
+       * @param value Sets whether to force a version in the URL
+       */
+      setForceVersion(value) {
+        this.forceVersion = value;
+        return this;
+      }
+      /**
+       * @param params Sets additional params
+       */
+      setQueryParams(params) {
+        this.queryParams = params;
+        return this;
+      }
+    };
+    URLConfig$1 = URLConfig;
+    QualifierValue = class {
+      /**
+       *
+       * @param {QualifierValue | QualifierValue[] | any[] | string | number}qualifierValue
+       */
+      constructor(qualifierValue) {
+        this.values = [];
+        this.delimiter = ":";
+        if (this.hasValue(qualifierValue)) {
+          this.addValue(qualifierValue);
+        }
+      }
+      /**
+       * @description Joins the provided values with the provided delimiter
+       */
+      toString() {
+        return this.values.join(this.delimiter);
+      }
+      /**
+       * @description Checks if the provided argument has a value
+       * @param {any} v
+       * @private
+       * @return {boolean}
+       */
+      hasValue(v) {
+        return typeof v !== "undefined" && v !== null && v !== "";
+      }
+      /**
+       * @desc Adds a value for the this qualifier instance
+       * @param {any} value
+       * @return {this}
+       */
+      addValue(value) {
+        if (Array.isArray(value)) {
+          this.values = this.values.concat(value);
+        } else {
+          this.values.push(value);
+        }
+        this.values = this.values.filter((v) => this.hasValue(v));
+        return this;
+      }
+      /**
+       * @description Sets the delimiter for this instance
+       * @param delimiter
+       */
+      setDelimiter(delimiter) {
+        this.delimiter = delimiter;
+        return this;
+      }
+    };
+    UnsupportedError = class extends Error {
+      constructor(message = "Unsupported") {
+        super(message);
+      }
+    };
+    QualifierModel = class {
+      constructor() {
+        this._qualifierModel = {};
+      }
+      toJson() {
+        return qualifierToJson.apply(this);
+      }
+    };
+    Qualifier = class extends QualifierModel {
+      constructor(key2, qualifierValue) {
+        super();
+        this.delimiter = "_";
+        this.key = key2;
+        if (qualifierValue instanceof QualifierValue) {
+          this.qualifierValue = qualifierValue;
+        } else {
+          this.qualifierValue = new QualifierValue();
+          this.qualifierValue.addValue(qualifierValue);
+        }
+      }
+      toString() {
+        const { key: key2, delimiter, qualifierValue } = this;
+        return `${key2}${delimiter}${qualifierValue.toString()}`;
+      }
+      addValue(value) {
+        this.qualifierValue.addValue(value);
+        return this;
+      }
+    };
+    FlagQualifier = class extends Qualifier {
+      constructor(flagType, flagValue) {
+        let qualifierValue;
+        if (flagValue) {
+          qualifierValue = new QualifierValue([flagType, `${flagValue}`]).setDelimiter(":");
+        } else {
+          qualifierValue = flagType;
+        }
+        super("fl", qualifierValue);
+        this.flagValue = flagValue;
+      }
+      toString() {
+        return super.toString().replace(/\./, "%2E");
+      }
+      getFlagValue() {
+        return this.flagValue;
+      }
+    };
+    ActionModel = class {
+      constructor() {
+        this._actionModel = {};
+      }
+      toJson() {
+        return actionToJson.apply(this);
+      }
+    };
+    Action = class extends ActionModel {
+      constructor() {
+        super(...arguments);
+        this.qualifiers = /* @__PURE__ */ new Map();
+        this.flags = [];
+        this.delimiter = ",";
+        this.actionTag = "";
+      }
+      prepareQualifiers() {
+      }
+      /**
+       * @description Returns the custom name tag that was given to this action
+       * @return {string}
+       */
+      getActionTag() {
+        return this.actionTag;
+      }
+      /**
+       * @description Sets the custom name tag for this action
+       * @return {this}
+       */
+      setActionTag(tag) {
+        this.actionTag = tag;
+        return this;
+      }
+      /**
+       * @description Calls toString() on all child qualifiers (implicitly by using .join()).
+       * @return {string}
+       */
+      toString() {
+        this.prepareQualifiers();
+        return mapToSortedArray(this.qualifiers, this.flags).join(this.delimiter);
+      }
+      /**
+       * @description Adds the parameter to the action.
+       * @param {SDK.Qualifier} qualifier
+       * @return {this}
+       */
+      addQualifier(qualifier) {
+        if (typeof qualifier === "string") {
+          const [key2, value] = qualifier.toLowerCase().split("_");
+          if (key2 === "fl") {
+            this.flags.push(new FlagQualifier(value));
+          } else {
+            this.qualifiers.set(key2, new Qualifier(key2, value));
+          }
+        } else {
+          this.qualifiers.set(qualifier.key, qualifier);
+        }
+        return this;
+      }
+      /**
+       * @description Adds a flag to the current action.
+       * @param {Qualifiers.Flag} flag
+       * @return {this}
+       */
+      addFlag(flag) {
+        if (typeof flag === "string") {
+          this.flags.push(new FlagQualifier(flag));
+        } else {
+          if (flag instanceof FlagQualifier) {
+            this.flags.push(flag);
+          }
+        }
+        return this;
+      }
+      addValueToQualifier(qualifierKey, qualifierValue) {
+        this.qualifiers.get(qualifierKey).addValue(qualifierValue);
+        return this;
+      }
+    };
+    BackgroundColor = class extends Action {
+      constructor(color) {
+        super();
+        this.addQualifier(new Qualifier("b", new QualifierValue(color).setDelimiter("_")));
+      }
+    };
+    RawAction = class {
+      constructor(raw) {
+        this.raw = raw;
+      }
+      toString() {
+        return this.raw;
+      }
+      toJson() {
+        return { error: createUnsupportedError(`unsupported action ${this.constructor.name}`) };
+      }
+    };
+    FormatQualifier = class extends QualifierValue {
+      constructor(val) {
+        super(val);
+        this.val = val;
+      }
+      getValue() {
+        return this.val;
+      }
+    };
+    ACTION_TYPE_TO_CROP_MODE_MAP = {
+      limitFit: "limit",
+      limitFill: "lfill",
+      minimumFit: "mfit",
+      thumbnail: "thumb",
+      limitPad: "lpad",
+      minimumPad: "mpad"
+    };
+    ACTION_TYPE_TO_DELIVERY_MODE_MAP = {
+      colorSpace: "cs",
+      dpr: "dpr",
+      density: "dn",
+      defaultImage: "d",
+      format: "f",
+      quality: "q"
+    };
+    ACTION_TYPE_TO_EFFECT_MODE_MAP = {
+      redEye: "redeye",
+      advancedRedEye: "adv_redeye",
+      oilPaint: "oil_paint",
+      unsharpMask: "unsharp_mask",
+      makeTransparent: "make_transparent"
+    };
+    ACTION_TYPE_TO_QUALITY_MODE_MAP = {
+      autoBest: "auto:best",
+      autoEco: "auto:eco",
+      autoGood: "auto:good",
+      autoLow: "auto:low",
+      jpegminiHigh: "jpegmini:1",
+      jpegminiMedium: "jpegmini:2",
+      jpegminiBest: "jpegmini:0"
+    };
+    ACTION_TYPE_TO_STREAMING_PROFILE_MODE_MAP = {
+      fullHd: "full_hd",
+      fullHdWifi: "full_hd_wifi",
+      fullHdLean: "full_hd_lean",
+      hdLean: "hd_lean"
+    };
+    CHROMA_VALUE_TO_CHROMA_MODEL_ENUM = {
+      444: "CHROMA_444",
+      420: "CHROMA_420"
+    };
+    COLOR_SPACE_MODEL_MODE_TO_COLOR_SPACE_MODE_MAP = {
+      "noCmyk": "no_cmyk",
+      "keepCmyk": "keep_cmyk",
+      "tinySrgb": "tinysrgb",
+      "srgbTrueColor": "srgb:truecolor"
+    };
+    objectFlip(CHROMA_VALUE_TO_CHROMA_MODEL_ENUM);
+    objectFlip(COLOR_SPACE_MODEL_MODE_TO_COLOR_SPACE_MODE_MAP);
+    objectFlip(ACTION_TYPE_TO_CROP_MODE_MAP);
+    DELIVERY_MODE_TO_ACTION_TYPE_MAP = objectFlip(ACTION_TYPE_TO_DELIVERY_MODE_MAP);
+    objectFlip(ACTION_TYPE_TO_EFFECT_MODE_MAP);
+    objectFlip(ACTION_TYPE_TO_QUALITY_MODE_MAP);
+    objectFlip(ACTION_TYPE_TO_STREAMING_PROFILE_MODE_MAP);
+    DeliveryAction = class extends Action {
+      /**
+       * @param {string} deliveryKey A generic Delivery Action Key (such as q, f, dn, etc.)
+       * @param {string} deliveryType A Format Qualifiers for the action, such as Quality.auto()
+       * @param {string} modelProperty internal model property of the action, for example quality uses `level` while dpr uses `density`
+       * @see Visit {@link Actions.Delivery|Delivery} for an example
+       */
+      constructor(deliveryKey, deliveryType, modelProperty) {
+        super();
+        this._actionModel = {};
+        let deliveryTypeValue;
+        if (deliveryType instanceof FormatQualifier) {
+          deliveryTypeValue = deliveryType.getValue();
+        } else {
+          deliveryTypeValue = deliveryType;
+        }
+        this._actionModel.actionType = DELIVERY_MODE_TO_ACTION_TYPE_MAP[deliveryKey];
+        this._actionModel[modelProperty] = deliveryTypeValue;
+        this.addQualifier(new Qualifier(deliveryKey, deliveryType));
+      }
+    };
+    ProgressiveQualifier = class extends FlagQualifier {
+      constructor(mode) {
+        super("progressive", mode);
+      }
+    };
+    DeliveryFormatAction = class extends DeliveryAction {
+      constructor(deliveryKey, deliveryType) {
+        super(deliveryKey, deliveryType, "formatType");
+      }
+      /**
+       * @description Uses lossy compression when delivering animated GIF files.
+       * @return {this}
+       */
+      lossy() {
+        this._actionModel.lossy = true;
+        this.addFlag(lossy());
+        return this;
+      }
+      /**
+       * @description Uses progressive compression when delivering JPG file format.
+       * @return {this}
+       */
+      progressive(mode) {
+        if (mode instanceof ProgressiveQualifier) {
+          this._actionModel.progressive = { mode: mode.getFlagValue() };
+          this.addFlag(mode);
+        } else {
+          this._actionModel.progressive = { mode };
+          this.addFlag(progressive(mode));
+        }
+        return this;
+      }
+      /**
+       * @description Ensures that images with a transparency channel are delivered in PNG format.
+       */
+      preserveTransparency() {
+        this._actionModel.preserveTransparency = true;
+        this.addFlag(preserveTransparency());
+        return this;
+      }
+      static fromJson(actionModel) {
+        const { formatType, lossy: lossy2, progressive: progressive2, preserveTransparency: preserveTransparency2 } = actionModel;
+        let result;
+        if (formatType) {
+          result = new this("f", formatType);
+        } else {
+          result = new this("f");
+        }
+        if (progressive2) {
+          if (progressive2.mode) {
+            result.progressive(progressive2.mode);
+          } else {
+            result.progressive();
+          }
+        }
+        lossy2 && result.lossy();
+        preserveTransparency2 && result.preserveTransparency();
+        return result;
+      }
+    };
+    Transformation = class _Transformation {
+      constructor() {
+        this.actions = [];
+      }
+      /**
+       * @param {SDK.Action | string} action
+       * @return {this}
+       */
+      addAction(action) {
+        let actionToAdd;
+        if (typeof action === "string") {
+          if (action.indexOf("/") >= 0) {
+            throw "addAction cannot accept a string with a forward slash in it - /, use .addTransformation() instead";
+          } else {
+            actionToAdd = new RawAction(action);
+          }
+        } else {
+          actionToAdd = action;
+        }
+        this.actions.push(actionToAdd);
+        return this;
+      }
+      /**
+       * @description Allows the injection of a raw transformation as a string into the transformation, or a Transformation instance that was previously created
+       * @param {string | SDK.Transformation} tx
+       * @example
+       * import {Transformation} from "@cloudinary/url-gen";
+       *
+       * const transformation = new Transformation();
+       * transformation.addTransformation('w_100/w_200/w_300');
+       * @return {this}
+       */
+      addTransformation(tx) {
+        if (tx instanceof _Transformation) {
+          this.actions = this.actions.concat(tx.actions);
+        } else {
+          this.actions.push(new RawAction(tx));
+        }
+        return this;
+      }
+      /**
+       * @return {string}
+       */
+      toString() {
+        return this.actions.map((action) => {
+          return action.toString();
+        }).filter((a) => a).join("/");
+      }
+      /**
+       * @description Delivers an animated GIF.
+       * @param {AnimatedAction} animatedAction
+       * @return {this}
+       */
+      animated(animatedAction) {
+        return this.addAction(animatedAction);
+      }
+      /**
+       * @description Adds a border around the image.
+       * @param {Border} borderAction
+       * @return {this}
+       */
+      border(borderAction) {
+        return this.addAction(borderAction);
+      }
+      /**
+       * @description Adjusts the shape of the delivered image. </br>
+       * <b>Learn more:</b> {@link https://cloudinary.com/documentation/effects_and_artistic_enhancements#distort|Shape changes and distortion effects}
+       * @param {IReshape} reshapeAction
+       * @return {this}
+       */
+      reshape(reshapeAction) {
+        return this.addAction(reshapeAction);
+      }
+      /**
+       * @description Resize the asset using provided resize action
+       * @param {ResizeSimpleAction} resizeAction
+       * @return {this}
+       */
+      resize(resizeAction) {
+        return this.addAction(resizeAction);
+      }
+      /**
+       * @desc An alias to Action Delivery.quality
+       * @param {string|number} quality
+       * @return {this}
+       */
+      quality(quality) {
+        this.addAction(new DeliveryFormatAction("q", quality));
+        return this;
+      }
+      /**
+       * @desc An alias to Action Delivery.format
+       * @param {string} format
+       * @return {this}
+       */
+      format(format) {
+        this.addAction(new DeliveryFormatAction("f", format));
+        return this;
+      }
+      /**
+       * @description Rounds the specified corners of an image.
+       * @param roundCornersAction
+       * @return {this}
+       */
+      roundCorners(roundCornersAction) {
+        return this.addAction(roundCornersAction);
+      }
+      /**
+       * @description Adds an overlay over the base image.
+       * @param {LayerAction} overlayAction
+       * @return {this}
+       */
+      overlay(overlayAction) {
+        return this.addAction(overlayAction);
+      }
+      /**
+       * @description Adds an underlay under the base image.
+       * @param {LayerAction} underlayAction
+       * @return {this}
+       */
+      underlay(underlayAction) {
+        underlayAction.setLayerType("u");
+        return this.addAction(underlayAction);
+      }
+      /**
+       * @description Defines an new user variable.
+       * @param {VariableAction} variableAction
+       * @return {this}
+       */
+      addVariable(variableAction) {
+        return this.addAction(variableAction);
+      }
+      /**
+       * @description Specifies a condition to be met before applying a transformation.
+       * @param {ConditionalAction} conditionAction
+       * @return {this}
+       */
+      conditional(conditionAction) {
+        return this.addAction(conditionAction);
+      }
+      /**
+       * @description Applies a filter or an effect on an asset.
+       * @param {SimpleEffectAction} effectAction
+       * @return {this}
+       */
+      effect(effectAction) {
+        return this.addAction(effectAction);
+      }
+      /**
+       * @description Applies adjustment effect on an asset.
+       * @param action
+       * @return {this}
+       */
+      adjust(action) {
+        return this.addAction(action);
+      }
+      /**
+       * @description Rotates the asset by the given angle.
+       * @param {RotateAction} rotateAction
+       * @return {this}
+       */
+      rotate(rotateAction) {
+        return this.addAction(rotateAction);
+      }
+      /**
+       * @description Applies a pre-defined named transformation of the given name.
+       * @param {NamedTransformation} namedTransformation
+       * @return {this}
+       */
+      namedTransformation(namedTransformation) {
+        return this.addAction(namedTransformation);
+      }
+      /**
+       * @description Applies delivery action.
+       * @param deliveryAction
+       * @return {this}
+       */
+      delivery(deliveryAction) {
+        return this.addAction(deliveryAction);
+      }
+      /**
+       * @description Sets the color of the background.
+       * @param {Qualifiers.Color} color
+       * @return {this}
+       */
+      backgroundColor(color) {
+        return this.addAction(new BackgroundColor(prepareColor(color)));
+      }
+      /**
+       * @description Adds a layer in a Photoshop document.
+       * @param action
+       * @return {this}
+       */
+      psdTools(action) {
+        return this.addAction(action);
+      }
+      /**
+       * @description Extracts an image or a page using an index, a range, or a name from a layered media asset.
+       * @param action
+       * @return {this}
+       */
+      extract(action) {
+        return this.addAction(action);
+      }
+      /**
+       * @description Adds a flag as a separate action.
+       * @param {Qualifiers.Flag | string} flagQualifier
+       * @return {this}
+       */
+      addFlag(flagQualifier) {
+        const action = new Action();
+        let flagToAdd = flagQualifier;
+        if (typeof flagQualifier === "string") {
+          flagToAdd = new FlagQualifier(flagQualifier);
+        }
+        action.addQualifier(flagToAdd);
+        return this.addAction(action);
+      }
+      /**
+       * @description Inject a custom function into the image transformation pipeline.
+       * @return {this}
+       */
+      customFunction(customFunction) {
+        return this.addAction(customFunction);
+      }
+      /**
+       * Transcodes the video (or audio) to another format.
+       * @param {Action} action
+       * @return {this}
+       */
+      transcode(action) {
+        return this.addAction(action);
+      }
+      /**
+       * Applies the specified video edit action.
+       *
+       * @param {videoEditType} action
+       * @return {this}
+       */
+      videoEdit(action) {
+        return this.addAction(action);
+      }
+      toJson() {
+        const actions = [];
+        for (const action of this.actions) {
+          const json2 = action.toJson();
+          if (isErrorObject(json2)) {
+            return json2;
+          }
+          actions.push(json2);
+        }
+        return { actions };
+      }
+    };
+    ImageTransformation = class extends Transformation {
+    };
+    VideoTransformation = class extends Transformation {
+    };
+    chars3 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    base64Map = {};
+    num = 0;
+    chars3.split("").forEach((char) => {
+      let key2 = num.toString(2);
+      key2 = stringPad(key2, 6, "0");
+      base64Map[key2] = char;
+      num++;
+    });
+    packageVersion = "1.11.0";
+    SEO_TYPES = {
+      "image/upload": "images",
+      "image/private": "private_images",
+      "image/authenticated": "authenticated_images",
+      "raw/upload": "files",
+      "video/upload": "videos"
+    };
+    CloudinaryFile = class {
+      constructor(publicID, cloudConfig = {}, urlConfig) {
+        this.setPublicID(publicID);
+        this.setCloudConfig(cloudConfig);
+        this.setURLConfig(urlConfig);
+      }
+      /**
+       * @description Sets the URL Config for this asset
+       * @param urlConfig
+       * @return {this}
+       */
+      setURLConfig(urlConfig) {
+        this.urlConfig = new URLConfig$1(urlConfig);
+        return this;
+      }
+      /**
+       * @description Sets the Cloud Config for this asset
+       * @param urlConfig
+       * @return {this}
+       */
+      setCloudConfig(cloudConfig) {
+        this.cloudName = cloudConfig.cloudName;
+        this.apiKey = cloudConfig.apiKey;
+        this.apiSecret = cloudConfig.apiSecret;
+        this.authToken = cloudConfig.authToken;
+        return this;
+      }
+      /**
+       * @description Sets the public ID of the asset.
+       * @param {string} publicID The public ID of the asset.
+       * @return {this}
+       */
+      setPublicID(publicID) {
+        this.publicID = publicID ? publicID.toString() : "";
+        return this;
+      }
+      /**
+       * @description Sets the delivery type of the asset.
+       * @param {DELIVERY_TYPE | string} newType The type of the asset.
+       * @return {this}
+       */
+      setDeliveryType(newType) {
+        this.deliveryType = newType;
+        return this;
+      }
+      /**
+       * @description Sets the URL SEO suffix of the asset.
+       * @param {string} newSuffix The SEO suffix.
+       * @return {this}
+       */
+      setSuffix(newSuffix) {
+        this.suffix = newSuffix;
+        return this;
+      }
+      /**
+       * @description Sets the signature of the asset.
+       * @param {string} signature The signature.
+       * @return {this}
+       */
+      setSignature(signature) {
+        this.signature = signature;
+        return this;
+      }
+      /**
+       * @description Sets the version of the asset.
+       * @param {string} newVersion The version of the asset.
+       * @return {this}
+       */
+      setVersion(newVersion) {
+        if (newVersion) {
+          this.version = newVersion;
+        }
+        return this;
+      }
+      /**
+       * @description Sets the asset type.
+       * @param {string} newType The type of the asset.
+       * @return {this}
+       */
+      setAssetType(newType) {
+        if (newType) {
+          this.assetType = newType;
+        }
+        return this;
+      }
+      sign() {
+        return this;
+      }
+      /**
+       * @description Serializes to URL string
+       * @param overwriteOptions
+       */
+      toURL(overwriteOptions = {}) {
+        return this.createCloudinaryURL(null, overwriteOptions.trackedAnalytics);
+      }
+      /**
+       * @description Validate various options before attempting to create a URL
+       * The function will throw in case a violation
+       * @throws Validation errors
+       */
+      validateAssetForURLCreation() {
+        if (typeof this.cloudName === "undefined") {
+          throw "You must supply a cloudName when initializing the asset";
+        }
+        const suffixContainsDot = this.suffix && this.suffix.indexOf(".") >= 0;
+        const suffixContainsSlash = this.suffix && this.suffix.indexOf("/") >= 0;
+        if (suffixContainsDot || suffixContainsSlash) {
+          throw "`suffix`` should not include . or /";
+        }
+      }
+      /**
+       * @description return an SEO friendly name for a combination of asset/delivery, some examples:
+       * * image/upload -> images
+       * * video/upload -> videos
+       * If no match is found, return `{asset}/{delivery}`
+       */
+      getResourceType() {
+        const assetType = handleAssetType(this.assetType);
+        const deliveryType = handleDeliveryType(this.deliveryType);
+        const hasSuffix = !!this.suffix;
+        const regularSEOType = `${assetType}/${deliveryType}`;
+        const shortSEOType = SEO_TYPES[`${assetType}/${deliveryType}`];
+        const useRootPath = this.urlConfig.useRootPath;
+        const shorten = this.urlConfig.shorten;
+        if (useRootPath) {
+          if (regularSEOType === "image/upload") {
+            return "";
+          } else {
+            throw new Error(`useRootPath can only be used with assetType: 'image' and deliveryType: 'upload'. Provided: ${regularSEOType} instead`);
+          }
+        }
+        if (shorten && regularSEOType === "image/upload") {
+          return "iu";
+        }
+        if (hasSuffix) {
+          if (shortSEOType) {
+            return shortSEOType;
+          } else {
+            throw new Error(`URL Suffix only supported for ${Object.keys(SEO_TYPES).join(", ")}, Provided: ${regularSEOType} instead`);
+          }
+        }
+        return regularSEOType;
+      }
+      getSignature() {
+        if (this.signature) {
+          return `s--${this.signature}--`;
+        } else {
+          return "";
+        }
+      }
+      /**
+       *
+       * @description Creates a fully qualified CloudinaryURL
+       * @return {string} CloudinaryURL
+       * @throws Validation Errors
+       */
+      createCloudinaryURL(transformation, trackedAnalytics) {
+        if (!this.publicID) {
+          return "";
+        }
+        this.validateAssetForURLCreation();
+        const prefix2 = getUrlPrefix(this.cloudName, this.urlConfig);
+        const transformationString = transformation ? transformation.toString() : "";
+        const version2 = getUrlVersion(this.publicID, this.version, this.urlConfig.forceVersion);
+        const publicID = this.publicID.replace(/,/g, "%2C");
+        const url = [prefix2, this.getResourceType(), this.getSignature(), transformationString, version2, publicID, this.suffix].filter((a) => a).join("/");
+        if (typeof transformation === "string") {
+          return url;
+        } else {
+          const safeURL = encodeURI(url).replace(/\?/g, "%3F").replace(/=/g, "%3D");
+          const queryParams = new URLSearchParams(this.urlConfig.queryParams);
+          if (this.urlConfig.analytics !== false && !publicID.includes("?")) {
+            queryParams.set("_a", getSDKAnalyticsSignature(trackedAnalytics));
+          }
+          const queryParamsString = queryParams.toString();
+          if (queryParamsString) {
+            return `${safeURL}?${queryParamsString}`;
+          } else {
+            return safeURL;
+          }
+        }
+      }
+    };
+    CloudinaryTransformable = class extends CloudinaryFile {
+      constructor(publicID, cloudConfig, urlConfig, transformation) {
+        super(publicID, cloudConfig, urlConfig);
+        this.transformation = transformation;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Animated} animated
+       * @return {this}
+       */
+      animated(animated) {
+        this.transformation.animated(animated);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Border} border
+       * @return {this}
+       */
+      border(border) {
+        this.transformation.border(border);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Reshape} reshape
+       * @return {this}
+       */
+      reshape(reshape) {
+        this.transformation.reshape(reshape);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Resize} resize
+       * @return {this}
+       */
+      resize(resize) {
+        this.transformation.resize(resize);
+        return this;
+      }
+      /**
+       * @desc An alias to Action Delivery.quality
+       * @param {string|number} quality
+       * @return {this}
+       */
+      quality(quality) {
+        this.addAction(new DeliveryFormatAction("q", quality));
+        return this;
+      }
+      /**
+       * @desc An alias to Action Delivery.format
+       * @param {string} format
+       * @return {this}
+       */
+      format(format) {
+        this.addAction(new DeliveryFormatAction("f", format));
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.RoundCorners} roundCorners
+       * @return {this}
+       */
+      roundCorners(roundCorners) {
+        this.transformation.roundCorners(roundCorners);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @return {this}
+       */
+      overlay(overlayAction) {
+        this.transformation.overlay(overlayAction);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Variable} variableAction
+       * @return {this}
+       */
+      addVariable(variableAction) {
+        this.transformation.addVariable(variableAction);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Condition} conditionalAction
+       * @return {this}
+       */
+      conditional(conditionalAction) {
+        this.transformation.conditional(conditionalAction);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Effect} effect
+       * @return {this}
+       */
+      effect(effect) {
+        this.transformation.effect(effect);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Adjust} action
+       * @return {this}
+       */
+      adjust(action) {
+        this.transformation.adjust(action);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Rotate} rotate
+       * @return {this}
+       */
+      rotate(rotate) {
+        this.transformation.rotate(rotate);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.NamedTransformation} namedTransformation
+       * @return {this}
+       */
+      namedTransformation(namedTransformation) {
+        this.transformation.namedTransformation(namedTransformation);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Delivery} deliveryAction
+       * @return {this}
+       */
+      delivery(deliveryAction) {
+        this.transformation.delivery(deliveryAction);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Qualifiers.color} color
+       * @return {this}
+       */
+      backgroundColor(color) {
+        this.transformation.backgroundColor(color);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.PSDTools} action
+       * @return {this}
+       */
+      psdTools(action) {
+        this.transformation.psdTools(action);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Extract} action
+       * @return {this}
+       */
+      extract(action) {
+        this.transformation.extract(action);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Qualifiers.Flag | string} flagQualifier
+       * @return {this}
+       */
+      addFlag(flagQualifier) {
+        this.transformation.addFlag(flagQualifier);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.CustomFunction} customFunction
+       * @return {this}
+       */
+      customFunction(customFunction) {
+        this.transformation.customFunction(customFunction);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {SDK.Action | string} action
+       * @return {this}
+       */
+      addAction(action) {
+        this.transformation.addAction(action);
+        return this;
+      }
+      /**
+       * @description Extend your transformation with another transformation
+       * @param { string | SDK.Transformation } tx
+       */
+      addTransformation(tx) {
+        this.transformation.addTransformation(tx);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @return {string}
+       */
+      toString() {
+        return this.transformation.toString();
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @return {this}
+       */
+      underlay(underlayAction) {
+        this.transformation.underlay(underlayAction);
+        return this;
+      }
+      toURL(overwriteOptions = {}) {
+        return this.createCloudinaryURL(this.transformation, overwriteOptions === null || overwriteOptions === void 0 ? void 0 : overwriteOptions.trackedAnalytics);
+      }
+    };
+    CloudinaryImage = class extends CloudinaryTransformable {
+      constructor(publicID, cloudConfig, urlConfig) {
+        super(publicID, cloudConfig, urlConfig, new ImageTransformation());
+      }
+    };
+    CloudinaryVideo = class extends CloudinaryTransformable {
+      constructor(publicID, cloudConfig, urlConfig) {
+        super(publicID, cloudConfig, urlConfig, new VideoTransformation());
+        this.assetType = "video";
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.Transcode} action
+       * @return {this}
+       */
+      transcode(action) {
+        this.transformation.transcode(action);
+        return this;
+      }
+      /**
+       * @desc A proxy to {@link SDK.Transformation| Transformation} - Calls the same method contained in this.transformation
+       * @param {Actions.VideoEdit} action
+       * @return {this}
+       */
+      videoEdit(action) {
+        this.transformation.videoEdit(action);
+        return this;
+      }
+    };
+    Cloudinary = class {
+      constructor(cloudinaryConfig) {
+        if (cloudinaryConfig) {
+          this.cloudinaryConfig = cloudinaryConfig;
+        }
+      }
+      image(publicID) {
+        return new CloudinaryImage(publicID, this.cloudinaryConfig.cloud, this.cloudinaryConfig.url);
+      }
+      video(publicID) {
+        return new CloudinaryVideo(publicID, this.cloudinaryConfig.cloud, this.cloudinaryConfig.url);
+      }
+      setConfig(cloudinaryConfig) {
+        this.cloudinaryConfig = cloudinaryConfig;
+        return this;
+      }
+      getConfig() {
+        return this.cloudinaryConfig;
+      }
+      extendConfig() {
+      }
+    };
+    __defProp2 = Object.defineProperty;
+    __export2 = (target, all) => {
+      for (var name2 in all)
+        __defProp2(target, name2, { get: all[name2], enumerable: true });
+    };
+    cropping_exports = {};
+    __export2(cropping_exports, {
+      assetTypes: () => assetTypes,
+      normalizeNumberParameter: () => normalizeNumberParameter,
+      plugin: () => plugin,
+      props: () => props
+    });
+    cropsGravityAuto = ["crop", "fill", "lfill", "fill_pad", "thumb"];
+    cropsWithZoom = ["crop", "thumb"];
+    props = [
+      "crop",
+      "gravity",
+      "zoom"
+    ];
+    assetTypes = ["image", "images", "video", "videos"];
+    effects_exports = {};
+    __export2(effects_exports, {
+      assetTypes: () => assetTypes2,
+      plugin: () => plugin2,
+      props: () => props2
+    });
+    convertersColors = [
+      {
+        test: testColorIsHex,
+        convert: convertColorHexToRgb
+      }
+    ];
+    primary = {
+      aspectRatio: {
+        qualifier: "ar"
+      },
+      crop: {
+        qualifier: "c"
+      },
+      gravity: {
+        qualifier: "g"
+      },
+      height: {
+        qualifier: "h"
+      },
+      width: {
+        qualifier: "w"
+      }
+    };
+    position = {
+      angle: {
+        qualifier: "a"
+      },
+      gravity: {
+        qualifier: "g"
+      },
+      x: {
+        qualifier: "x"
+      },
+      y: {
+        qualifier: "y"
+      }
+    };
+    text2 = {
+      alignment: {
+        qualifier: false,
+        order: 6
+      },
+      antialias: {
+        qualifier: "antialias"
+      },
+      border: {
+        qualifier: "bo",
+        location: "primary"
+      },
+      color: {
+        qualifier: "co",
+        location: "primary",
+        converters: convertersColors
+      },
+      fontFamily: {
+        qualifier: false,
+        order: 1
+      },
+      fontSize: {
+        qualifier: false,
+        order: 2
+      },
+      fontStyle: {
+        qualifier: false,
+        order: 4
+      },
+      fontWeight: {
+        qualifier: false,
+        order: 3
+      },
+      hinting: {
+        qualifier: "hinting"
+      },
+      letterSpacing: {
+        qualifier: "letter_spacing"
+      },
+      lineSpacing: {
+        qualifier: "line_spacing"
+      },
+      stroke: {
+        qualifier: "self",
+        order: 7
+      },
+      textDecoration: {
+        qualifier: false,
+        order: 5
+      }
+    };
+    effects = {
+      art: {
+        prefix: "e",
+        qualifier: "art"
+      },
+      autoBrightness: {
+        prefix: "e",
+        qualifier: "auto_brightness"
+      },
+      autoColor: {
+        prefix: "e",
+        qualifier: "auto_color"
+      },
+      autoContrast: {
+        prefix: "e",
+        qualifier: "auto_contrast"
+      },
+      assistColorblind: {
+        prefix: "e",
+        qualifier: "assist_colorblind"
+      },
+      background: {
+        qualifier: "b"
+      },
+      blackwhite: {
+        prefix: "e",
+        qualifier: "blackwhite"
+      },
+      blur: {
+        prefix: "e",
+        qualifier: "blur"
+      },
+      blurFaces: {
+        prefix: "e",
+        qualifier: "blur_faces"
+      },
+      blurRegion: {
+        prefix: "e",
+        qualifier: "blur_region"
+      },
+      border: {
+        qualifier: "bo"
+      },
+      brightness: {
+        prefix: "e",
+        qualifier: "brightness"
+      },
+      brightnessHSB: {
+        prefix: "e",
+        qualifier: "brightness_hsb"
+      },
+      cartoonify: {
+        prefix: "e",
+        qualifier: "cartoonify"
+      },
+      color: {
+        qualifier: "co",
+        converters: convertersColors
+      },
+      colorize: {
+        prefix: "e",
+        qualifier: "colorize"
+      },
+      contrast: {
+        prefix: "e",
+        qualifier: "contrast"
+      },
+      distort: {
+        prefix: "e",
+        qualifier: "distort"
+      },
+      fillLight: {
+        prefix: "e",
+        qualifier: "fill_light"
+      },
+      gamma: {
+        prefix: "e",
+        qualifier: "gamma"
+      },
+      gradientFade: {
+        prefix: "e",
+        qualifier: "gradient_fade"
+      },
+      grayscale: {
+        prefix: "e",
+        qualifier: "grayscale"
+      },
+      improve: {
+        prefix: "e",
+        qualifier: "improve"
+      },
+      multiply: {
+        prefix: "e",
+        qualifier: "multiply"
+      },
+      negate: {
+        prefix: "e",
+        qualifier: "negate"
+      },
+      oilPaint: {
+        prefix: "e",
+        qualifier: "oil_paint"
+      },
+      opacity: {
+        qualifier: "o"
+      },
+      outline: {
+        prefix: "e",
+        qualifier: "outline"
+      },
+      overlay: {
+        prefix: "e",
+        qualifier: "overlay"
+      },
+      pixelate: {
+        prefix: "e",
+        qualifier: "pixelate"
+      },
+      pixelateFaces: {
+        prefix: "e",
+        qualifier: "pixelate_faces"
+      },
+      pixelateRegion: {
+        prefix: "e",
+        qualifier: "pixelate_region"
+      },
+      radius: {
+        qualifier: "r"
+      },
+      redeye: {
+        prefix: "e",
+        qualifier: "redeye"
+      },
+      replaceColor: {
+        prefix: "e",
+        qualifier: "replace_color"
+      },
+      saturation: {
+        prefix: "e",
+        qualifier: "saturation"
+      },
+      screen: {
+        prefix: "e",
+        qualifier: "screen"
+      },
+      sepia: {
+        prefix: "e",
+        qualifier: "sepia"
+      },
+      shadow: {
+        prefix: "e",
+        qualifier: "shadow"
+      },
+      sharpen: {
+        prefix: "e",
+        qualifier: "sharpen"
+      },
+      shear: {
+        prefix: "e",
+        qualifier: "shear"
+      },
+      simulateColorblind: {
+        prefix: "e",
+        qualifier: "simulate_colorblind"
+      },
+      tint: {
+        prefix: "e",
+        qualifier: "tint"
+      },
+      trim: {
+        prefix: "e",
+        qualifier: "trim"
+      },
+      unsharpMask: {
+        prefix: "e",
+        qualifier: "unsharp_mask"
+      },
+      vectorize: {
+        prefix: "e",
+        qualifier: "vectorize"
+      },
+      vibrance: {
+        prefix: "e",
+        qualifier: "vibrance"
+      },
+      vignette: {
+        prefix: "e",
+        qualifier: "vignette"
+      }
+    };
+    flags = {
+      animated: {
+        prefix: "fl",
+        qualifier: "animated"
+      },
+      anyFormat: {
+        prefix: "fl",
+        qualifier: "any_format"
+      },
+      apng: {
+        prefix: "fl",
+        qualifier: "apng"
+      },
+      attachment: {
+        prefix: "fl",
+        qualifier: "attachment"
+      },
+      awebp: {
+        prefix: "fl",
+        qualifier: "awebp"
+      },
+      clip: {
+        prefix: "fl",
+        qualifier: "clip"
+      },
+      clipEvenodd: {
+        prefix: "fl",
+        qualifier: "clip_evenodd"
+      },
+      cutter: {
+        prefix: "fl",
+        qualifier: "cutter"
+      },
+      draco: {
+        prefix: "fl",
+        qualifier: "draco"
+      },
+      forceIcc: {
+        prefix: "fl",
+        qualifier: "force_icc"
+      },
+      forceStrip: {
+        prefix: "fl",
+        qualifier: "force_strip"
+      },
+      getinfo: {
+        prefix: "fl",
+        qualifier: "getinfo"
+      },
+      group4: {
+        prefix: "fl",
+        qualifier: "group4"
+      },
+      hlsv3: {
+        prefix: "fl",
+        qualifier: "hlsv3"
+      },
+      ignoreAspectRatio: {
+        prefix: "fl",
+        qualifier: "ignore_aspect_ratio"
+      },
+      ignoreMaskChannels: {
+        prefix: "fl",
+        qualifier: "ignore_mask_channels"
+      },
+      immutableCache: {
+        prefix: "fl",
+        qualifier: "immutable_cache"
+      },
+      keepAttribution: {
+        prefix: "fl",
+        qualifier: "keep_attribution"
+      },
+      keepDar: {
+        prefix: "fl",
+        qualifier: "keep_dar"
+      },
+      keepIptc: {
+        prefix: "fl",
+        qualifier: "keep_iptc"
+      },
+      layerApply: {
+        prefix: "fl",
+        qualifier: "layer_apply"
+      },
+      lossy: {
+        prefix: "fl",
+        qualifier: "lossy"
+      },
+      mono: {
+        prefix: "fl",
+        qualifier: "mono"
+      },
+      noOverflow: {
+        prefix: "fl",
+        qualifier: "no_overflow"
+      },
+      noStream: {
+        prefix: "fl",
+        qualifier: "no_stream"
+      },
+      png8: {
+        prefix: "fl",
+        qualifier: "png8"
+      },
+      png24: {
+        prefix: "fl",
+        qualifier: "png24"
+      },
+      png32: {
+        prefix: "fl",
+        qualifier: "png32"
+      },
+      preserveTransparency: {
+        prefix: "fl",
+        qualifier: "preserve_transparency"
+      },
+      progressive: {
+        prefix: "fl",
+        qualifier: "progressive"
+      },
+      rasterize: {
+        prefix: "fl",
+        qualifier: "rasterize"
+      },
+      regionRelative: {
+        prefix: "fl",
+        qualifier: "region_relative"
+      },
+      relative: {
+        prefix: "fl",
+        qualifier: "relative",
+        location: "primary"
+      },
+      replaceImage: {
+        prefix: "fl",
+        qualifier: "replace_image"
+      },
+      sanitize: {
+        prefix: "fl",
+        qualifier: "sanitize"
+      },
+      splice: {
+        prefix: "fl",
+        qualifier: "splice"
+      },
+      streamingAttachment: {
+        prefix: "fl",
+        qualifier: "streaming_attachment"
+      },
+      stripProfile: {
+        prefix: "fl",
+        qualifier: "strip_profile"
+      },
+      textDisallowOverflow: {
+        prefix: "fl",
+        qualifier: "text_disallow_overflow"
+      },
+      textNoTrim: {
+        prefix: "fl",
+        qualifier: "text_no_trim"
+      },
+      tif8Lzw: {
+        prefix: "fl",
+        qualifier: "tif8_lzw"
+      },
+      tiled: {
+        prefix: "fl",
+        qualifier: "tiled"
+      },
+      truncateTs: {
+        prefix: "fl",
+        qualifier: "truncate_ts"
+      },
+      waveform: {
+        prefix: "fl",
+        qualifier: "waveform"
+      }
+    };
+    video = {
+      streamingProfile: {
+        qualifier: "sp",
+        location: "primary"
+      }
+    };
+    props2 = [...Object.keys(effects), "effects"];
+    assetTypes2 = ["image", "images", "video", "videos"];
+    flags_exports = {};
+    __export2(flags_exports, {
+      assetTypes: () => assetTypes3,
+      plugin: () => plugin3,
+      props: () => props3
+    });
+    props3 = ["flags"];
+    assetTypes3 = ["image", "images", "video", "videos"];
+    supportedFlags = Object.entries(flags).map(([_, { qualifier }]) => qualifier);
+    fill_background_exports = {};
+    __export2(fill_background_exports, {
+      assetTypes: () => assetTypes4,
+      plugin: () => plugin4,
+      props: () => props4
+    });
+    props4 = ["fillBackground"];
+    assetTypes4 = ["image", "images"];
+    defaultCrop = "pad";
+    sanitize_exports = {};
+    __export2(sanitize_exports, {
+      assetTypes: () => assetTypes5,
+      plugin: () => plugin5,
+      props: () => props5
+    });
+    props5 = ["sanitize"];
+    assetTypes5 = ["image", "images"];
+    overlays_exports = {};
+    __export2(overlays_exports, {
+      DEFAULT_TEXT_OPTIONS: () => DEFAULT_TEXT_OPTIONS,
+      assetTypes: () => assetTypes6,
+      plugin: () => plugin6,
+      props: () => props6
+    });
+    props6 = ["text", "overlays"];
+    assetTypes6 = ["image", "images", "video", "videos"];
+    DEFAULT_TEXT_OPTIONS = {
+      color: "black",
+      fontFamily: "Arial",
+      fontSize: 200,
+      fontWeight: "bold"
+    };
+    named_transformations_exports = {};
+    __export2(named_transformations_exports, {
+      assetTypes: () => assetTypes7,
+      plugin: () => plugin7,
+      props: () => props7
+    });
+    props7 = ["transformations"];
+    assetTypes7 = ["image", "images", "video", "videos"];
+    raw_transformations_exports = {};
+    __export2(raw_transformations_exports, {
+      assetTypes: () => assetTypes8,
+      plugin: () => plugin8,
+      props: () => props8
+    });
+    props8 = ["rawTransformations"];
+    assetTypes8 = ["image", "images", "video", "videos"];
+    remove_background_exports = {};
+    __export2(remove_background_exports, {
+      assetTypes: () => assetTypes9,
+      plugin: () => plugin9,
+      props: () => props9
+    });
+    props9 = ["removeBackground"];
+    assetTypes9 = ["image", "images"];
+    seo_exports = {};
+    __export2(seo_exports, {
+      assetTypes: () => assetTypes10,
+      plugin: () => plugin10,
+      props: () => props10
+    });
+    props10 = ["seoSuffix"];
+    assetTypes10 = ["image", "images", "video", "videos"];
+    underlays_exports = {};
+    __export2(underlays_exports, {
+      assetTypes: () => assetTypes11,
+      plugin: () => plugin11,
+      props: () => props11
+    });
+    props11 = ["underlay", "underlays"];
+    assetTypes11 = ["image", "images", "video", "videos"];
+    version_exports = {};
+    __export2(version_exports, {
+      assetTypes: () => assetTypes12,
+      plugin: () => plugin12,
+      props: () => props12
+    });
+    props12 = ["version"];
+    assetTypes12 = ["image", "images", "video", "videos"];
+    video_exports = {};
+    __export2(video_exports, {
+      assetTypes: () => assetTypes13,
+      plugin: () => plugin13,
+      props: () => props13
+    });
+    props13 = [...Object.keys(video)];
+    assetTypes13 = ["video", "videos"];
+    zoompan_exports = {};
+    __export2(zoompan_exports, {
+      assetTypes: () => assetTypes14,
+      plugin: () => plugin14,
+      props: () => props14
+    });
+    props14 = ["zoompan"];
+    assetTypes14 = ["image", "images"];
+    transformationPlugins = [
+      remove_background_exports,
+      raw_transformations_exports,
+      cropping_exports,
+      effects_exports,
+      fill_background_exports,
+      flags_exports,
+      overlays_exports,
+      sanitize_exports,
+      named_transformations_exports,
+      seo_exports,
+      underlays_exports,
+      version_exports,
+      video_exports,
+      zoompan_exports
+    ];
+    domains = {
+      "images.ctfassets.net": "contentful",
+      "cdn.builder.io": "builder.io",
+      "images.prismic.io": "imgix",
+      "www.datocms-assets.com": "imgix",
+      "cdn.sanity.io": "imgix",
+      "images.unsplash.com": "imgix",
+      "cdn.shopify.com": "shopify",
+      "s7d1.scene7.com": "scene7",
+      "ip.keycdn.com": "keycdn",
+      "assets.caisy.io": "bunny",
+      "images.contentstack.io": "contentstack"
+    };
+    subdomains = {
+      "imgix.net": "imgix",
+      "files.wordpress.com": "wordpress",
+      "b-cdn.net": "bunny",
+      "storyblok.com": "storyblok",
+      "kc-usercontent.com": "kontent.ai",
+      "cloudinary.com": "cloudinary",
+      "kxcdn.com": "keycdn",
+      "imgeng.in": "imageengine"
+    };
+    paths = {
+      "/cdn-cgi/image/": "cloudflare",
+      "/_next/image": "nextjs",
+      "/_next/static": "nextjs",
+      "/_vercel/image": "vercel",
+      "/is/image": "scene7"
+    };
+    roundIfNumeric = (value) => {
+      if (!value) {
+        return value;
+      }
+      const num2 = Number(value);
+      return isNaN(num2) ? value : Math.round(num2);
+    };
+    setParamIfDefined = (url, key2, value, deleteExisting, roundValue) => {
+      if (value) {
+        if (roundValue) {
+          value = roundIfNumeric(value);
+        }
+        url.searchParams.set(key2, value.toString());
+      } else if (deleteExisting) {
+        url.searchParams.delete(key2);
+      }
+    };
+    setParamIfUndefined = (url, key2, value) => {
+      if (!url.searchParams.has(key2)) {
+        url.searchParams.set(key2, value.toString());
+      }
+    };
+    getNumericParam = (url, key2) => {
+      const value = Number(url.searchParams.get(key2));
+      return isNaN(value) ? void 0 : value;
+    };
+    toRelativeUrl = (url) => {
+      const { pathname, search } = url;
+      return `${pathname}${search}`;
+    };
+    toUrl = (url, base2) => {
+      return typeof url === "string" ? new URL(url, base2 ?? "http://n/") : url;
+    };
+    cdnDomains = new Map(Object.entries(domains));
+    cdnSubdomains = Object.entries(subdomains);
+    transform$g = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "w", width, true, true);
+      setParamIfDefined(url, "h", height, true, true);
+      setParamIfDefined(url, "fm", format);
+      setParamIfUndefined(url, "fit", "fill");
+      return url;
+    };
+    transform$f = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "width", width, true, true);
+      setParamIfDefined(url, "height", height, true, true);
+      setParamIfDefined(url, "format", format);
+      if (width && height) {
+        setParamIfUndefined(url, "fit", "cover");
+        setParamIfUndefined(url, "sharp", "true");
+      }
+      return url;
+    };
+    transform$e = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "w", width, true, true);
+      setParamIfDefined(url, "h", height, true, true);
+      setParamIfUndefined(url, "fit", "min");
+      if (format) {
+        url.searchParams.set("fm", format);
+        const fm = url.searchParams.get("auto");
+        if (fm === "format") {
+          url.searchParams.delete("auto");
+        } else if (fm?.includes("format")) {
+          url.searchParams.set("auto", fm.split(",").filter((s2) => s2 !== "format").join(","));
+        }
+      } else {
+        url.searchParams.delete("fm");
+        if (!url.searchParams.get("auto")?.includes("format")) {
+          url.searchParams.append("auto", "format");
+        }
+      }
+      return url;
+    };
+    shopifyRegex = /(.+?)(?:_(?:(pico|icon|thumb|small|compact|medium|large|grande|original|master)|(\d*)x(\d*)))?(?:_crop_([a-z]+))?(\.[a-zA-Z]+)(\.png|\.jpg|\.webp|\.avif)?$/;
+    parse$3 = (imageUrl) => {
+      const url = toUrl(imageUrl);
+      const match = url.pathname.match(shopifyRegex);
+      if (!match) {
+        throw new Error("Invalid Shopify URL");
+      }
+      const [, path, size, width, height, crop, extension, format] = match;
+      url.pathname = `${path}${extension}`;
+      const widthString = width ? width : url.searchParams.get("width");
+      const heightString = height ? height : url.searchParams.get("height");
+      url.searchParams.delete("width");
+      url.searchParams.delete("height");
+      return {
+        base: url.toString(),
+        width: Number(widthString) || void 0,
+        height: Number(heightString) || void 0,
+        format: format ? format.slice(1) : void 0,
+        params: { crop, size },
+        cdn: "shopify"
+      };
+    };
+    generate$4 = ({ base: base2, width, height, format, params }) => {
+      const url = toUrl(base2);
+      setParamIfDefined(url, "width", width, true, true);
+      setParamIfDefined(url, "height", height, true, true);
+      setParamIfDefined(url, "crop", params?.crop);
+      setParamIfDefined(url, "format", format);
+      return url;
+    };
+    transform$d = ({ url: originalUrl, width, height }) => {
+      const parsed = parse$3(originalUrl);
+      if (!parsed) {
+        return;
+      }
+      const props15 = {
+        ...parsed,
+        width,
+        height
+      };
+      return generate$4(props15);
+    };
+    transform$c = ({ url: originalUrl, width, height }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "w", width, true, true);
+      setParamIfDefined(url, "h", height, true, true);
+      setParamIfUndefined(url, "crop", "1");
+      return url;
+    };
+    cloudinaryRegex = /https?:\/\/(?<host>[^\/]+)\/(?<cloudName>[^\/]+)\/(?<assetType>image|video|raw)\/(?<deliveryType>upload|fetch|private|authenticated|sprite|facebook|twitter|youtube|vimeo)\/?(?<signature>s\-\-[a-zA-Z0-9]+\-\-)?\/?(?<transformations>(?:[^_\/]+_[^,\/]+,?)*)?\/(?:(?<version>v\d+)\/)?(?<idAndFormat>[^\s]+)$/g;
+    parseTransforms$1 = (transformations) => {
+      return transformations ? Object.fromEntries(transformations.split(",").map((t) => t.split("_"))) : {};
+    };
+    formatUrl$1 = ({ host, cloudName, assetType, deliveryType, signature, transformations = {}, version: version2, id, format }) => {
+      if (format) {
+        transformations.f = format;
+      }
+      const transformString = Object.entries(transformations).map(([key2, value]) => `${key2}_${value}`).join(",");
+      const pathSegments = [
+        host,
+        cloudName,
+        assetType,
+        deliveryType,
+        signature,
+        transformString,
+        version2,
+        id
+      ].filter(Boolean).join("/");
+      return `https://${pathSegments}`;
+    };
+    parse$2 = (imageUrl) => {
+      const url = toUrl(imageUrl);
+      const matches = [...url.toString().matchAll(cloudinaryRegex)];
+      if (!matches.length) {
+        throw new Error("Invalid Cloudinary URL");
+      }
+      const group = matches[0].groups || {};
+      const { transformations: transformString = "", idAndFormat, ...baseParams } = group;
+      delete group.idAndFormat;
+      const lastDotIndex = idAndFormat.lastIndexOf(".");
+      const id = lastDotIndex < 0 ? idAndFormat : idAndFormat.slice(0, lastDotIndex);
+      const originalFormat = lastDotIndex < 0 ? void 0 : idAndFormat.slice(lastDotIndex + 1);
+      const { w, h, f, ...transformations } = parseTransforms$1(transformString);
+      const format = f && f !== "auto" ? f : originalFormat;
+      const base2 = formatUrl$1({ ...baseParams, id, transformations });
+      return {
+        base: base2,
+        width: Number(w) || void 0,
+        height: Number(h) || void 0,
+        format,
+        cdn: "cloudinary",
+        params: {
+          ...group,
+          id: group.deliveryType === "fetch" ? idAndFormat : id,
+          format,
+          transformations
+        }
+      };
+    };
+    generate$3 = ({ base: base2, width, height, format, params }) => {
+      var _a;
+      const parsed = parse$2(base2.toString());
+      const props15 = {
+        transformations: {},
+        ...parsed.params,
+        ...params,
+        format: format || "auto"
+      };
+      if (width) {
+        props15.transformations.w = roundIfNumeric(width).toString();
+      }
+      if (height) {
+        props15.transformations.h = roundIfNumeric(height).toString();
+      }
+      (_a = props15.transformations).c || (_a.c = "lfill");
+      return formatUrl$1(props15);
+    };
+    transform$b = ({ url: originalUrl, width, height, format = "auto" }) => {
+      const parsed = parse$2(originalUrl);
+      if (!parsed) {
+        throw new Error("Invalid Cloudinary URL");
+      }
+      if (parsed.params?.assetType !== "image") {
+        throw new Error("Cloudinary transformer only supports images");
+      }
+      if (parsed.params?.signature) {
+        throw new Error("Cloudinary transformer does not support signed URLs");
+      }
+      const props15 = {
+        ...parsed,
+        width,
+        height,
+        format
+      };
+      return generate$3(props15);
+    };
+    cloudflareRegex = /https?:\/\/(?<host>[^\/]+)\/cdn-cgi\/image\/(?<transformations>[^\/]+)\/(?<path>.*)$/g;
+    parseTransforms = (transformations) => Object.fromEntries(transformations.split(",").map((t) => t.split("=")));
+    formatUrl = ({ host, transformations = {}, path }) => {
+      const transformString = Object.entries(transformations).map(([key2, value]) => `${key2}=${value}`).join(",");
+      const pathSegments = [
+        host,
+        "cdn-cgi",
+        "image",
+        transformString,
+        path
+      ].join("/");
+      return `https://${pathSegments}`;
+    };
+    parse$1 = (imageUrl) => {
+      const url = toUrl(imageUrl);
+      const matches = [...url.toString().matchAll(cloudflareRegex)];
+      if (!matches.length) {
+        throw new Error("Invalid Cloudflare URL");
+      }
+      const group = matches[0].groups || {};
+      const { transformations: transformString, ...baseParams } = group;
+      const { width, height, f, ...transformations } = parseTransforms(transformString);
+      formatUrl({ ...baseParams, transformations });
+      return {
+        base: url.toString(),
+        width: Number(width) || void 0,
+        height: Number(height) || void 0,
+        format: f,
+        cdn: "cloudflare",
+        params: { ...group, transformations }
+      };
+    };
+    generate$2 = ({ base: base2, width, height, format, params }) => {
+      var _a;
+      const parsed = parse$1(base2.toString());
+      const props15 = {
+        transformations: {},
+        ...parsed.params,
+        ...params
+      };
+      if (width) {
+        props15.transformations.width = width?.toString();
+      }
+      if (height) {
+        props15.transformations.height = height?.toString();
+      }
+      if (format) {
+        props15.transformations.f = format;
+      }
+      (_a = props15.transformations).fit || (_a.fit = "cover");
+      return new URL(formatUrl(props15));
+    };
+    transform$a = ({ url: originalUrl, width, height, format = "auto" }) => {
+      const parsed = parse$1(originalUrl);
+      if (!parsed) {
+        throw new Error("Invalid Cloudflare URL");
+      }
+      const props15 = {
+        ...parsed,
+        width,
+        height,
+        format
+      };
+      return generate$2(props15);
+    };
+    transform$9 = ({ url: originalUrl, width, height }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "width", width, true, true);
+      if (width && height) {
+        setParamIfUndefined(url, "aspect_ratio", `${width}:${height}`);
+      }
+      return url;
+    };
+    storyBlokAssets = /(?<id>\/f\/\d+\/\d+x\d+\/\w+\/[^\/]+)\/?(?<modifiers>m\/?(?<crop>\d+x\d+:\d+x\d+)?\/?(?<resize>(?<flipx>\-)?(?<width>\d+)x(?<flipy>\-)?(?<height>\d+))?\/?(filters\:(?<filters>[^\/]+))?)?$/g;
+    storyBlokImg2 = /^(?<modifiers>\/(?<crop>\d+x\d+:\d+x\d+)?\/?(?<resize>(?<flipx>\-)?(?<width>\d+)x(?<flipy>\-)?(?<height>\d+))?\/?(filters\:(?<filters>[^\/]+))?\/?)?(?<id>\/f\/.+)$/g;
+    splitFilters = (filters) => {
+      if (!filters) {
+        return {};
+      }
+      return Object.fromEntries(filters.split(":").map((filter) => {
+        if (!filter)
+          return [];
+        const [key2, value] = filter.split("(");
+        return [key2, value.replace(")", "")];
+      }));
+    };
+    generateFilters = (filters) => {
+      if (!filters) {
+        return void 0;
+      }
+      const filterItems = Object.entries(filters).map(([key2, value]) => `${key2}(${value ?? ""})`);
+      if (filterItems.length === 0) {
+        return void 0;
+      }
+      return `filters:${filterItems.join(":")}`;
+    };
+    parse3 = (imageUrl) => {
+      const url = toUrl(imageUrl);
+      const regex = url.hostname === "img2.storyblok.com" ? storyBlokImg2 : storyBlokAssets;
+      const [matches] = url.pathname.matchAll(regex);
+      if (!matches || !matches.groups) {
+        throw new Error("Invalid Storyblok URL");
+      }
+      const { id, crop, width, height, filters, flipx, flipy } = matches.groups;
+      const { format, ...filterMap } = splitFilters(filters);
+      if (url.hostname === "img2.storyblok.com") {
+        url.hostname = "a.storyblok.com";
+      }
+      return {
+        base: url.origin + id,
+        width: Number(width) || void 0,
+        height: Number(height) || void 0,
+        format,
+        params: {
+          crop,
+          filters: filterMap,
+          flipx,
+          flipy
+        },
+        cdn: "storyblok"
+      };
+    };
+    generate$1 = ({ base: base2, width = 0, height = 0, format, params = {} }) => {
+      const { crop, filters, flipx = "", flipy = "" } = params;
+      const size = `${flipx}${width}x${flipy}${height}`;
+      return new URL([base2, "m", crop, size, generateFilters(filters), format].filter(Boolean).join("/"));
+    };
+    transform$8 = ({ url: originalUrl, width, height, format }) => {
+      const parsed = parse3(originalUrl);
+      if (!parsed) {
+        return;
+      }
+      if (format) {
+        if (!parsed.params) {
+          parsed.params = { filters: {} };
+        }
+        if (!parsed.params.filters) {
+          parsed.params.filters = {};
+        }
+        parsed.params.filters.format = format;
+      }
+      return generate$1({
+        ...parsed,
+        width,
+        height
+      });
+    };
+    transform$7 = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "w", width, true, true);
+      setParamIfDefined(url, "h", height, true, true);
+      setParamIfDefined(url, "fm", format, true);
+      if (width && height) {
+        setParamIfUndefined(url, "fit", "crop");
+      }
+      return url;
+    };
+    delegateUrl = (url) => {
+      const parsed = toUrl(url);
+      const source = parsed.searchParams.get("url");
+      if (!source || !source.startsWith("http")) {
+        return false;
+      }
+      const cdn = getImageCdnForUrlByDomain(source);
+      if (!cdn) {
+        return false;
+      }
+      return {
+        cdn,
+        url: source
+      };
+    };
+    generate = ({ base: base2, width, params: { quality = 75, root = "_vercel" } = {} }) => {
+      const url = new URL("http://n");
+      url.pathname = `/${root}/image`;
+      url.searchParams.set("url", base2.toString());
+      setParamIfDefined(url, "w", width, false, true);
+      setParamIfUndefined(url, "q", quality);
+      return toRelativeUrl(url);
+    };
+    transform$6 = ({ url, width, cdn }) => {
+      const parsedUrl = toUrl(url);
+      const isNextImage = parsedUrl.pathname.startsWith("/_next/image") || parsedUrl.pathname.startsWith("/_vercel/image");
+      const src = isNextImage ? parsedUrl.searchParams.get("url") : url.toString();
+      if (!src) {
+        return void 0;
+      }
+      setParamIfDefined(parsedUrl, "w", width, true, true);
+      if (isNextImage) {
+        if (parsedUrl.hostname === "n") {
+          return toRelativeUrl(parsedUrl);
+        }
+        return parsedUrl.toString();
+      }
+      return generate({
+        base: src,
+        width,
+        params: { root: cdn === "nextjs" ? "_next" : "_vercel" }
+      });
+    };
+    transform$5 = (params) => transform$6({ ...params, cdn: "nextjs" });
+    transform$4 = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "wid", width, true, true);
+      setParamIfDefined(url, "hei", height, true, true);
+      setParamIfDefined(url, "fmt", format, true);
+      setParamIfDefined(url, "qlt", getNumericParam(url, "qlt"), true);
+      setParamIfDefined(url, "scl", getNumericParam(url, "scl"), true);
+      setParamIfUndefined(url, "fit", "crop");
+      if (!width && !height) {
+        setParamIfUndefined(url, "scl", 1);
+      }
+      return url;
+    };
+    transform$3 = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "width", width, true, true);
+      setParamIfDefined(url, "height", height, true, true);
+      setParamIfDefined(url, "format", format, true);
+      setParamIfDefined(url, "quality", getNumericParam(url, "quality"), true);
+      setParamIfUndefined(url, "enlarge", 0);
+      return url;
+    };
+    transform$2 = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "width", width, true, true);
+      setParamIfDefined(url, "height", height, true, true);
+      setParamIfDefined(url, "format", format);
+      setParamIfDefined(url, "quality", getNumericParam(url, "quality"), true);
+      return url;
+    };
+    OBJECT_TO_DIRECTIVES_MAP = {
+      width: "w",
+      height: "h",
+      autoWidthWithFallback: "w_auto",
+      auto_width_fallback: "w_auto",
+      scaleToScreenWidth: "pc",
+      scale_to_screen_width: "pc",
+      crop: "cr",
+      outputFormat: "f",
+      format: "f",
+      fit: "m",
+      fitMethod: "m",
+      compression: "cmpr",
+      sharpness: "s",
+      rotate: "r",
+      inline: "in",
+      keepMeta: "meta",
+      keep_meta: "meta",
+      noOptimization: "pass",
+      no_optimization: "pass",
+      force_download: "dl",
+      max_device_pixel_ratio: "maxdpr",
+      maxDevicePixelRatio: "maxdpr"
+    };
+    transform$1 = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      const src = getBaseUrl(url);
+      let directives = {};
+      const param = url.toString() === src ? [] : getParameterArray(url);
+      if (param.length) {
+        directives = getDirectives(param);
+      }
+      if (width)
+        directives["width"] = width;
+      if (height)
+        directives["height"] = height;
+      if (format)
+        directives["format"] = format;
+      if (!directives.hasOwnProperty("fit")) {
+        directives = { ...directives, "fit": "cropbox" };
+      }
+      let directives_string = build_IE_directives(directives);
+      let query_string = build_IE_query_string(directives_string);
+      let query_prefix = query_string === "" ? "" : src.includes("?") ? "&" : "?";
+      return `${src}${query_prefix}${query_string}`;
+    };
+    transform = ({ url: originalUrl, width, height, format }) => {
+      const url = toUrl(originalUrl);
+      setParamIfDefined(url, "width", width, true, true);
+      setParamIfDefined(url, "height", height, true, true);
+      setParamIfDefined(url, "format", format);
+      if (!url.searchParams.has("format")) {
+        setParamIfUndefined(url, "auto", "webp");
+      }
+      if (width && height) {
+        setParamIfUndefined(url, "fit", "crop");
+      }
+      return url;
+    };
+    delegators = {
+      vercel: delegateUrl,
+      nextjs: delegateUrl
+    };
+    getTransformer = (cdn) => ({
+      imgix: transform$e,
+      contentful: transform$g,
+      "builder.io": transform$f,
+      shopify: transform$d,
+      wordpress: transform$c,
+      cloudinary: transform$b,
+      bunny: transform$9,
+      storyblok: transform$8,
+      cloudflare: transform$a,
+      vercel: transform$6,
+      nextjs: transform$5,
+      scene7: transform$4,
+      "kontent.ai": transform$7,
+      keycdn: transform$3,
+      directus: transform$2,
+      imageengine: transform$1,
+      contentstack: transform
+    })[cdn];
+    getSizes = (width, layout) => {
+      if (!width || !layout) {
+        return void 0;
+      }
+      switch (layout) {
+        case `constrained`:
+          return `(min-width: ${width}px) ${width}px, 100vw`;
+        case `fixed`:
+          return `${width}px`;
+        case `fullWidth`:
+          return `100vw`;
+        default:
+          return void 0;
+      }
+    };
+    pixelate = (value) => value || value === 0 ? `${value}px` : void 0;
+    getStyle = ({
+      width,
+      height,
+      aspectRatio,
+      layout,
+      objectFit = "cover",
+      background
+    }) => {
+      const styleEntries = [
+        ["object-fit", objectFit]
+      ];
+      if (background?.startsWith("https:") || background?.startsWith("http:") || background?.startsWith("data:")) {
+        styleEntries.push(["background-image", `url(${background})`]);
+        styleEntries.push(["background-size", "cover"]);
+        styleEntries.push(["background-repeat", "no-repeat"]);
+      } else {
+        styleEntries.push(["background", background]);
+      }
+      if (layout === "fixed") {
+        styleEntries.push(["width", pixelate(width)]);
+        styleEntries.push(["height", pixelate(height)]);
+      }
+      if (layout === "constrained") {
+        styleEntries.push(["max-width", pixelate(width)]);
+        styleEntries.push(["max-height", pixelate(height)]);
+        styleEntries.push([
+          "aspect-ratio",
+          aspectRatio ? `${aspectRatio}` : void 0
+        ]);
+        styleEntries.push(["width", "100%"]);
+      }
+      if (layout === "fullWidth") {
+        styleEntries.push(["width", "100%"]);
+        styleEntries.push([
+          "aspect-ratio",
+          aspectRatio ? `${aspectRatio}` : void 0
+        ]);
+        styleEntries.push(["height", pixelate(height)]);
+      }
+      return Object.fromEntries(
+        styleEntries.filter(([, value]) => value)
+      );
+    };
+    DEFAULT_RESOLUTIONS = [
+      6016,
+      // 6K
+      5120,
+      // 5K
+      4480,
+      // 4.5K
+      3840,
+      // 4K
+      3200,
+      // QHD+
+      2560,
+      // WQXGA
+      2048,
+      // QXGA
+      1920,
+      // 1080p
+      1668,
+      // Various iPads
+      1280,
+      // 720p
+      1080,
+      // iPhone 6-8 Plus
+      960,
+      // older horizontal phones
+      828,
+      // iPhone XR/11
+      750,
+      // iPhone 6-8
+      640
+      // older and lower-end phones
+    ];
+    LOW_RES_WIDTH = 24;
+    getBreakpoints = ({
+      width,
+      layout
+    }) => {
+      if (layout === "fullWidth") {
+        return DEFAULT_RESOLUTIONS;
+      }
+      if (!width) {
+        return [];
+      }
+      const doubleWidth = width * 2;
+      if (layout === "fixed") {
+        return [width, doubleWidth];
+      }
+      if (layout === "constrained") {
+        return [
+          // Always include the image at 1x and 2x the specified width
+          width,
+          doubleWidth,
+          // Filter out any resolutions that are larger than the double-res image
+          ...DEFAULT_RESOLUTIONS.filter((w) => w < doubleWidth)
+        ];
+      }
+      return [];
+    };
+    getSrcSet = ({
+      src,
+      width,
+      layout = "constrained",
+      height,
+      aspectRatio,
+      breakpoints,
+      cdn,
+      transformer
+    }) => {
+      const canonical = getCanonicalCdnForUrl(src, cdn);
+      if (!canonical) {
+        return;
+      }
+      transformer || (transformer = getTransformer(canonical.cdn));
+      if (!transformer) {
+        return;
+      }
+      breakpoints || (breakpoints = getBreakpoints({ width, layout }));
+      return breakpoints.sort((a, b) => a - b).map((bp) => {
+        let transformedHeight;
+        if (height && aspectRatio) {
+          transformedHeight = Math.round(bp / aspectRatio);
+        }
+        const transformed = transformer({
+          url: canonical.url,
+          width: bp,
+          height: transformedHeight
+        });
+        if (transformed) {
+          return `${transformed.toString()} ${bp}w`;
+        }
+        return "";
+      }).join(",\n");
+    };
+    dist = { exports: {} };
+    objToString = {};
+    parsers = {};
+    createParser = {};
+    (function(exports2) {
+      Object.defineProperty(exports2, "__esModule", {
+        value: true
+      });
+      exports2["default"] = void 0;
+      function createParser2(matcher, replacer) {
+        const regex = RegExp(matcher, "g");
+        return (string) => {
+          if (typeof string !== "string") {
+            throw new TypeError("expected an argument of type string, but got ".concat(typeof styleObj));
+          }
+          if (!string.match(regex)) {
+            return string;
+          }
+          return string.replace(regex, replacer);
+        };
+      }
+      var _default = createParser2;
+      exports2["default"] = _default;
+    })(createParser);
+    Object.defineProperty(parsers, "__esModule", {
+      value: true
+    });
+    parsers.snakeToKebab = parsers.camelToKebab = void 0;
+    _createParser = _interopRequireDefault(createParser);
+    camelToKebab = (0, _createParser["default"])(/[A-Z]/, (match) => "-".concat(match.toLowerCase()));
+    parsers.camelToKebab = camelToKebab;
+    snakeToKebab = (0, _createParser["default"])(/_/, () => "-");
+    parsers.snakeToKebab = snakeToKebab;
+    (function(exports2) {
+      Object.defineProperty(exports2, "__esModule", {
+        value: true
+      });
+      exports2["default"] = void 0;
+      var _parsers = parsers;
+      function objToString2(styleObj2, parser = _parsers.camelToKebab) {
+        if (!styleObj2 || typeof styleObj2 !== "object" || Array.isArray(styleObj2)) {
+          throw new TypeError("expected an argument of type object, but got ".concat(typeof styleObj2));
+        }
+        const lines = Object.keys(styleObj2).map((property) => "".concat(parser(property), ": ").concat(styleObj2[property], ";"));
+        return lines.join("\n");
+      }
+      var _default = objToString2;
+      exports2["default"] = _default;
+    })(objToString);
+    (function(module2, exports2) {
+      Object.defineProperty(exports2, "__esModule", {
+        value: true
+      });
+      Object.defineProperty(exports2, "createParser", {
+        enumerable: true,
+        get: function get() {
+          return _createParser2["default"];
+        }
+      });
+      exports2.parsers = exports2["default"] = void 0;
+      var _objToString = _interopRequireDefault2(objToString);
+      var _createParser2 = _interopRequireDefault2(createParser);
+      var parsers$1 = _interopRequireWildcard(parsers);
+      exports2.parsers = parsers$1;
+      function _interopRequireWildcard(obj) {
+        if (obj && obj.__esModule) {
+          return obj;
+        } else {
+          var newObj = {};
+          if (obj != null) {
+            for (var key2 in obj) {
+              if (Object.prototype.hasOwnProperty.call(obj, key2)) {
+                var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key2) : {};
+                if (desc.get || desc.set) {
+                  Object.defineProperty(newObj, key2, desc);
+                } else {
+                  newObj[key2] = obj[key2];
+                }
+              }
+            }
+          }
+          newObj["default"] = obj;
+          return newObj;
+        }
+      }
+      function _interopRequireDefault2(obj) {
+        return obj && obj.__esModule ? obj : { "default": obj };
+      }
+      function _objectSpread(target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i] != null ? arguments[i] : {};
+          var ownKeys = Object.keys(source);
+          if (typeof Object.getOwnPropertySymbols === "function") {
+            ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function(sym) {
+              return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+            }));
+          }
+          ownKeys.forEach(function(key2) {
+            _defineProperty(target, key2, source[key2]);
+          });
+        }
+        return target;
+      }
+      function _defineProperty(obj, key2, value) {
+        if (key2 in obj) {
+          Object.defineProperty(obj, key2, { value, enumerable: true, configurable: true, writable: true });
+        } else {
+          obj[key2] = value;
+        }
+        return obj;
+      }
+      var _default = _objToString["default"];
+      exports2["default"] = _default;
+      module2.exports = _objToString["default"];
+      module2.exports.createParser = _createParser2["default"];
+      module2.exports.parsers = _objectSpread({}, parsers$1);
+    })(dist, dist.exports);
+    distExports = dist.exports;
+    styleToCss = /* @__PURE__ */ getDefaultExportFromCjs(distExports);
+    Image = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let parentStyle;
+      let props15;
+      let alt;
+      let styleObj2;
+      let transformedProps;
+      let style;
+      ({ style: parentStyle, ...props15 } = $$props);
+      ({ alt, style: styleObj2, ...transformedProps } = transformProps({ ...props15, style: {} }));
+      style = [styleToCss(styleObj2), parentStyle].filter(Boolean).join(";");
+      return `<img${spread(
+        [
+          { alt: escape_attribute_value(alt) },
+          { style: escape_attribute_value(style) },
+          escape_object(transformedProps)
+        ],
+        {}
+      )}>`;
+    });
+    name = "svelte";
+    version$1 = "4.1.1";
+    description = "Cybernetically enhanced web apps";
+    type = "module";
+    module = "src/runtime/index.js";
+    main = "src/runtime/index.js";
+    files = [
+      "src",
+      "!src/**/tsconfig.json",
+      "types",
+      "compiler.*",
+      "register.js",
+      "index.d.ts",
+      "store.d.ts",
+      "animate.d.ts",
+      "transition.d.ts",
+      "easing.d.ts",
+      "motion.d.ts",
+      "action.d.ts",
+      "elements.d.ts",
+      "README.md"
+    ];
+    exports = {
+      "./package.json": "./package.json",
+      ".": {
+        types: "./types/index.d.ts",
+        browser: {
+          "default": "./src/runtime/index.js"
+        },
+        "default": "./src/runtime/ssr.js"
+      },
+      "./compiler": {
+        types: "./types/index.d.ts",
+        require: "./compiler.cjs",
+        "default": "./src/compiler/index.js"
+      },
+      "./action": {
+        types: "./types/index.d.ts"
+      },
+      "./animate": {
+        types: "./types/index.d.ts",
+        "default": "./src/runtime/animate/index.js"
+      },
+      "./easing": {
+        types: "./types/index.d.ts",
+        "default": "./src/runtime/easing/index.js"
+      },
+      "./internal": {
+        "default": "./src/runtime/internal/index.js"
+      },
+      "./motion": {
+        types: "./types/index.d.ts",
+        "default": "./src/runtime/motion/index.js"
+      },
+      "./store": {
+        types: "./types/index.d.ts",
+        "default": "./src/runtime/store/index.js"
+      },
+      "./internal/disclose-version": {
+        "default": "./src/runtime/internal/disclose-version/index.js"
+      },
+      "./transition": {
+        types: "./types/index.d.ts",
+        "default": "./src/runtime/transition/index.js"
+      },
+      "./elements": {
+        types: "./elements.d.ts"
+      }
+    };
+    engines = {
+      node: ">=16"
+    };
+    types = "types/index.d.ts";
+    repository = {
+      type: "git",
+      url: "https://github.com/sveltejs/svelte.git",
+      directory: "packages/svelte"
+    };
+    keywords = [
+      "UI",
+      "framework",
+      "templates",
+      "templating"
+    ];
+    author = "Rich Harris";
+    license = "MIT";
+    bugs = {
+      url: "https://github.com/sveltejs/svelte/issues"
+    };
+    homepage = "https://svelte.dev";
+    dependencies = {
+      "@ampproject/remapping": "^2.2.1",
+      "@jridgewell/sourcemap-codec": "^1.4.15",
+      "@jridgewell/trace-mapping": "^0.3.18",
+      acorn: "^8.9.0",
+      "aria-query": "^5.3.0",
+      "axobject-query": "^3.2.1",
+      "code-red": "^1.0.3",
+      "css-tree": "^2.3.1",
+      "estree-walker": "^3.0.3",
+      "is-reference": "^3.0.1",
+      "locate-character": "^3.0.0",
+      "magic-string": "^0.30.0",
+      periscopic: "^3.1.0"
+    };
+    devDependencies = {
+      "@playwright/test": "^1.35.1",
+      "@rollup/plugin-commonjs": "^24.1.0",
+      "@rollup/plugin-json": "^6.0.0",
+      "@rollup/plugin-node-resolve": "^15.1.0",
+      "@sveltejs/eslint-config": "^6.0.4",
+      "@types/aria-query": "^5.0.1",
+      "@types/estree": "^1.0.1",
+      "@types/node": "^14.18.51",
+      agadoo: "^3.0.0",
+      "dts-buddy": "^0.1.7",
+      esbuild: "^0.18.11",
+      "happy-dom": "^9.20.3",
+      jsdom: "^21.1.2",
+      kleur: "^4.1.5",
+      rollup: "^3.26.2",
+      "source-map": "^0.7.4",
+      "tiny-glob": "^0.2.9",
+      typescript: "^5.1.3",
+      vitest: "^0.33.0"
+    };
+    scripts = {
+      format: "prettier . --cache --plugin-search-dir=. --write",
+      check: "tsc --noEmit",
+      test: 'vitest run && echo "manually check that there are no type errors in test/types by opening the files in there"',
+      build: "rollup -c && pnpm types",
+      "generate:version": "node ./scripts/generate-version.js",
+      dev: "rollup -cw",
+      posttest: "agadoo src/internal/index.js",
+      types: "node ./scripts/generate-dts.js",
+      lint: 'prettier . --cache --plugin-search-dir=. --check && eslint "{src,test}/**/*.{ts,js}" --cache'
+    };
+    sveltePkg = {
+      name,
+      version: version$1,
+      description,
+      type,
+      module,
+      main,
+      files,
+      exports,
+      engines,
+      types,
+      repository,
+      keywords,
+      author,
+      license,
+      bugs,
+      homepage,
+      dependencies,
+      devDependencies,
+      scripts
+    };
+    version = "1.0.3";
+    metadata = {
+      version
+    };
+    SVELTE_CLOUDINARY_ANALYTICS_ID = "E";
+    SVELTE_CLOUDINARY_VERSION = metadata.version.split("-")[0];
+    SVELTE_VERSION = `${sveltePkg.version.split(".")[0]}.0.0`;
+    ({ Object: Object_1 } = globals);
+    CldImage = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      let alt;
+      let src;
+      let width;
+      let height;
+      let config;
+      let imageProps;
+      const CLD_OPTIONS = ["config", "deliveryType", "preserveTransformations"];
+      transformationPlugins.forEach(({ props: props15 = [] }) => {
+        props15.forEach((prop) => {
+          if (CLD_OPTIONS.includes(prop)) {
+            throw new Error(`Option ${prop} already exists!`);
+          }
+          CLD_OPTIONS.push(prop);
+        });
+      });
+      const cldOptions = {};
+      CLD_OPTIONS.forEach((key2) => {
+        if ($$props[key2]) {
+          cldOptions[key2] = $$props[key2] || void 0;
+        }
+      });
+      if ($$props.preserveTransformations) {
+        try {
+          const transformations = getTransformations(imageProps.src).map((t) => t.join(","));
+          cldOptions.rawTransformations = [...transformations.flat(), ...$$props.rawTransformations || []];
+        } catch (e) {
+          console.warn(`Failed to preserve transformations: ${e.message}`);
+        }
+      }
+      ({ alt, src, width, height, config } = $$props);
+      imageProps = {
+        alt,
+        src,
+        width: typeof width === "string" ? parseInt(width) : width,
+        height: typeof height === "string" ? parseInt(height) : height
+      };
+      {
+        if (imageProps) {
+          Object.keys($$props).filter((key2) => !CLD_OPTIONS.includes(key2)).forEach((key2) => {
+            imageProps[key2] = $$props[key2];
+          });
+        }
+      }
+      return `${imageProps.src ? `${validate_component(Image, "Image").$$render(
+        $$result,
+        Object_1.assign({}, imageProps, { cdn: "cloudinary" }, {
+          transformer: ({ width: width2 }) => {
+            const options2 = {
+              ...imageProps,
+              ...cldOptions,
+              // Without, get a "never" type error on options.width
+              width: imageProps.width
+            };
+            options2.width = typeof options2.width === "string" ? parseInt(options2.width) : options2.width;
+            options2.height = typeof options2.height === "string" ? parseInt(options2.height) : options2.height;
+            if (typeof width2 === "number" && typeof options2.width === "number" && width2 !== options2.width) {
+              options2.widthResize = width2;
+            }
+            return getCldImageUrl(options2, config);
+          }
+        }),
+        {},
+        {}
+      )}` : ``}`;
+    });
+  }
+});
+
 // .svelte-kit/output/server/entries/pages/_layout.svelte.js
 var layout_svelte_exports = {};
 __export(layout_svelte_exports, {
@@ -3827,7 +7856,7 @@ __export(layout_svelte_exports, {
 function quintOut(t) {
   return --t * t * t * t * t + 1;
 }
-var ButtonGroup, Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup, Navbar, NavBrand, Menu, NavHamburger, NavLi, NavUl, OVERFLOW_ANIMATION_TIME, Layout;
+var ButtonGroup, Footer, FooterBrand, FooterCopyright, FooterIcon, FooterLink, FooterLinkGroup, Navbar, NavBrand, Menu, NavHamburger, NavLi, NavUl, MAX_PAGE_WIDTH, OVERFLOW_ANIMATION_TIME, Layout;
 var init_layout_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/_layout.svelte.js"() {
     init_ssr();
@@ -3836,6 +7865,7 @@ var init_layout_svelte = __esm({
     init_tailwind_merge();
     init_Modal();
     init_CloseButton();
+    init_CldImage();
     ButtonGroup = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $$restProps = compute_rest_props($$props, ["size", "divClass"]);
       let { size = "md" } = $$props;
@@ -3880,7 +7910,7 @@ var init_layout_svelte = __esm({
       let { href = "" } = $$props;
       let { src = "" } = $$props;
       let { alt = "" } = $$props;
-      let { name = "" } = $$props;
+      let { name: name2 = "" } = $$props;
       let { target = void 0 } = $$props;
       let aCls = twMerge(aClass, $$props.classA);
       let spanCls = twMerge(spanClass, $$props.classSpan);
@@ -3897,8 +7927,8 @@ var init_layout_svelte = __esm({
         $$bindings.src(src);
       if ($$props.alt === void 0 && $$bindings.alt && alt !== void 0)
         $$bindings.alt(alt);
-      if ($$props.name === void 0 && $$bindings.name && name !== void 0)
-        $$bindings.name(name);
+      if ($$props.name === void 0 && $$bindings.name && name2 !== void 0)
+        $$bindings.name(name2);
       if ($$props.target === void 0 && $$bindings.target && target !== void 0)
         $$bindings.target(target);
       return `${href ? `<a${spread(
@@ -3909,7 +7939,7 @@ var init_layout_svelte = __esm({
           { class: escape_attribute_value(aCls) }
         ],
         {}
-      )}><img${add_attribute("src", src, 0)}${add_attribute("class", imgCls, 0)}${add_attribute("alt", alt, 0)}> <span${add_attribute("class", spanCls, 0)}>${escape(name)}</span> ${slots.default ? slots.default({}) : ``}</a>` : `<img${spread(
+      )}><img${add_attribute("src", src, 0)}${add_attribute("class", imgCls, 0)}${add_attribute("alt", alt, 0)}> <span${add_attribute("class", spanCls, 0)}>${escape(name2)}</span> ${slots.default ? slots.default({}) : ``}</a>` : `<img${spread(
         [
           escape_object($$restProps),
           { src: escape_attribute_value(src) },
@@ -4232,12 +8262,13 @@ var init_layout_svelte = __esm({
         {}
       )}><ul${add_attribute("class", _ulClass, 0)}>${slots.default ? slots.default({}) : ``}</ul></div>`} `;
     });
+    MAX_PAGE_WIDTH = 1440;
     OVERFLOW_ANIMATION_TIME = 2e3;
     Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let headerClass;
       let $page, $$unsubscribe_page;
       $$unsubscribe_page = subscribe(page, (value) => $page = value);
-      let defaultModal = false;
+      let emailSubscribeModal = false;
       let hideOverflow = true;
       setTimeout(
         () => {
@@ -4250,13 +8281,13 @@ var init_layout_svelte = __esm({
       do {
         $$settled = true;
         headerClass = hideOverflow ? "w-full relative overflow-hidden relative" : "w-full relative overflow-visible relative";
-        $$rendered = `${$$result.head += `<!-- HEAD_svelte-659c80_START --><script async src="https://www.googletagmanager.com/gtag/js?id=" data-svelte-h="svelte-2zhiaz"><\/script><script data-svelte-h="svelte-1n42iur">window.dataLayer = window.dataLayer || [];
+        $$rendered = `${$$result.head += `<!-- HEAD_svelte-8bssk7_START --><meta name="description" content="bunny garden animals nature squirrel frog vegetables woods spring summer children books picture book"><meta property="og:title" content="bunny garden animals nature squirrel frog vegetables woods spring summer children books picture book"><meta property="og:description" content="Simple Reads Books and Hunnie Bunny's Garden"><meta property="og:image" content="https://res.cloudinary.com/simple-reads-books/image/upload/c_limit,w_2880/f_auto/q_auto/banner?_a=BBEHUxAE0"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="My Page Title"><meta name="twitter:description" content="This is a description of my page for SEO purposes."><meta name="twitter:image" content="https://res.cloudinary.com/simple-reads-books/image/upload/c_limit,w_2880/f_auto/q_auto/banner?_a=BBEHUxAE0"><script async src="https://www.googletagmanager.com/gtag/js?id=" data-svelte-h="svelte-2zhiaz"><\/script><script data-svelte-h="svelte-1n42iur">window.dataLayer = window.dataLayer || [];
 		function gtag() {
 			dataLayer.push(arguments);
 		}
 		gtag('js', new Date());
 
-		gtag('config', 'G-9YTEE5C1YT');<\/script><!-- HEAD_svelte-659c80_END -->`, ""} <div><div class="m-auto max-w-screen-xl w-full overflow-hidden">   <header${add_attribute("class", headerClass, 0)}${add_attribute("style", $page.error && "visibility: hidden; height: 0", 0)}>${validate_component(Navbar, "Navbar").$$render(
+		gtag('config', 'G-9YTEE5C1YT');<\/script><!-- HEAD_svelte-8bssk7_END -->`, ""} <div id="page-container"><div id="header-container" class="m-auto max-w-screen-xl w-full overflow-hidden">   <header${add_attribute("class", headerClass, 0)}${add_attribute("style", $page.error && "visibility: hidden; height: 0", 0)}>${validate_component(Navbar, "Navbar").$$render(
           $$result,
           {
             color: "form",
@@ -4269,7 +8300,19 @@ var init_layout_svelte = __esm({
             default: ({ hidden, toggle }) => {
               return `${validate_component(NavBrand, "NavBrand").$$render($$result, { href: "/" }, {}, {
                 default: () => {
-                  return `<div class="md:hidden flex flex-row justify-center items-center min-w-min" data-svelte-h="svelte-1rej817"><img src="/images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy"> <span class="self-center whitespace-nowrap sm dark:text-white font-[Itim] text-md sm:text-lg">Simple Reads Books</span></div>`;
+                  return `<div class="md:hidden flex flex-row justify-center items-center min-w-min">${validate_component(CldImage, "CldImage").$$render(
+                    $$result,
+                    {
+                      width: 128,
+                      height: 104,
+                      src: "logo",
+                      class: "mr-3 h-6 sm:h-9",
+                      alt: "logo",
+                      loading: "eager"
+                    },
+                    {},
+                    {}
+                  )} <span class="self-center whitespace-nowrap sm dark:text-white font-[Itim] text-md sm:text-lg" data-svelte-h="svelte-afkk7p">Simple Reads Books</span></div>`;
                 }
               })} ${validate_component(NavHamburger, "NavHamburger").$$render($$result, {}, {}, {})} ${validate_component(NavUl, "NavUl").$$render(
                 $$result,
@@ -4346,7 +8389,45 @@ var init_layout_svelte = __esm({
               )}`;
             }
           }
-        )} <img class="max-w-screen-2xl m-auto" src="/images/banner.png" width="100%" alt="Simple Reads Books Banner" loading="lazy" style="aspect-ratio:288/85"> <img src="/images/hunnie-bunny-peering-over.png" class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp" alt="Hunnie Bunny Peering Over"> <img src="/images/hunnie-bunny-reading.png" class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-fadeIn" alt="Hunnie Bunny Peering Over"></header> ${$page.error ? `${slots.default ? slots.default({}) : ``}` : `<main>${slots.default ? slots.default({}) : ``}</main> ${validate_component(Footer, "Footer").$$render(
+        )} ${validate_component(CldImage, "CldImage").$$render(
+          $$result,
+          {
+            src: "banner",
+            width: MAX_PAGE_WIDTH * 2,
+            aspectRatio: 338 / 100,
+            height: "100%",
+            alt: "Simple Reads Books Banner",
+            sizes: "100vw",
+            class: "max-w-screen-2xl m-auto",
+            loading: "eager"
+          },
+          {},
+          {}
+        )} ${validate_component(CldImage, "CldImage").$$render(
+          $$result,
+          {
+            src: "hunnie-bunnie-peering-over",
+            width: 450,
+            aspectRatio: 7 / 5,
+            height: "100%",
+            alt: "Hunnie Bunny Peering Over",
+            class: "absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp !w-fit"
+          },
+          {},
+          {}
+        )} ${validate_component(CldImage, "CldImage").$$render(
+          $$result,
+          {
+            src: "hunnie-bunnie-reading",
+            width: 450,
+            aspectRatio: 7 / 5,
+            height: "100%",
+            alt: "Hunnie Bunny Reading",
+            class: "absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-slideInFromLeft !w-fit"
+          },
+          {},
+          {}
+        )}</header> ${$page.error ? `${slots.default ? slots.default({}) : ``}` : `<main>${slots.default ? slots.default({}) : ``}</main> ${validate_component(Footer, "Footer").$$render(
           $$result,
           {
             footerType: "socialmedia",
@@ -4359,12 +8440,12 @@ var init_layout_svelte = __esm({
                 $$result,
                 {
                   href: "/",
-                  src: "/images/logo.png",
+                  src: "https://res.cloudinary.com/simple-reads-books/image/upload/w_128,h_104,f_webp,q_auto/SRBooksLogo_uyvnpj.png",
                   alt: "Simple Reads Books",
                   name: "Simple Reads Books",
                   class: "text-white",
                   spanClass: "text-white text-md md:text-xl font-[Itim] whitespace-nowrap hidden sm:block",
-                  imgClass: "h-10 pr-3",
+                  imgClass: "h-10 pr-3 sm:w-20 h-fit",
                   aClass: "flex flex-row items-center min-w-[fit-content] mr-3 col-span-3 hidden sm:flex"
                 },
                 {},
@@ -4385,19 +8466,21 @@ var init_layout_svelte = __esm({
                       default: () => {
                         return `Privacy Policy`;
                       }
-                    })} ${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/" }, {}, {
+                    })} ${validate_component(FooterLink, "FooterLink").$$render($$result, { href: "/", aClass: "hidden" }, {}, {
                       default: () => {
                         return `Reviews`;
                       }
                     })}`;
                   }
                 }
-              )} <div class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13"><p class="text-white text-xs pb-1 bg-transparent" data-svelte-h="svelte-1edl2a2">Subscribe for e-mail updates!</p> ${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, { class: "rounded-none w-full" }, {}, {
+              )} <div class="w-full rounded-xl col-start-1 md:col-start-10 col-end-13" role="button" tabindex="0"><p class="text-white text-xs pb-1 bg-transparent" data-svelte-h="svelte-1edl2a2">Subscribe for e-mail updates!</p> ${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, { class: "rounded-none w-full" }, {}, {
                 default: () => {
                   return `${validate_component(Input, "Input").$$render(
                     $$result,
                     {
                       type: "email",
+                      id: "EMAIL",
+                      name: "EMAIL",
                       placeholder: "name@gmail.com",
                       size: "sm",
                       class: "!rounded-none !rounded-tl !rounded-bl"
@@ -4423,41 +8506,64 @@ var init_layout_svelte = __esm({
                 },
                 {},
                 {}
-              )} <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0 text-white">${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
-                default: () => {
-                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>`;
+              )} <div class="flex mt-4 space-x-6 sm:justify-center sm:mt-0 text-white">${validate_component(FooterIcon, "FooterIcon").$$render(
+                $$result,
+                {
+                  href: "https://facebook.com/deborah.martin.3154",
+                  target: "_blank",
+                  class: "text-white"
+                },
+                {},
+                {
+                  default: () => {
+                    return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>`;
+                  }
                 }
-              })} ${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
-                default: () => {
-                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path></svg>`;
+              )} ${validate_component(FooterIcon, "FooterIcon").$$render(
+                $$result,
+                {
+                  href: "https://instagram.com/debbiemartin064",
+                  target: "_blank",
+                  class: "text-white"
+                },
+                {},
+                {
+                  default: () => {
+                    return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path></svg>`;
+                  }
                 }
-              })} ${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
-                default: () => {
-                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>`;
+              )} ${validate_component(FooterIcon, "FooterIcon").$$render(
+                $$result,
+                {
+                  href: "https://twitter.com/DeborahCMartin",
+                  target: "_blank",
+                  class: "text-white"
+                },
+                {},
+                {
+                  default: () => {
+                    return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>`;
+                  }
                 }
-              })} ${validate_component(FooterIcon, "FooterIcon").$$render($$result, { href: "/", class: "text-white" }, {}, {
-                default: () => {
-                  return `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>`;
-                }
-              })}</div></div></div>`;
+              )}</div></div></div>`;
             }
           }
         )}`}</div> ${validate_component(Modal, "Modal").$$render(
           $$result,
           {
-            title: "E-mail not ready yet",
+            class: "w-fit h-fit pt-10",
             autoclose: true,
-            open: defaultModal
+            open: emailSubscribeModal
           },
           {
             open: ($$value) => {
-              defaultModal = $$value;
+              emailSubscribeModal = $$value;
               $$settled = false;
             }
           },
           {
             default: () => {
-              return `<p class="text-base leading-relaxed text-gray-500 dark:text-gray-400" data-svelte-h="svelte-hp7v1m">E-mail subscription not ready yet</p>`;
+              return `<iframe title="email subscribe" width="540" height="540" src="https://cb8831b5.sibforms.com/serve/MUIFAAlGMe78lSVFkIYUCGSb2MNQDS5_DdlDLsckCsxmqSUdh2yo0ZkJsUu0II_U0BSAwsPnzkxTmUW5kLyZmIr2EWtSk4V1sDYqKe4yV6xBlyPnFMqIPrjlvJqZBx_7Smqhxr1q_30uur1_-joez43hUw1ucLcu_zp7FnrJn1zJZ8B3qgCIMxPaxlhAKZvLSeaEh3O0Qlumw18x" frameborder="0" scrolling="auto" allowfullscreen style="display: block;margin-left: auto;margin-right: auto;max-width: 100%;" class="-mx-10"></iframe>`;
             }
           }
         )}</div>`;
@@ -4482,8 +8588,8 @@ var init__ = __esm({
   ".svelte-kit/output/server/nodes/0.js"() {
     index = 0;
     component = async () => component_cache ?? (component_cache = (await Promise.resolve().then(() => (init_layout_svelte(), layout_svelte_exports))).default);
-    imports = ["_app/immutable/nodes/0.af90eb63.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/stores.167f22d1.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js", "_app/immutable/chunks/Modal.476411a0.js", "_app/immutable/chunks/CloseButton.20e6c958.js", "_app/immutable/chunks/index.d0fa776d.js"];
-    stylesheets = ["_app/immutable/assets/0.f834a060.css", "_app/immutable/assets/Indicator.1d121e74.css"];
+    imports = ["_app/immutable/nodes/0.03b80c44.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/stores.098e5259.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/Modal.33e41680.js", "_app/immutable/chunks/CloseButton.c40e06a6.js", "_app/immutable/chunks/index.d0fa776d.js", "_app/immutable/chunks/CldImage.0f5e97b0.js"];
+    stylesheets = ["_app/immutable/assets/0.ff12487a.css", "_app/immutable/assets/Indicator.1d121e74.css"];
     fonts = [];
   }
 });
@@ -4529,7 +8635,7 @@ var init_error_svelte = __esm({
       let $page, $$unsubscribe_page;
       $$unsubscribe_page = subscribe(page, (value) => $page = value);
       $$unsubscribe_page();
-      return `${$$result.head += `<!-- HEAD_svelte-170ftj0_START --><script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" data-svelte-h="svelte-16ujy84"><\/script><!-- HEAD_svelte-170ftj0_END -->`, ""} <section class="bg-white dark:bg-gray-900 h-[100vh] flex flex-col items-center">${$page?.error?.message !== "Not Found" ? `<h1 class="rounded-sm shadow p-5 w-full text-center bold bg-red-500 text-white">Error: ${escape($page?.error?.message)}</h1>` : ``} <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 my-auto h-[100%] flex items-center"><div class="mx-auto max-w-screen-sm text-center"><lottie-player src="https://lottie.host/5824a45e-3640-4d4f-8085-c82b1a40ca91/4RT9fuVtBk.json" background="#fff" speed="1" class="sm:w-[600px] sm:h-[600px]" loop autoplay direction="1" mode="normal"></lottie-player> <h1 class="mb-4 text-2xl font-extrabold text-red-600 dark:text-red-500" data-svelte-h="svelte-moli4v">Page Not Found</h1> <p class="mb-10 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white" data-svelte-h="svelte-oui917">Uh oh! That page doesn\u2019t exist \u{1F632}</p> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</div></div></section>`;
+      return `${$$result.head += `<!-- HEAD_svelte-1mxau7w_START --><script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" data-svelte-h="svelte-16ujy84"><\/script>${$$result.title = `<title>Uh oh</title>`, ""}<!-- HEAD_svelte-1mxau7w_END -->`, ""} <section class="bg-white dark:bg-gray-900 h-[100vh] flex flex-col items-center">${$page?.error?.message !== "Not Found" ? `<h1 class="rounded-sm shadow p-5 w-full text-center bold bg-red-500 text-white">Error: ${escape($page?.error?.message)}</h1>` : ``} <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6 my-auto h-[100%] flex items-center"><div class="mx-auto max-w-screen-sm text-center"><lottie-player src="https://lottie.host/5824a45e-3640-4d4f-8085-c82b1a40ca91/4RT9fuVtBk.json" background="#fff" speed="1" class="sm:w-[600px] sm:h-[600px]" loop autoplay direction="1" mode="normal"></lottie-player> <h1 class="mb-4 text-2xl font-extrabold text-red-600 dark:text-red-500" data-svelte-h="svelte-moli4v">Page Not Found</h1> <p class="mb-10 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white" data-svelte-h="svelte-oui917">Uh oh! That page doesn\u2019t exist \u{1F632}</p> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</div></div></section>`;
     });
   }
 });
@@ -4548,7 +8654,7 @@ var init__2 = __esm({
   ".svelte-kit/output/server/nodes/1.js"() {
     index2 = 1;
     component2 = async () => component_cache2 ?? (component_cache2 = (await Promise.resolve().then(() => (init_error_svelte(), error_svelte_exports))).default);
-    imports2 = ["_app/immutable/nodes/1.615f6d42.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js", "_app/immutable/chunks/stores.167f22d1.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/chunks/ButtonBack.6c5c0a6f.js", "_app/immutable/chunks/navigation.65a33de5.js"];
+    imports2 = ["_app/immutable/nodes/1.86e3ccee.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/stores.098e5259.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/chunks/ButtonBack.efd125c8.js", "_app/immutable/chunks/navigation.3a164a89.js"];
     stylesheets2 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts2 = [];
   }
@@ -4556,8 +8662,8 @@ var init__2 = __esm({
 
 // node_modules/.pnpm/csvtojson@2.0.10/node_modules/csvtojson/browser/browser.js
 var require_browser = __commonJS({
-  "node_modules/.pnpm/csvtojson@2.0.10/node_modules/csvtojson/browser/browser.js"(exports, module) {
-    module.exports = function(t) {
+  "node_modules/.pnpm/csvtojson@2.0.10/node_modules/csvtojson/browser/browser.js"(exports2, module2) {
+    module2.exports = function(t) {
       var e = {};
       function r(n) {
         if (e[n])
@@ -10122,8 +14228,8 @@ var require_browser = __commonJS({
 });
 
 // .svelte-kit/output/server/chunks/helpers.js
-function wrapTextInParagraphTags(text2) {
-  return text2.split("\n").map((line) => `<p>${line}</p>`).join("");
+function wrapTextInParagraphTags(text3) {
+  return text3.split("\n").map((line) => `<p>${line}</p>`).join("");
 }
 function generateTestImage(randomSizeLimit = 400, fixedSizeLimit = 200) {
   const id = Math.random() * 1e8;
@@ -10324,9 +14430,7 @@ var init_ButtonAmazon = __esm({
         {
           default: () => {
             return `<svg class="mr-3" style="color: white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><title>ionicons-v5_logos</title><path d="M48.48,378.73a300.52,300.52,0,0,0,152.89,95.92,262.57,262.57,0,0,0,159.3-17.25,225.52,225.52,0,0,0,66.79-47,6.36,6.36,0,0,0-2-8.53,11.76,11.76,0,0,0-8-.05,401.92,401.92,0,0,1-116.55,39.34,358.13,358.13,0,0,1-127.29-8.83,446.73,446.73,0,0,1-119.1-60.49,5,5,0,0,0-6.06,6.9Z" fill="white"></path><path d="M387.15,388.44a168.11,168.11,0,0,1,48.94-2.23l.67.13a10,10,0,0,1,7.37,12.05A204.71,204.71,0,0,1,429,444.47a2.55,2.55,0,0,0,1.66,3.18,2.51,2.51,0,0,0,2.23-.37A83.31,83.31,0,0,0,464,382.86a12.44,12.44,0,0,0-10.22-13.22A95.75,95.75,0,0,0,384.91,384a2.55,2.55,0,0,0-.57,3.55A2.52,2.52,0,0,0,387.15,388.44Z" fill="white"></path><path d="M304.24,324.92a164,164,0,0,1-28.92,25.3A135.16,135.16,0,0,1,208.63,369a99.49,99.49,0,0,1-57.49-19.85,97.25,97.25,0,0,1-27.36-100.28,112.35,112.35,0,0,1,65.3-69.06,367.67,367.67,0,0,1,104.7-15.55V127A37.82,37.82,0,0,0,261,94.72a59.9,59.9,0,0,0-31.17,4.08,48.89,48.89,0,0,0-27.13,34.67,12,12,0,0,1-12.58,6.72l-50.9-4.5a11.38,11.38,0,0,1-8.38-10.16,103.66,103.66,0,0,1,36.61-63.45A143.86,143.86,0,0,1,257.85,32a146.24,146.24,0,0,1,84.27,27.67,86.82,86.82,0,0,1,30.7,70.22V258.8a84.46,84.46,0,0,0,8,31.28l15.87,23.23a13,13,0,0,1,0,11.23L349.7,364.25a12.5,12.5,0,0,1-12.68-.44A244.84,244.84,0,0,1,304.24,324.92Zm-10.6-116.83a257.68,257.68,0,0,0-44,2.89A63,63,0,0,0,208,242.54a63,63,0,0,0,3.07,54,40.6,40.6,0,0,0,47.11,12.19,78.61,78.61,0,0,0,35.46-55.58V208.09" fill="white"></path></svg>
-	Buy on Amazon \xA0
-
-	<svg aria-hidden="true" class="mr-2 ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>`;
+	Buy on Amazon`;
           }
         }
       )}`;
@@ -10339,26 +14443,73 @@ var page_svelte_exports = {};
 __export(page_svelte_exports, {
   default: () => Page
 });
-var css, Page;
+var Page;
 var init_page_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/home/_page.svelte.js"() {
     init_ssr();
     init_ButtonAmazon();
     init_Indicator_svelte_svelte_type_style_lang();
-    css = {
-      code: "@keyframes svelte-8wrmk9-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}.animate-bounce-custom.svelte-8wrmk9{animation:svelte-8wrmk9-bounce 1s infinite steps(50)}@keyframes svelte-8wrmk9-rotate{0%{transform:scaleX(1)}50%{transform:scaleX(0.98)}100%{transform:scaleX(1)}}.animate-rotate-custom.svelte-8wrmk9{animation:svelte-8wrmk9-rotate 2s ease-in-out infinite}",
-      map: null
-    };
+    init_CldImage();
     Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      $$result.css.add(css);
-      return `<section class="w-full py-10 md:py-20 px-4 md:px-5 bg-[#009933] bg-opacity-40 flex-col justify-start items-center inline-flex font-[Itim]" data-svelte-h="svelte-zlw5rg"><div class="justify-start items-center inline-flex"><div class="self-stretch justify-between items-start gap-2.5 inline-flex"><div class="text-center text-gray-900 lg:text-4xl xs:text-normal sm:text-2xl md:text-3xl font-normal md:px-10">Simple Reads Books encourages children to explore nature through entertaining stories filled
-				with colorful illustrations</div></div></div></section>  <section><div class="flex flex-row flex-wrap font-[Itim]"><div class="p-4 md:basis-7/12" role="button" tabindex="0" data-svelte-h="svelte-vrblg4"><a href="/products/hunnie-bunnys-garden"><img class="rounded-lg w-full" src="images/hunnie-bunnys-garden-mockup.png" alt="book mockup cover"> <div class="self-stretch text-center text-gray-900 md:text-xl lg:text-2xl text-xl p-3"><p class="mb-2">Hunnie Bunny\u2019s Garden is a delightful blend of entertainment and education that provides
+      return `${$$result.head += `<!-- HEAD_svelte-im3euq_START -->${$$result.title = `<title>Welcome to Simple Reads Books</title>`, ""}<!-- HEAD_svelte-im3euq_END -->`, ""} <section class="w-full py-10 md:py-20 px-4 md:px-5 bg-[#009933] bg-opacity-40 flex-col justify-start items-center inline-flex font-[Itim]" data-svelte-h="svelte-zlw5rg"><div class="justify-start items-center inline-flex"><div class="self-stretch justify-between items-start gap-2.5 inline-flex"><div class="text-center text-gray-900 lg:text-4xl xs:text-normal sm:text-2xl md:text-3xl font-normal md:px-10">Simple Reads Books encourages children to explore nature through entertaining stories filled
+				with colorful illustrations</div></div></div></section>  <section><div class="flex flex-row flex-wrap font-[Itim]"><div class="p-4 md:basis-7/12" role="button" tabindex="0"><a href="/products/hunnie-bunnys-garden">${validate_component(CldImage, "CldImage").$$render(
+        $$result,
+        {
+          width: 1616,
+          height: "100%",
+          aspectRatio: 1413 / 983,
+          class: "rounded-lg w-full",
+          src: "hunnie-bunnys-garden-table",
+          alt: "book mockup cover",
+          quality: 75,
+          loading: "eager"
+        },
+        {},
+        {}
+      )} <div class="self-stretch text-center text-gray-900 md:text-xl lg:text-2xl text-xl p-3" data-svelte-h="svelte-1i186ue"><p class="mb-2">Hunnie Bunny\u2019s Garden is a delightful blend of entertainment and education that provides
 						endless opportunities for learning and discovery.</p> <p class="mb-2">This charming story is a wonderful testament to the beauty of nature and the joy that
-						gardening can bring.</p> <p class="pt-3 text-shadow-black-xs text-black">Add Hunnie Bunny\u2019s Garden to your child\u2019s library today!</p></div></a></div> <div class="p-4 basis-full md:basis-5/12 flex flex-col justify-start items-center"><div class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal mb-10" data-svelte-h="svelte-118b3i3">Release Date <mark class="px-2 bg-[#B9D6B8] rounded">August 15, 2023</mark></div> ${validate_component(ButtonAmazon, "ButtonAmazon").$$render($$result, {}, {}, {})} <img style="scale:1.25" src="/images/hunnie-bunny-reading-book.png" alt="hunnie bunny reading" class="mt-10"></div></div></section> <section class="w-full font-[Itim]" data-svelte-h="svelte-1xttzuq"><div class="bg-[rgba(0,102,204,0.44)] p-2.5 flex flex-row items-center justify-between w-full relative"><img class="hidden sm:flex col-span-3 max-w-[20%] animate-rotate-custom svelte-8wrmk9" src="images/mr_squirrel_sitting.png" loading="lazy" alt="Mr. Squirrel sitting"> <div class="flex flex-row gap-2.5 items-center justify-center col-span-6 m-auto"><div class="flex flex-col gap-0 items-center justify-start"><div class="text-gray-900 text-center relative self-stretch"><span><p class="text-xl md:text-2xl lg:text-3xl text-normal text-shadow-sm mb-5">Coming Soon!</p> <div class="mt-30"><span class="md:text-xl lg:text-2xl">Hunnie Bunny\u2019s Garden Mystery
+						gardening can bring.</p> <p class="pt-3 text-shadow-black-xs text-black">Add Hunnie Bunny\u2019s Garden to your child\u2019s library today!</p></div></a></div> <div class="p-4 basis-full md:basis-5/12 flex flex-col justify-start items-center"><div class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal mb-10" data-svelte-h="svelte-118b3i3">Release Date <mark class="px-2 bg-[#B9D6B8] rounded">August 15, 2023</mark></div> ${validate_component(ButtonAmazon, "ButtonAmazon").$$render($$result, {}, {}, {})} ${validate_component(CldImage, "CldImage").$$render(
+        $$result,
+        {
+          width: 1420,
+          height: "100%",
+          aspectRatio: 2100 / 1500,
+          style: "scale:1.25",
+          src: "hunnie-bunny-reading-book",
+          alt: "hunnie bunny reading",
+          class: "mt-10"
+        },
+        {},
+        {}
+      )}</div></div></section> <section class="w-full font-[Itim]"><div class="bg-[rgba(0,102,204,0.44)] p-2.5 flex flex-row items-center justify-between w-full relative">${validate_component(CldImage, "CldImage").$$render(
+        $$result,
+        {
+          width: 472,
+          height: "100%",
+          aspectRatio: 2100 / 1500,
+          class: "hidden sm:flex col-span-3 !max-w-[20%] !h-fit   animate-[rotateSlow_1s_ease-in_infinite]",
+          src: "mr-squirrel-sitting",
+          alt: "Mr. Frog sitting"
+        },
+        {},
+        {}
+      )} <div class="flex flex-row gap-2.5 items-center justify-center col-span-6 m-auto" data-svelte-h="svelte-rv2nkz"><div class="flex flex-col gap-0 items-center justify-start"><div class="text-gray-900 text-center relative self-stretch"><span><p class="text-xl md:text-2xl lg:text-3xl text-normal text-shadow-sm mb-5">Coming Soon!</p> <div class="mt-30"><span class="md:text-xl lg:text-2xl">Hunnie Bunny\u2019s Garden Mystery
 								<br>
 								Hunnie Bunny\u2019s Special Gift
 								<br>
-								Hunnie Bunny\u2019s Christmas Wish</span></div></span></div></div></div> <img class="hidden sm:flex col-span-3 max-w-[20%] animate-bounce-custom svelte-8wrmk9" src="images/mr_frog_sitting.png" loading="lazy" alt="Mr. Frog sitting"></div> </section>`;
+								Hunnie Bunny\u2019s Christmas Wish</span></div></span></div></div></div> ${validate_component(CldImage, "CldImage").$$render(
+        $$result,
+        {
+          width: 382,
+          height: "100%",
+          aspectRatio: 252 / 191,
+          class: "hidden sm:flex col-span-3 !max-w-[20%] !h-fit animate-[bouncefrog_1s_ease-in_infinite]",
+          src: "mr-frog-sitting",
+          alt: "Mr. Frog sitting"
+        },
+        {},
+        {}
+      )}</div> </section>`;
     });
   }
 });
@@ -10393,8 +14544,8 @@ var init__4 = __esm({
   ".svelte-kit/output/server/nodes/3.js"() {
     index4 = 3;
     component4 = async () => component_cache4 ?? (component_cache4 = (await Promise.resolve().then(() => (init_page_svelte2(), page_svelte_exports2))).default);
-    imports4 = ["_app/immutable/nodes/3.8aa12f18.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/nodes/6.ff3217f4.js", "_app/immutable/chunks/navigation.65a33de5.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/chunks/ButtonAmazon.7a31ed06.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js"];
-    stylesheets4 = ["_app/immutable/assets/6.5eb213e4.css", "_app/immutable/assets/Indicator.1d121e74.css"];
+    imports4 = ["_app/immutable/nodes/3.d683805d.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/nodes/6.68bb3fd7.js", "_app/immutable/chunks/navigation.3a164a89.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/chunks/ButtonAmazon.2dbe8e11.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/CldImage.0f5e97b0.js"];
+    stylesheets4 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts4 = [];
   }
 });
@@ -10408,17 +14559,47 @@ var Page2;
 var init_page_svelte3 = __esm({
   ".svelte-kit/output/server/entries/pages/about/_page.svelte.js"() {
     init_ssr();
+    init_CldImage();
     Page2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<article class="prose prose-lg sm:prose-xl md:prose-2xl w-full m-auto max-w-4xl p-2 md:p-0 pt-5 md:pt-8" data-svelte-h="svelte-1jq6h43"><h1 class="text-center">About Us</h1> <div><img src="/images/dcm-author.png" class="sm:float-right sm:max-w-[50%] sm:rounded-bl-[75px] align-bottom rounded-br-[50px] rounded-bl-[50px]" alt="author"> <p class="font-medium -mt-[30px]">Welcome to Simple Reads Books!<br></p> <p class="font-medium">My name is Deborah Martin and I am the author of the Hunnie Bunny book series.</p> <p>I have always enjoyed writing children\u2019s stories and decided to finally publish Hunnie Bunny\u2019s Garden after my grandson\u2019s birth In August of 2022. Even though I wrote Hunnie Bunny\u2019s Garden in 1985 when my son was two years old, I
-            never forgot about the story and recently was able to find the perfect illustrator to bring the story to life.</p> <p>Growing up in Roanoke, Virginia, we had lots of pets, including cats, dogs, bunnies, birds and fish, all at the same time. So, it was natural for me to write about animals as I grew older. I believe that children learn empathy,
-            respect and responsibility when pets are part of the family.</p> <p>Horses have always been my first love and true passion, and I was fortunate to buy my first horse when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows.</p> <p>When I moved to California, I gave up riding to raise my family and didn\u2019t buy another horse until our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named Crimson Sky, a black German
-            warmblood gelding named San Fransisko, and a bay Oldenburg gelding named Santana. All three are trained in dressage and have done extremely well at shows with their professional rider.</p> <p>Besides my horses, I have two other four-legged children: a fifteen-year-old Bluepoint Balinese cat named Zoie (who is quite the diva in our house) and an eight-year-old Bluepoint Birman/Siamese mix named Rascal (who definitely
-            lives up to his name). They are wonderful companions, and my home wouldn\u2019t be the same without them!</p> <p>I hope you will join the Simple Reads Books community and share my books with your family and friends. Enjoy!</p>
-        Horses have always been my first love and true passion, and I was fortunate to buy my first horse when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows. When I moved to California, I
-        gave up riding to raise my family and didn\u2019t buy another horse until our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named Crimson Sky, a black German warmblood gelding named San
-        Fransisko, and a bay Oldenburg gelding named Santana. All three are trained in dressage and have done extremely well at shows with their professional rider.
+      return `${$$result.head += `<!-- HEAD_svelte-19wrl6u_START -->${$$result.title = `<title>About Simple Reads Books</title>`, ""}<!-- HEAD_svelte-19wrl6u_END -->`, ""} <article class="prose prose-lg sm:prose-xl md:prose-2xl w-full m-auto max-w-4xl p-2 md:p-0 pt-5 md:pt-8"><h1 class="text-center font-bold text-5xl sm:text-6xl md:text-7xl" data-svelte-h="svelte-10100qf">About Us</h1> <div>${validate_component(CldImage, "CldImage").$$render(
+        $$result,
+        {
+          width: 896,
+          height: "100%",
+          aspectRatio: 2956 / 4016,
+          class: "sm:float-right sm:rounded-bl-[75px] align-bottom rounded-br-[50px] rounded-bl-[50px] sm:!w-fit !max-h-[50vh] !object-contain",
+          src: "author-portrait-photo",
+          alt: "Author portrait"
+        },
+        {},
+        {}
+      )} <p class="font-medium -mt-[30px]" data-svelte-h="svelte-15jehfs">Welcome to Simple Reads Books!<br></p> <p class="font-medium" data-svelte-h="svelte-1sbrp6n">My name is Deborah Martin and I am the author of the Hunnie Bunny book series.</p> <p data-svelte-h="svelte-hvq6vx">I have always enjoyed writing children\u2019s stories and decided to finally publish Hunnie Bunny\u2019s
+			Garden after my grandson\u2019s birth In August of 2022. Even though I wrote Hunnie Bunny\u2019s Garden
+			in 1985 when my son was two years old, I never forgot about the story and recently was able to
+			find the perfect illustrator to bring the story to life.</p> <p data-svelte-h="svelte-4w1nde">Growing up in Roanoke, Virginia, we had lots of pets, including cats, dogs, bunnies, birds and
+			fish, all at the same time. So, it was natural for me to write about animals as I grew older.
+			I believe that children learn empathy, respect and responsibility when pets are part of the
+			family.</p> <p data-svelte-h="svelte-epi3fx">Horses have always been my first love and true passion, and I was fortunate to buy my first
+			horse when I was in college. Some of my best years were spent showing my thoroughbred mare in
+			hunter shows.</p> <p data-svelte-h="svelte-155rnqi">When I moved to California, I gave up riding to raise my family and didn\u2019t buy another horse
+			until our son went off to college. I now have three horses, a chestnut Appendix Quarter horse
+			gelding named Crimson Sky, a black German warmblood gelding named San Fransisko, and a bay
+			Oldenburg gelding named Santana. All three are trained in dressage and have done extremely
+			well at shows with their professional rider.</p> <p data-svelte-h="svelte-45l6bh">Besides my horses, I have two other four-legged children: a fifteen-year-old Bluepoint
+			Balinese cat named Zoie (who is quite the diva in our house) and an eight-year-old Bluepoint
+			Birman/Siamese mix named Rascal (who definitely lives up to his name). They are wonderful
+			companions, and my home wouldn\u2019t be the same without them!</p> <p data-svelte-h="svelte-13xn0hy">I hope you will join the Simple Reads Books community and share my books with your family and
+			friends. Enjoy!</p>
+		Horses have always been my first love and true passion, and I was fortunate to buy my first horse
+		when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows.
+		When I moved to California, I gave up riding to raise my family and didn\u2019t buy another horse until
+		our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named
+		Crimson Sky, a black German warmblood gelding named San Fransisko, and a bay Oldenburg gelding named
+		Santana. All three are trained in dressage and have done extremely well at shows with their professional
+		rider.
 
-        <h2>Mission Statement</h2> <p>Simple Reads Books is dedicated to presenting children\u2019s stories with a positive message using colorful illustrations to build self-esteem and a love of animals and nature.</p></div></article>`;
+		<h2 data-svelte-h="svelte-2gijk7">Mission Statement</h2> <p data-svelte-h="svelte-1ovthg3">Simple Reads Books is dedicated to presenting children\u2019s stories with a positive message using
+			colorful illustrations to build self-esteem and a love of animals and nature.</p></div></article>`;
     });
   }
 });
@@ -10437,7 +14618,7 @@ var init__5 = __esm({
   ".svelte-kit/output/server/nodes/4.js"() {
     index5 = 4;
     component5 = async () => component_cache5 ?? (component_cache5 = (await Promise.resolve().then(() => (init_page_svelte3(), page_svelte_exports3))).default);
-    imports5 = ["_app/immutable/nodes/4.4cab749c.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js"];
+    imports5 = ["_app/immutable/nodes/4.28e0aaa8.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/CldImage.0f5e97b0.js", "_app/immutable/chunks/spread.8a54911c.js"];
     stylesheets5 = [];
     fonts5 = [];
   }
@@ -10659,7 +14840,7 @@ var init_page_svelte4 = __esm({
               })}</div>`;
             }
           }
-        )} <section class="bg-white dark:bg-gray-900"><div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md"><h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white" data-svelte-h="svelte-3a2tot">Contact Us</h2> <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl" data-svelte-h="svelte-1c50znc">Have any questions or comments? Let me know how we can help.</p> <form id="contact-form" name="contact" method="POST" class="space-y-8"><div><label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" data-svelte-h="svelte-18o4z4r">Your email</label> ${validate_component(Label, "Label").$$render($$result, { class: "space-y-2" }, {}, {
+        )} ${$$result.head += `<!-- HEAD_svelte-rg684o_START -->${$$result.title = `<title>Contact</title>`, ""}<!-- HEAD_svelte-rg684o_END -->`, ""} <section class="bg-white dark:bg-gray-900"><div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md !pt-8"><h2 class="mb-4 text-5xl sm:text-6xl md:text-7xl tracking-tight font-bold text-center text-gray-900 dark:text-white" data-svelte-h="svelte-1onfpeg">Contact Us</h2> <p class="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl" data-svelte-h="svelte-1c50znc">Have any questions or comments? Let me know how we can help.</p> <form id="contact-form" name="contact" method="POST" class="space-y-8"><div><label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" data-svelte-h="svelte-18o4z4r">Your email</label> ${validate_component(Label, "Label").$$render($$result, { class: "space-y-2" }, {}, {
           default: () => {
             return `${validate_component(Input, "Input").$$render(
               $$result,
@@ -10747,7 +14928,7 @@ var init__6 = __esm({
   ".svelte-kit/output/server/nodes/5.js"() {
     index6 = 5;
     component6 = async () => component_cache6 ?? (component_cache6 = (await Promise.resolve().then(() => (init_page_svelte4(), page_svelte_exports4))).default);
-    imports6 = ["_app/immutable/nodes/5.6e994b9a.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js", "_app/immutable/chunks/Modal.476411a0.js", "_app/immutable/chunks/CloseButton.20e6c958.js"];
+    imports6 = ["_app/immutable/nodes/5.5615251c.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/Modal.33e41680.js", "_app/immutable/chunks/CloseButton.c40e06a6.js"];
     stylesheets6 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts6 = [];
   }
@@ -10767,8 +14948,8 @@ var init__7 = __esm({
   ".svelte-kit/output/server/nodes/6.js"() {
     index7 = 6;
     component7 = async () => component_cache7 ?? (component_cache7 = (await Promise.resolve().then(() => (init_page_svelte(), page_svelte_exports))).default);
-    imports7 = ["_app/immutable/nodes/6.ff3217f4.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/navigation.65a33de5.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/chunks/ButtonAmazon.7a31ed06.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js"];
-    stylesheets7 = ["_app/immutable/assets/6.5eb213e4.css", "_app/immutable/assets/Indicator.1d121e74.css"];
+    imports7 = ["_app/immutable/nodes/6.68bb3fd7.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/navigation.3a164a89.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/chunks/ButtonAmazon.2dbe8e11.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/CldImage.0f5e97b0.js"];
+    stylesheets7 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts7 = [];
   }
 });
@@ -10788,7 +14969,7 @@ var init_page_svelte5 = __esm({
     h3Class = "text-gray-900 text-xl font-semibold pb-0.5 leading-normal";
     pClass = "text-gray-500 text-sm font-normal leading-normal";
     Page4 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<div class="max-w-2xl m-auto mb-5"><section class="w-full flex flex-col justify-center items-center my-10"><h1 class="text-4xl font-extrabold" data-svelte-h="svelte-1nh32uq">Privacy Policy</h1> <h6 class="text-gray-500" data-svelte-h="svelte-1lv66r3">Last updated on July 26th, 2023</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</section> <p class="font-normal text-gray-900 pb-5" data-svelte-h="svelte-r2h0nv">At <a href="simplereadsbooks.com" class="text-blue-400">simplereadsbooks.com</a>, we take your
+      return `${$$result.head += `<!-- HEAD_svelte-8dio08_START -->${$$result.title = `<title>Privacy</title>`, ""}<!-- HEAD_svelte-8dio08_END -->`, ""} <div class="max-w-2xl m-auto mb-5"><section class="w-full flex flex-col justify-center items-center my-10"><h1 class="text-4xl font-extrabold" data-svelte-h="svelte-1nh32uq">Privacy Policy</h1> <h6 class="text-gray-500" data-svelte-h="svelte-1lv66r3">Last updated on July 26th, 2023</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</section> <p class="font-normal text-gray-900 pb-5" data-svelte-h="svelte-r2h0nv">At <a href="simplereadsbooks.com" class="text-blue-400">simplereadsbooks.com</a>, we take your
 		privacy seriously. This Privacy Policy outlines the types of personal information we collect
 		from visitors to our website and how we use, disclose, and protect that information.
 		<br><br>
@@ -10839,7 +15020,7 @@ var init__8 = __esm({
   ".svelte-kit/output/server/nodes/7.js"() {
     index8 = 7;
     component8 = async () => component_cache8 ?? (component_cache8 = (await Promise.resolve().then(() => (init_page_svelte5(), page_svelte_exports5))).default);
-    imports8 = ["_app/immutable/nodes/7.d6ef8525.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js", "_app/immutable/chunks/ButtonBack.6c5c0a6f.js", "_app/immutable/chunks/navigation.65a33de5.js"];
+    imports8 = ["_app/immutable/nodes/7.e74f8f6d.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/ButtonBack.efd125c8.js", "_app/immutable/chunks/navigation.3a164a89.js"];
     stylesheets8 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts8 = [];
   }
@@ -10965,6 +15146,7 @@ var init_page_svelte6 = __esm({
     init_Indicator_svelte_svelte_type_style_lang();
     init_ButtonAmazon();
     init_Badge();
+    init_CldImage();
     Card = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let innerPadding;
       let $$restProps = compute_rest_props($$props, ["href", "horizontal", "reverse", "img", "padding", "size"]);
@@ -11130,7 +15312,7 @@ var init_page_svelte6 = __esm({
       const { products } = data;
       if ($$props.data === void 0 && $$bindings.data && data !== void 0)
         $$bindings.data(data);
-      return `<h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-bold mt-4 md:mt-8" data-svelte-h="svelte-jlnj2x">Books</h1> <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-4 md:gap-8 justify-items-center mt-4 sm:mt-6 md:mt-10 mx-3 sm:mx-4 md:mx-6">${each(products, (product, i) => {
+      return `${$$result.head += `<!-- HEAD_svelte-tdgbx4_START -->${$$result.title = `<title>Books &amp; Products</title>`, ""}<!-- HEAD_svelte-tdgbx4_END -->`, ""} <h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-bold mt-4 md:mt-8" data-svelte-h="svelte-jlnj2x">Books</h1> <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-4 md:gap-8 justify-items-center mt-4 sm:mt-6 md:mt-10 mx-3 sm:mx-4 md:mx-6">${each(products, (product, i) => {
         return `${validate_component(Card, "Card").$$render(
           $$result,
           {
@@ -11140,7 +15322,7 @@ var init_page_svelte6 = __esm({
           {},
           {
             default: () => {
-              return `<a${add_attribute("href", "/products/" + product.id, 0)} class="flex justify-center items-center"><img class="rounded-t-lg object-cover w-full"${add_attribute("src", product.images[0].imgurl, 0)}${add_attribute("alt", "Product image" + i, 0)}></a> <div class="px-5 py-5 pt-2"><h1 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">${escape(product.title)} ${validate_component(AvailableInFormat, "AvailableInFormat").$$render(
+              return `<a${add_attribute("href", "/products/" + product.id, 0)} class="flex justify-center items-center"><img class="rounded-t-lg object-cover w-full"${add_attribute("src", product.images[0].imgurl, 0)}${add_attribute("alt", "Product image" + i, 0)} loading="lazy"></a> <div class="px-5 py-5 pt-2"><h1 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">${escape(product.title)} ${validate_component(AvailableInFormat, "AvailableInFormat").$$render(
                 $$result,
                 {
                   divClass: "pt-0 -mt-[8px]",
@@ -11148,7 +15330,7 @@ var init_page_svelte6 = __esm({
                 },
                 {},
                 {}
-              )}</h1> <p class="text-sm text-gray-400 mt-1.5 sm:mt-3">${escape(product.description.split("\n")[0])}</p> <div class="flex justify-between items-center mt-5"><span class="text-xl font-medium text-gray-900 dark:text-white">$${escape(product.price.toLocaleString("en-US", { style: "currency", currency: "USD" }))}</span> ${validate_component(ButtonAmazon, "ButtonAmazon").$$render($$result, { size: "sm" }, {}, {})} </div></div> `;
+              )}</h1> <p class="text-sm text-gray-400 mt-1.5 sm:mt-3">${escape(product.description.split("\n")[0])}</p> <div class="flex justify-between items-center mt-5"><span class="text-xl font-medium text-gray-900 dark:text-white">$${escape(product.price.toLocaleString("en-US", { style: "currency", currency: "USD" }))}</span> ${validate_component(ButtonAmazon, "ButtonAmazon").$$render($$result, { size: "xs" }, {}, {})} </div></div> `;
             }
           }
         )}`;
@@ -11169,7 +15351,19 @@ var init_page_svelte6 = __esm({
             })}`;
           }
         }
-      )} <img alt="Hunnie Bunny Reading Book" src="/images/hunnie-bunny-reading-a-book-to-mr-squirrel.png" class="w-full p-1 sm:p-8 md:p-32 block -mt-4 sm:-mt-8 md:-mt-32 !mb-0 !pb-0">`;
+      )} ${validate_component(CldImage, "CldImage").$$render(
+        $$result,
+        {
+          width: 2100,
+          height: "100%",
+          aspectRatio: 2100 / 1500,
+          src: "hunnie-bunny-reading-a-book-to-mr-squirrel",
+          quality: 80,
+          class: "w-full !p-1 sm:!p-8 md:!p-24 md:!-mb-20 block !-mt-4 sm:!-mt-8 md:!-mt-24 !mb-0 !pb-0 !h-[100%] !object-contain"
+        },
+        {},
+        {}
+      )}`;
     });
   }
 });
@@ -11188,7 +15382,7 @@ var init__9 = __esm({
   ".svelte-kit/output/server/nodes/8.js"() {
     index9 = 8;
     component9 = async () => component_cache9 ?? (component_cache9 = (await Promise.resolve().then(() => (init_page_svelte6(), page_svelte_exports6))).default);
-    imports9 = ["_app/immutable/nodes/8.3ab60cb4.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Badge.95246e99.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js", "_app/immutable/chunks/CloseButton.20e6c958.js", "_app/immutable/chunks/index.d0fa776d.js", "_app/immutable/chunks/ButtonAmazon.7a31ed06.js"];
+    imports9 = ["_app/immutable/nodes/8.487b3361.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Badge.533cf40a.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/CloseButton.c40e06a6.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/index.d0fa776d.js", "_app/immutable/chunks/ButtonAmazon.2dbe8e11.js", "_app/immutable/chunks/CldImage.0f5e97b0.js"];
     stylesheets9 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts9 = [];
   }
@@ -11202,7 +15396,7 @@ __export(page_svelte_exports7, {
 function getProductById(products, id) {
   return products.find((product) => product.id === id);
 }
-var Slide, css$1, Thumbnail, Caption, css2, Indicator, Carousel, ExclamationCircleSolid, Page6;
+var Slide, css$1, Thumbnail, Caption, css, Indicator, Carousel, ExclamationCircleSolid, Page6;
 var init_page_svelte7 = __esm({
   ".svelte-kit/output/server/entries/pages/products/_id_/_page.svelte.js"() {
     init_ssr();
@@ -11213,6 +15407,7 @@ var init_page_svelte7 = __esm({
     init_stores();
     init_ButtonBack();
     init_helpers();
+    init_CldImage();
     Slide = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let { image = "" } = $$props;
       let { altTag = "" } = $$props;
@@ -11278,25 +15473,25 @@ var init_page_svelte7 = __esm({
         $$bindings.pClass(pClass3);
       return `<div${add_attribute("class", captionClass, 0)}><p id="caption"${add_attribute("class", pClass3, 0)}>${escape(caption)}</p></div> `;
     });
-    css2 = {
+    css = {
       code: ".active.svelte-1o2b5yq{opacity:1}",
       map: null
     };
     Indicator = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      let { name = "" } = $$props;
+      let { name: name2 = "" } = $$props;
       let { selected = false } = $$props;
       let { indicatorClass = "" } = $$props;
-      if ($$props.name === void 0 && $$bindings.name && name !== void 0)
-        $$bindings.name(name);
+      if ($$props.name === void 0 && $$bindings.name && name2 !== void 0)
+        $$bindings.name(name2);
       if ($$props.selected === void 0 && $$bindings.selected && selected !== void 0)
         $$bindings.selected(selected);
       if ($$props.indicatorClass === void 0 && $$bindings.indicatorClass && indicatorClass !== void 0)
         $$bindings.indicatorClass(indicatorClass);
-      $$result.css.add(css2);
+      $$result.css.add(css);
       return `<button type="button" class="${[
         escape(null_to_empty(indicatorClass), true) + " svelte-1o2b5yq",
         selected ? "active" : ""
-      ].join(" ").trim()}"${add_attribute("aria-label", name, 0)}></button> `;
+      ].join(" ").trim()}"${add_attribute("aria-label", name2, 0)}></button> `;
     });
     Carousel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let image;
@@ -11389,11 +15584,11 @@ var init_page_svelte7 = __esm({
         },
         {},
         {}
-      )}</div> ${showIndicators ? ` <div${add_attribute("class", indicatorDivCls, 0)}>${each(images, ({ id: id2, imgurl, name, attribution }) => {
+      )}</div> ${showIndicators ? ` <div${add_attribute("class", indicatorDivCls, 0)}>${each(images, ({ id: id2, imgurl, name: name2, attribution }) => {
         return `${validate_component(Indicator, "Indicator").$$render(
           $$result,
           {
-            name,
+            name: name2,
             selected: imageShowingIndex === id2,
             indicatorClass: indicatorCls
           },
@@ -11408,14 +15603,14 @@ var init_page_svelte7 = __esm({
         },
         {},
         {}
-      )}` : ``} ${showThumbs ? `<div${add_attribute("class", thumbDivCls, 0)}>${each(images, ({ id: id2, imgurl, name, attribution }) => {
+      )}` : ``} ${showThumbs ? `<div${add_attribute("class", thumbDivCls, 0)}>${each(images, ({ id: id2, imgurl, name: name2, attribution }) => {
         return `${validate_component(Thumbnail, "Thumbnail").$$render(
           $$result,
           {
             thumbClass: thumbCls,
             thumbBtnClass: thumbBtnCls,
             thumbImg: imgurl,
-            altTag: name,
+            altTag: name2,
             titleLink: attribution,
             id: id2,
             selected: imageShowingIndex === id2
@@ -11472,7 +15667,7 @@ var init_page_svelte7 = __esm({
         $$bindings.data(data);
       isBook = product?.type === "book";
       $$unsubscribe_page();
-      return `${product ? `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-1 w-full justiy-center items-center justify-items-center"><div id="carousel-wrapper" class="dark m-2 sm:m-6 md:m-10">${validate_component(Carousel, "Carousel").$$render(
+      return `${$$result.head += `<!-- HEAD_svelte-ucssa1_START -->${product ? `${$$result.title = `<title>${escape(product.title)}</title>`, ""}` : ``}<!-- HEAD_svelte-ucssa1_END -->`, ""} ${product ? `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-1 w-full justiy-center items-center justify-items-center"><div id="carousel-wrapper" class="dark m-2 sm:m-6 md:m-10">${validate_component(Carousel, "Carousel").$$render(
         $$result,
         {
           images: product.images,
@@ -11509,7 +15704,19 @@ var init_page_svelte7 = __esm({
         {},
         {}
       )}
-			No product found</h1> <h6 class="text-md text-center" data-svelte-h="svelte-rwseym">We couldn&#39;t find a match based on the provided product ID.</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</div> <img src="/images/hunnie-bunny-reading-a-book-to-mr-squirrel.png" class="w-full">`}`;
+			No product found</h1> <h6 class="text-md text-center" data-svelte-h="svelte-rwseym">We couldn&#39;t find a match based on the provided product ID.</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</div> ${validate_component(CldImage, "CldImage").$$render(
+        $$result,
+        {
+          width: 2100,
+          height: "100%",
+          aspectRatio: 2100 / 1500,
+          src: "hunnie-bunny-reading-a-book-to-mr-squirrel",
+          quality: 80,
+          class: "w-full"
+        },
+        {},
+        {}
+      )}`}`;
     });
   }
 });
@@ -11528,7 +15735,7 @@ var init__10 = __esm({
   ".svelte-kit/output/server/nodes/9.js"() {
     index10 = 9;
     component10 = async () => component_cache10 ?? (component_cache10 = (await Promise.resolve().then(() => (init_page_svelte7(), page_svelte_exports7))).default);
-    imports10 = ["_app/immutable/nodes/9.6ac91d22.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Badge.95246e99.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js", "_app/immutable/chunks/CloseButton.20e6c958.js", "_app/immutable/chunks/index.d0fa776d.js", "_app/immutable/chunks/ButtonAmazon.7a31ed06.js", "_app/immutable/chunks/stores.167f22d1.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/chunks/ButtonBack.6c5c0a6f.js", "_app/immutable/chunks/navigation.65a33de5.js"];
+    imports10 = ["_app/immutable/nodes/9.2c47b627.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/Badge.533cf40a.js", "_app/immutable/chunks/spread.8a54911c.js", "_app/immutable/chunks/CloseButton.c40e06a6.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/index.d0fa776d.js", "_app/immutable/chunks/ButtonAmazon.2dbe8e11.js", "_app/immutable/chunks/stores.098e5259.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/chunks/ButtonBack.efd125c8.js", "_app/immutable/chunks/navigation.3a164a89.js", "_app/immutable/chunks/CldImage.0f5e97b0.js"];
     stylesheets10 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts10 = [];
   }
@@ -11547,7 +15754,7 @@ var init_page_svelte8 = __esm({
     init_Indicator_svelte_svelte_type_style_lang();
     pClass2 = "text-sm text-gray-500 font-normal leading-normal pb-2";
     Page7 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<div class="m-auto max-w-2xl mt-10"><section class="w-full flex flex-col justify-center items-center mb-10"><h1 class="text-4xl font-extrabold" data-svelte-h="svelte-2lnjzc">Terms and Conditions</h1> <h6 class="text-gray-500" data-svelte-h="svelte-1lv66r3">Last updated on July 26th, 2023</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</section> <section><h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-1qodkej">Acceptance of Terms</h1> <p${add_attribute("class", pClass2, 0)}>By accessing or using the Simple Reads Books website, you acknowledge that you have read,
+      return `${$$result.head += `<!-- HEAD_svelte-12dfn2p_START -->${$$result.title = `<title>Terms &amp; Conditions</title>`, ""}<!-- HEAD_svelte-12dfn2p_END -->`, ""} <div class="m-auto max-w-2xl mt-10"><section class="w-full flex flex-col justify-center items-center mb-10"><h1 class="text-4xl font-extrabold" data-svelte-h="svelte-2lnjzc">Terms and Conditions</h1> <h6 class="text-gray-500" data-svelte-h="svelte-1lv66r3">Last updated on July 26th, 2023</h6> ${validate_component(ButtonBack, "ButtonBack").$$render($$result, {}, {}, {})}</section> <section><h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-1qodkej">Acceptance of Terms</h1> <p${add_attribute("class", pClass2, 0)}>By accessing or using the Simple Reads Books website, you acknowledge that you have read,
 			understood, and agree to be bound by these Terms and Conditions. If you do not agree to these
 			terms, please refrain from using the website.</p> <h1 class="text-2xl font-bold pb-0.5" data-svelte-h="svelte-1pgjztr">Intellectual Property</h1> <p${add_attribute("class", pClass2, 0)}>All content on the Simple Reads Books website, including but not limited to text, graphics,
 			logos, images, and any other materials, is the intellectual property of Simple Reads Books and
@@ -11601,7 +15808,7 @@ var init__11 = __esm({
   ".svelte-kit/output/server/nodes/10.js"() {
     index11 = 10;
     component11 = async () => component_cache11 ?? (component_cache11 = (await Promise.resolve().then(() => (init_page_svelte8(), page_svelte_exports8))).default);
-    imports11 = ["_app/immutable/nodes/10.30f2cc43.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/ButtonBack.6c5c0a6f.js", "_app/immutable/chunks/navigation.65a33de5.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.fc5a8605.js"];
+    imports11 = ["_app/immutable/nodes/10.1c630038.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js", "_app/immutable/chunks/ButtonBack.efd125c8.js", "_app/immutable/chunks/navigation.3a164a89.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/chunks/Indicator.svelte_svelte_type_style_lang.8f059b12.js", "_app/immutable/chunks/spread.8a54911c.js"];
     stylesheets11 = ["_app/immutable/assets/Indicator.1d121e74.css"];
     fonts11 = [];
   }
@@ -11798,7 +16005,7 @@ var options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "w44985"
+  version_hash: "13wwisa"
 };
 function get_hooks() {
   return {};
@@ -11906,8 +16113,8 @@ function uneval(value, replacer) {
           return;
         }
       }
-      const type = get_type(thing);
-      switch (type) {
+      const type2 = get_type(thing);
+      switch (type2) {
         case "Number":
         case "BigInt":
         case "String":
@@ -11970,8 +16177,8 @@ function uneval(value, replacer) {
     if (custom.has(thing)) {
       return custom.get(thing);
     }
-    const type = get_type(thing);
-    switch (type) {
+    const type2 = get_type(thing);
+    switch (type2) {
       case "Number":
       case "String":
       case "Boolean":
@@ -11991,7 +16198,7 @@ function uneval(value, replacer) {
         return `[${members.join(",")}${tail}]`;
       case "Set":
       case "Map":
-        return `new ${type}([${Array.from(thing).map(stringify2).join(",")}])`;
+        return `new ${type2}([${Array.from(thing).map(stringify2).join(",")}])`;
       default:
         const obj = `{${Object.keys(thing).map((key2) => `${safe_key(key2)}:${stringify2(thing[key2])}`).join(",")}}`;
         const proto = Object.getPrototypeOf(thing);
@@ -12006,8 +16213,8 @@ function uneval(value, replacer) {
     const params = [];
     const statements = [];
     const values = [];
-    names.forEach((name, thing) => {
-      params.push(name);
+    names.forEach((name2, thing) => {
+      params.push(name2);
       if (custom.has(thing)) {
         values.push(
           /** @type {string} */
@@ -12019,8 +16226,8 @@ function uneval(value, replacer) {
         values.push(stringify_primitive(thing));
         return;
       }
-      const type = get_type(thing);
-      switch (type) {
+      const type2 = get_type(thing);
+      switch (type2) {
         case "Number":
         case "String":
         case "Boolean":
@@ -12035,19 +16242,19 @@ function uneval(value, replacer) {
         case "Array":
           values.push(`Array(${thing.length})`);
           thing.forEach((v, i) => {
-            statements.push(`${name}[${i}]=${stringify2(v)}`);
+            statements.push(`${name2}[${i}]=${stringify2(v)}`);
           });
           break;
         case "Set":
           values.push(`new Set`);
           statements.push(
-            `${name}.${Array.from(thing).map((v) => `add(${stringify2(v)})`).join(".")}`
+            `${name2}.${Array.from(thing).map((v) => `add(${stringify2(v)})`).join(".")}`
           );
           break;
         case "Map":
           values.push(`new Map`);
           statements.push(
-            `${name}.${Array.from(thing).map(([k, v]) => `set(${stringify2(k)}, ${stringify2(v)})`).join(".")}`
+            `${name2}.${Array.from(thing).map(([k, v]) => `set(${stringify2(k)}, ${stringify2(v)})`).join(".")}`
           );
           break;
         default:
@@ -12056,7 +16263,7 @@ function uneval(value, replacer) {
           );
           Object.keys(thing).forEach((key2) => {
             statements.push(
-              `${name}${safe_prop(key2)}=${stringify2(thing[key2])}`
+              `${name2}${safe_prop(key2)}=${stringify2(thing[key2])}`
             );
           });
       }
@@ -12069,13 +16276,13 @@ function uneval(value, replacer) {
     return str;
   }
 }
-function get_name(num) {
-  let name = "";
+function get_name(num2) {
+  let name2 = "";
   do {
-    name = chars[num % chars.length] + name;
-    num = ~~(num / chars.length) - 1;
-  } while (num >= 0);
-  return reserved.test(name) ? `${name}0` : name;
+    name2 = chars[num2 % chars.length] + name2;
+    num2 = ~~(num2 / chars.length) - 1;
+  } while (num2 >= 0);
+  return reserved.test(name2) ? `${name2}0` : name2;
 }
 function escape_unsafe_char(c) {
   return escaped[c] || c;
@@ -12151,8 +16358,8 @@ function stringify(value, reducers) {
     if (is_primitive(thing)) {
       str = stringify_primitive2(thing);
     } else {
-      const type = get_type(thing);
-      switch (type) {
+      const type2 = get_type(thing);
+      switch (type2) {
         case "Number":
         case "String":
         case "Boolean":
@@ -12165,8 +16372,8 @@ function stringify(value, reducers) {
           str = `["Date","${thing.toISOString()}"]`;
           break;
         case "RegExp":
-          const { source, flags } = thing;
-          str = flags ? `["RegExp",${stringify_string(source)},"${flags}"]` : `["RegExp",${stringify_string(source)}]`;
+          const { source, flags: flags2 } = thing;
+          str = flags2 ? `["RegExp",${stringify_string(source)},"${flags2}"]` : `["RegExp",${stringify_string(source)}]`;
           break;
         case "Array":
           str = "[";
@@ -12245,8 +16452,8 @@ function stringify(value, reducers) {
   return `[${stringified.join(",")}]`;
 }
 function stringify_primitive2(thing) {
-  const type = typeof thing;
-  if (type === "string")
+  const type2 = typeof thing;
+  if (type2 === "string")
     return stringify_string(thing);
   if (thing instanceof String)
     return stringify_string(thing.toString());
@@ -12254,7 +16461,7 @@ function stringify_primitive2(thing) {
     return UNDEFINED.toString();
   if (thing === 0 && 1 / thing < 0)
     return NEGATIVE_ZERO.toString();
-  if (type === "bigint")
+  if (type2 === "bigint")
     return `["BigInt","${thing}"]`;
   return String(thing);
 }
@@ -12275,13 +16482,13 @@ var ENDPOINT_METHODS = /* @__PURE__ */ new Set([
   "HEAD"
 ]);
 var PAGE_METHODS = /* @__PURE__ */ new Set(["GET", "POST", "HEAD"]);
-function negotiate(accept, types) {
+function negotiate(accept, types2) {
   const parts = [];
   accept.split(",").forEach((str, i) => {
     const match = /([^/]+)\/([^;]+)(?:;q=([0-9.]+))?/.exec(str);
     if (match) {
-      const [, type, subtype, q = "1"] = match;
-      parts.push({ type, subtype, q: +q, i });
+      const [, type2, subtype, q = "1"] = match;
+      parts.push({ type: type2, subtype, q: +q, i });
     }
   });
   parts.sort((a, b) => {
@@ -12298,10 +16505,10 @@ function negotiate(accept, types) {
   });
   let accepted;
   let min_priority = Infinity;
-  for (const mimetype of types) {
-    const [type, subtype] = mimetype.split("/");
+  for (const mimetype of types2) {
+    const [type2, subtype] = mimetype.split("/");
     const priority = parts.findIndex(
-      (part) => (part.type === type || part.type === "*") && (part.subtype === subtype || part.subtype === "*")
+      (part) => (part.type === type2 || part.type === "*") && (part.subtype === subtype || part.subtype === "*")
     );
     if (priority !== -1 && priority < min_priority) {
       accepted = mimetype;
@@ -12310,9 +16517,9 @@ function negotiate(accept, types) {
   }
   return accepted;
 }
-function is_content_type(request, ...types) {
-  const type = request.headers.get("content-type")?.split(";", 1)[0].trim() ?? "";
-  return types.includes(type.toLowerCase());
+function is_content_type(request, ...types2) {
+  const type2 = request.headers.get("content-type")?.split(";", 1)[0].trim() ?? "";
+  return types2.includes(type2.toLowerCase());
 }
 function is_form_content_type(request) {
   return is_content_type(
@@ -12473,11 +16680,11 @@ async function handle_fatal_error(event, options2, error2) {
   error2 = error2 instanceof HttpError ? error2 : coalesce_to_error(error2);
   const status = error2 instanceof HttpError ? error2.status : 500;
   const body = await handle_error_and_jsonify(event, options2, error2);
-  const type = negotiate(event.request.headers.get("accept") || "text/html", [
+  const type2 = negotiate(event.request.headers.get("accept") || "text/html", [
     "application/json",
     "text/html"
   ]);
-  if (event.isDataRequest || type === "application/json") {
+  if (event.isDataRequest || type2 === "application/json") {
     return json(body, {
       status
     });
@@ -12815,19 +17022,19 @@ function check_named_default_separate(actions) {
 }
 async function call_action(event, actions) {
   const url = new URL(event.request.url);
-  let name = "default";
+  let name2 = "default";
   for (const param of url.searchParams) {
     if (param[0].startsWith("/")) {
-      name = param[0].slice(1);
-      if (name === "default") {
+      name2 = param[0].slice(1);
+      if (name2 === "default") {
         throw new Error('Cannot use reserved action name "default"');
       }
       break;
     }
   }
-  const action = actions[name];
+  const action = actions[name2];
   if (!action) {
-    throw new Error(`No action with name '${name}' found`);
+    throw new Error(`No action with name '${name2}' found`);
   }
   if (!is_form_content_type(event.request)) {
     throw new Error(
@@ -13001,7 +17208,7 @@ function create_universal_fetch(event, state, fetched, csr, resolve_opts) {
     }
     const proxy = new Proxy(response, {
       get(response2, key2, _receiver) {
-        async function text2() {
+        async function text22() {
           const body = await response2.text();
           if (!body || typeof body === "string") {
             const status_number = Number(response2.status);
@@ -13037,11 +17244,11 @@ function create_universal_fetch(event, state, fetched, csr, resolve_opts) {
           };
         }
         if (key2 === "text") {
-          return text2;
+          return text22;
         }
         if (key2 === "json") {
           return async () => {
-            return JSON.parse(await text2());
+            return JSON.parse(await text22());
           };
         }
         return Reflect.get(response2, key2, response2);
@@ -13604,7 +17811,7 @@ async function render_response({
     }
   }
   if (page_config.ssr) {
-    const props = {
+    const props15 = {
       stores: {
         page: writable(null),
         navigating: writable(null),
@@ -13616,9 +17823,9 @@ async function render_response({
     let data2 = {};
     for (let i = 0; i < branch.length; i += 1) {
       data2 = { ...data2, ...branch[i].data };
-      props[`data_${i}`] = data2;
+      props15[`data_${i}`] = data2;
     }
-    props.page = {
+    props15.page = {
       error: error2,
       params: (
         /** @type {Record<string, any>} */
@@ -13632,7 +17839,7 @@ async function render_response({
     };
     {
       try {
-        rendered = options2.root.render(props);
+        rendered = options2.root.render(props15);
       } finally {
         reset();
       }
@@ -13700,12 +17907,12 @@ async function render_response({
 		<link ${attributes.join(" ")}>`;
     }
   }
-  const global = `__sveltekit_${options2.version_hash}`;
+  const global2 = `__sveltekit_${options2.version_hash}`;
   const { data, chunks } = get_data(
     event,
     options2,
     branch.map((b) => b.server_data),
-    global
+    global2
   );
   if (page_config.ssr && page_config.csr) {
     body += `
@@ -13746,7 +17953,7 @@ async function render_response({
 							else fulfil(data);
 						}`);
     }
-    blocks.push(`${global} = {
+    blocks.push(`${global2} = {
 						${properties.join(",\n						")}
 					};`);
     const args = ["app", "element"];
@@ -13872,7 +18079,7 @@ async function render_response({
     }
   );
 }
-function get_data(event, options2, nodes, global) {
+function get_data(event, options2, nodes, global2) {
   let promise_id = 1;
   let count = 0;
   const { iterator, push, done } = create_async_iterator();
@@ -13906,13 +18113,13 @@ function get_data(event, options2, nodes, global) {
             data = void 0;
             str = uneval({ id, data, error: error2 }, replacer);
           }
-          push(`<script>${global}.resolve(${str})<\/script>
+          push(`<script>${global2}.resolve(${str})<\/script>
 `);
           if (count === 0)
             done();
         }
       );
-      return `${global}.defer(${id})`;
+      return `${global2}.defer(${id})`;
     }
   }
   try {
@@ -14490,14 +18697,14 @@ function get_cookies(request, url, trailing_slash) {
      * @param {string} name
      * @param {import('cookie').CookieParseOptions} opts
      */
-    get(name, opts) {
-      const c = new_cookies[name];
+    get(name2, opts) {
+      const c = new_cookies[name2];
       if (c && domain_matches(url.hostname, c.options.domain) && path_matches(url.pathname, c.options.path)) {
         return c.value;
       }
       const decoder = opts?.decode || decodeURIComponent;
       const req_cookies = (0, import_cookie.parse)(header, { decode: decoder });
-      const cookie = req_cookies[name];
+      const cookie = req_cookies[name2];
       return cookie;
     },
     /**
@@ -14511,22 +18718,22 @@ function get_cookies(request, url, trailing_slash) {
           cookies2[c.name] = c.value;
         }
       }
-      return Object.entries(cookies2).map(([name, value]) => ({ name, value }));
+      return Object.entries(cookies2).map(([name2, value]) => ({ name: name2, value }));
     },
     /**
      * @param {string} name
      * @param {string} value
      * @param {import('cookie').CookieSerializeOptions} opts
      */
-    set(name, value, opts = {}) {
-      set_internal(name, value, { ...defaults, ...opts });
+    set(name2, value, opts = {}) {
+      set_internal(name2, value, { ...defaults, ...opts });
     },
     /**
      * @param {string} name
      * @param {import('cookie').CookieSerializeOptions} opts
      */
-    delete(name, opts = {}) {
-      cookies.set(name, "", {
+    delete(name2, opts = {}) {
+      cookies.set(name2, "", {
         ...opts,
         maxAge: 0
       });
@@ -14536,8 +18743,8 @@ function get_cookies(request, url, trailing_slash) {
      * @param {string} value
      * @param {import('cookie').CookieSerializeOptions} opts
      */
-    serialize(name, value, opts) {
-      return (0, import_cookie.serialize)(name, value, {
+    serialize(name2, value, opts) {
+      return (0, import_cookie.serialize)(name2, value, {
         ...defaults,
         ...opts
       });
@@ -14559,16 +18766,16 @@ function get_cookies(request, url, trailing_slash) {
     }
     if (header2) {
       const parsed = (0, import_cookie.parse)(header2, { decode: (value) => value });
-      for (const name in parsed) {
-        combined_cookies[name] = parsed[name];
+      for (const name2 in parsed) {
+        combined_cookies[name2] = parsed[name2];
       }
     }
-    return Object.entries(combined_cookies).map(([name, value]) => `${name}=${value}`).join("; ");
+    return Object.entries(combined_cookies).map(([name2, value]) => `${name2}=${value}`).join("; ");
   }
-  function set_internal(name, value, opts) {
+  function set_internal(name2, value, opts) {
     const path = opts.path ?? default_path;
-    new_cookies[name] = {
-      name,
+    new_cookies[name2] = {
+      name: name2,
       value,
       options: {
         ...opts,
@@ -14596,8 +18803,8 @@ function path_matches(path, constraint) {
 }
 function add_cookies_to_headers(headers, cookies) {
   for (const new_cookie of cookies) {
-    const { name, value, options: options2 } = new_cookie;
-    headers.append("set-cookie", (0, import_cookie.serialize)(name, value, options2));
+    const { name: name2, value, options: options2 } = new_cookie;
+    headers.append("set-cookie", (0, import_cookie.serialize)(name2, value, options2));
   }
 }
 function create_fetch({ event, options: options2, manifest: manifest2, state, get_cookie_header, set_internal }) {
@@ -14638,9 +18845,9 @@ function create_fetch({ event, options: options2, manifest: manifest2, state, ge
         if (is_asset || is_asset_html) {
           const file = is_asset ? filename : filename_html;
           if (state.read) {
-            const type = is_asset ? manifest2.mimeTypes[filename.slice(filename.lastIndexOf("."))] : "text/html";
+            const type2 = is_asset ? manifest2.mimeTypes[filename.slice(filename.lastIndexOf("."))] : "text/html";
             return new Response(state.read(file), {
-              headers: type ? { "content-type": type } : {}
+              headers: type2 ? { "content-type": type2 } : {}
             });
           }
           return await fetch(request);
@@ -14672,9 +18879,9 @@ function create_fetch({ event, options: options2, manifest: manifest2, state, ge
         const set_cookie = response.headers.get("set-cookie");
         if (set_cookie) {
           for (const str of set_cookie_parser.splitCookiesString(set_cookie)) {
-            const { name, value, ...options3 } = set_cookie_parser.parseString(str);
+            const { name: name2, value, ...options3 } = set_cookie_parser.parseString(str);
             set_internal(
-              name,
+              name2,
               value,
               /** @type {import('cookie').CookieSerializeOptions} */
               options3
@@ -14693,10 +18900,10 @@ function normalize_fetch_input(info, init2, url) {
   return new Request(typeof info === "string" ? new URL(info, url) : info, init2);
 }
 function validator(expected) {
-  function validate(module, file) {
-    if (!module)
+  function validate(module2, file) {
+    if (!module2)
       return;
-    for (const key2 in module) {
+    for (const key2 in module2) {
       if (key2[0] === "_" || expected.has(key2))
         continue;
       const values = [...expected.values()];
@@ -14758,7 +18965,7 @@ var validate_page_server_exports = validator(valid_page_server_exports);
 var validate_server_exports = validator(valid_server_exports);
 var default_transform = ({ html }) => html;
 var default_filter = () => false;
-var default_preload = ({ type }) => type === "js" || type === "css";
+var default_preload = ({ type: type2 }) => type2 === "js" || type2 === "css";
 var page_methods = /* @__PURE__ */ new Set(["GET", "HEAD", "POST"]);
 var allowed_page_methods = /* @__PURE__ */ new Set(["GET", "HEAD", "OPTIONS"]);
 async function respond(request, options2, manifest2, state) {
@@ -15140,11 +19347,11 @@ var Server = class {
     );
     if (!__privateGet(this, _options).hooks) {
       try {
-        const module = await get_hooks();
+        const module2 = await get_hooks();
         __privateGet(this, _options).hooks = {
-          handle: module.handle || (({ event, resolve }) => resolve(event)),
-          handleError: module.handleError || (({ error: error2 }) => console.error(error2)),
-          handleFetch: module.handleFetch || (({ request, fetch: fetch2 }) => fetch2(request))
+          handle: module2.handle || (({ event, resolve }) => resolve(event)),
+          handleError: module2.handleError || (({ error: error2 }) => console.error(error2)),
+          handleFetch: module2.handleFetch || (({ request, fetch: fetch2 }) => fetch2(request))
         };
       } catch (error2) {
         {
@@ -15182,10 +19389,10 @@ var manifest = (() => {
   return {
     appDir: "_app",
     appPath: "_app",
-    assets: /* @__PURE__ */ new Set(["favicon.png", "images/banner.png", "images/dcm-author.png", "images/hunnie-bunny-2-transparent.png", "images/hunnie-bunny-peering-over.png", "images/hunnie-bunny-reading-a-book-to-mr-squirrel.png", "images/hunnie-bunny-reading-book.png", "images/hunnie-bunny-reading.png", "images/hunnie-bunnys-garden-book-cover-back-1.png", "images/hunnie-bunnys-garden-book-cover-front-1.png", "images/hunnie-bunnys-garden-book-cover.png", "images/hunnie-bunnys-garden-mockup.png", "images/hunnie-bunnys-garden-page-1.png", "images/hunnie-bunnys-garden-page-2.png", "images/logo.png", "images/mr_frog_sitting.png", "images/mr_frog_sitting.svg", "images/mr_squirrel_sitting.png", "images/mr_squirrel_sitting.svg"]),
+    assets: /* @__PURE__ */ new Set([".DS_Store", "favicon.png", "images/banner.png", "images/dcm-author.png", "images/hunnie-bunny-2-transparent.png", "images/hunnie-bunny-peering-over.png", "images/hunnie-bunny-reading-a-book-to-mr-squirrel.png", "images/hunnie-bunny-reading-book.png", "images/hunnie-bunny-reading.png", "images/hunnie-bunnys-garden-book-cover-back-1.png", "images/hunnie-bunnys-garden-book-cover-front-1.png", "images/hunnie-bunnys-garden-book-cover.png", "images/hunnie-bunnys-garden-mockup.png", "images/hunnie-bunnys-garden-page-1.png", "images/hunnie-bunnys-garden-page-2.png", "images/logo.png", "images/mr_frog_sitting.png", "images/mr_frog_sitting.svg", "images/mr_squirrel_sitting.png", "images/mr_squirrel_sitting.svg"]),
     mimeTypes: { ".png": "image/png", ".svg": "image/svg+xml" },
     _: {
-      client: { "start": "_app/immutable/entry/start.0bc03ff1.js", "app": "_app/immutable/entry/app.541b9b73.js", "imports": ["_app/immutable/entry/start.0bc03ff1.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/singletons.117d2b66.js", "_app/immutable/entry/app.541b9b73.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js"], "stylesheets": [], "fonts": [] },
+      client: { "start": "_app/immutable/entry/start.3f04ef5b.js", "app": "_app/immutable/entry/app.af254354.js", "imports": ["_app/immutable/entry/start.3f04ef5b.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/singletons.86980ea5.js", "_app/immutable/entry/app.af254354.js", "_app/immutable/chunks/scheduler.3319f7f9.js", "_app/immutable/chunks/index.10ff34d5.js"], "stylesheets": [], "fonts": [] },
       nodes: [
         __memo(() => Promise.resolve().then(() => (init__(), __exports))),
         __memo(() => Promise.resolve().then(() => (init__2(), __exports2))),

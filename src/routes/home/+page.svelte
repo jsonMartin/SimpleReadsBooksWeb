@@ -68,6 +68,7 @@
 					src="hunnie-bunnys-garden-table"
 					alt="book mockup cover"
 					quality={75}
+					loading="eager"
 				/>
 
 				<div class="self-stretch text-center text-gray-900 md:text-xl lg:text-2xl text-xl p-3">
