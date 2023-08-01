@@ -35,9 +35,32 @@
 		: 'w-full relative overflow-visible relative';
 </script>
 
-<!-- Google Analytics -->
-<!-- <svelte:head>
-	<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<svelte:head>
+	<title>Simple Reads Books</title>
+	<meta
+		name="description"
+		content="bunny garden animals nature squirrel frog vegetables woods spring summer children books picture book"
+	/>
+	<meta
+		property="og:title"
+		content="bunny garden animals nature squirrel frog vegetables woods spring summer children books picture book"
+	/>
+	<meta property="og:description" content="Simple Reads Books and Hunnie Bunny's Garden" />
+	<meta
+		property="og:image"
+		content="https://res.cloudinary.com/simple-reads-books/image/upload/c_limit,w_2880/f_auto/q_auto/banner?_a=BBEHUxAE0"
+	/>
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="My Page Title" />
+	<meta name="twitter:description" content="This is a description of my page for SEO purposes." />
+	<meta
+		name="twitter:image"
+		content="https://res.cloudinary.com/simple-reads-books/image/upload/c_limit,w_2880/f_auto/q_auto/banner?_a=BBEHUxAE0"
+	/>
+
+	<!-- Google Analytics -->
+	<!--
+		<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
@@ -47,7 +70,8 @@
 
 		gtag('config', 'G-9YTEE5C1YT');
 	</script>
-</svelte:head> -->
+	-->
+</svelte:head>
 
 <div id="page-container">
 	<div id="header-container" class="m-auto max-w-screen-xl w-full overflow-hidden">
