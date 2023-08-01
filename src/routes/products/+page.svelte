@@ -2,6 +2,7 @@
 	import { Card, Heading, Span } from 'flowbite-svelte';
 	import ButtonAmazon from '../../lib/components/ButtonAmazon.svelte';
 	import AvailableInFormat from '$lib/components/AvailableInFormat.svelte';
+	import { CldImage } from 'svelte-cloudinary';
 
 	export let data;
 	const { products } = data;
@@ -18,6 +19,7 @@
 					class="rounded-t-lg object-cover w-full"
 					src={product.images[0].imgurl}
 					alt={'Product image' + i}
+					loading="lazy"
 				/>
 			</a>
 			<div class="px-5 py-5 pt-2">
@@ -51,8 +53,11 @@
 >
 	<Span gradient>Coming soon...</Span>
 </Heading>
-<img
-	alt="Hunnie Bunny Reading Book"
-	src="/images/hunnie-bunny-reading-a-book-to-mr-squirrel.png"
-	class="w-full p-1 sm:p-8 md:p-32 block -mt-4 sm:-mt-8 md:-mt-32 !mb-0 !pb-0"
+<CldImage
+	width={2100}
+	height="100%"
+	aspectRatio={2100 / 1500}
+	src="hunnie-bunny-reading-a-book-to-mr-squirrel"
+	quality={80}
+	class="w-full !p-1 sm:!p-8 md:!p-24 md:!-mb-20 block !-mt-4 sm:!-mt-8 md:!-mt-24 !mb-0 !pb-0 !h-[100%] !object-contain"
 />

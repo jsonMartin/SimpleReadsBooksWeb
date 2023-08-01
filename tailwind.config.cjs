@@ -56,17 +56,10 @@ const config = {
         },
       },
       screens: {
-        'sm': '576px',
-        // => @media (min-width: 576px) { ... }
-
+        // 'sm': '576px',
         'md': '960px',
-        // => @media (min-width: 960px) { ... }
-
         'lg': '1280px',
-        // => @media (min-width: 1280px) { ... }
-
         'xl': '1440px',
-        // => @media (min-width: 1440px) { ... }
       },
 
       keyframes: {
@@ -81,16 +74,39 @@ const config = {
         fadeIn: {
           '0%': { opacity: 0 },
           '100%': { opacity: 1 },
+        },
+        bouncefrog: {
+          "0%": {
+            "transform": "translateY(0)"
+          },
+          "50%": {
+            "transform": "translateY(-5px)"
+          },
+          "100%": {
+            "transform": "translateY(0)"
+          }
+        },
+        "rotateSlow": {
+          "0%": {
+            "transform": "scaleX(1)"
+          },
+          "50%": {
+            "transform": "scaleX(0.975)"
+          },
+          "100%": {
+            "transform": "scaleX(1)"
+          }
+        },
+        animation: {
+          flipInX: 'flipInX .8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1',
+          slideUp: 'slideUp 2s ease-in-out 1',
+          fadeIn: 'fadeIn 2s ease-in-out 1',
+          bouncefrog: 'bouncefrog 1s infinite steps(50)',
+          rotateSlow: 'rotate 2s ease-in-out infinite'
         }
       },
-      animation: {
-        flipInX: 'flipInX .8s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1', // 1 indicates the animation will run once
-        slideUp: 'slideUp 2s ease-in-out 1',
-        fadeIn: 'fadeIn 2s ease-in-out 1',
-      }
-    },
-
+    }
   }
-};
+}
 
 module.exports = config;

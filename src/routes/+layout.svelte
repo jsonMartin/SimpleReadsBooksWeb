@@ -18,6 +18,8 @@
 		FooterLink,
 		FooterIcon
 	} from 'flowbite-svelte';
+	import { CldImage } from 'svelte-cloudinary';
+	import { MAX_PAGE_WIDTH } from '$lib/style';
 
 	let defaultModal = false;
 
@@ -33,7 +35,7 @@
 		: 'w-full relative overflow-visible relative';
 </script>
 
-<svelte:head>
+<!-- <svelte:head>
 	<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
@@ -44,7 +46,7 @@
 
 		gtag('config', 'G-9YTEE5C1YT');
 	</script>
-</svelte:head>
+</svelte:head> -->
 
 <div>
 	<div class="m-auto max-w-screen-xl w-full overflow-hidden">
@@ -62,7 +64,16 @@
 			>
 				<NavBrand href="/">
 					<div class="md:hidden flex flex-row justify-center items-center min-w-min">
-						<img src="/images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" />
+						<!-- <img src="/images/logo.png" class="mr-3 h-6 sm:h-9" alt="logo" loading="lazy" /> -->
+						<CldImage
+							width={128}
+							height="fit-content"
+							aspectRatio={1750 / 1424}
+							src="logo"
+							class="mr-3 h-6 sm:h-9"
+							alt="logo"
+						/>
+
 						<span
 							class="self-center whitespace-nowrap sm dark:text-white font-[Itim] text-md sm:text-lg"
 						>
@@ -118,25 +129,32 @@
 				</NavUl>
 			</Navbar>
 
-			<img
-				class="max-w-screen-2xl m-auto"
-				src="/images/banner.png"
-				width="100%"
+			<CldImage
+				src="banner"
+				width={MAX_PAGE_WIDTH * 2}
+				aspectRatio={338 / 100}
+				height="100%"
 				alt="Simple Reads Books Banner"
-				loading="lazy"
-				style="aspect-ratio:288/85"
+				sizes="100vw"
+				class="max-w-screen-2xl m-auto"
 			/>
 
-			<img
-				src="/images/hunnie-bunny-peering-over.png"
-				class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp"
+			<CldImage
+				src="hunnie-bunnie-peering-over"
+				width={450}
+				aspectRatio={7 / 5}
+				height="100%"
 				alt="Hunnie Bunny Peering Over"
+				class="absolute bottom-[-9px] right-[-5px] sm:bottom-[-12px] md:bottom-[-22px] md:right-[-10px] lg:bottom-[-22px] lg:right-[-5px] h-16 sm:h-20 md:h-40 lg:h-40 animate-slideUp !w-fit"
 			/>
 
-			<img
-				src="/images/hunnie-bunny-reading.png"
-				class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-fadeIn"
-				alt="Hunnie Bunny Peering Over"
+			<CldImage
+				src="hunnie-bunnie-reading"
+				width={450}
+				aspectRatio={7 / 5}
+				height="100%"
+				alt="Hunnie Bunny Reading"
+				class="absolute hidden sm:block sm:left-[-4%] md:left-[-3%] left-[-4%] bottom-[0px] rotate-3 sm:h-[100px] md:h-[140px] h-[80px] animate-fadeIn !w-fit"
 			/>
 		</header>
 

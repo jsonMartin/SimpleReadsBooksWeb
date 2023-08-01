@@ -45,6 +45,7 @@
 		"csvtojson": "^2.0.10",
 		"flowbite": "^1.7.0",
 		"flowbite-svelte": "github:jsonMartin/flowbite-svelte",
+		"svelte-cloudinary": "^1.0.3",
 		"tailwind-merge": "^1.14.0"
 	}
 }

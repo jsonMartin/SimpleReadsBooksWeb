@@ -14,9 +14,7 @@
 		Label,
 		ButtonGroup,
 		InputAddon,
-		Input
-	} from 'flowbite-svelte';
-	import {
+		Input,
 		Footer,
 		FooterCopyright,
 		FooterLinkGroup,
@@ -24,9 +22,8 @@
 		FooterLink,
 		FooterIcon
 	} from 'flowbite-svelte';
-	import { fade } from 'svelte/transition';
 
-	let defaultModal = false;
+	import { CldImage } from 'svelte-cloudinary';
 </script>
 
 <section
@@ -59,11 +56,16 @@
 			on:click={() => goto('/products/hunnie-bunnys-garden')}
 		>
 			<a href="/products/hunnie-bunnys-garden">
-				<img
+				<CldImage
+					width={1616}
+					height="100%"
+					aspectRatio={1413 / 983}
 					class="rounded-lg w-full"
-					src="images/hunnie-bunnys-garden-mockup.png"
+					src="hunnie-bunnys-garden-table"
 					alt="book mockup cover"
+					quality={75}
 				/>
+
 				<div class="self-stretch text-center text-gray-900 md:text-xl lg:text-2xl text-xl p-3">
 					<p class="mb-2">
 						Hunnie Bunny’s Garden is a delightful blend of entertainment and education that provides
@@ -88,9 +90,13 @@
 			</div>
 
 			<ButtonAmazon />
-			<img
+
+			<CldImage
+				width={1420}
+				height="100%"
+				aspectRatio={2100 / 1500}
 				style="scale:1.25"
-				src="/images/hunnie-bunny-reading-book.png"
+				src="hunnie-bunny-reading-book"
 				alt="hunnie bunny reading"
 				class="mt-10"
 			/>
@@ -102,11 +108,13 @@
 	<div
 		class="bg-[rgba(0,102,204,0.44)] p-2.5 flex flex-row items-center justify-between w-full relative"
 	>
-		<img
-			class="hidden sm:flex col-span-3 max-w-[20%] animate-rotate-custom"
-			src="images/mr_squirrel_sitting.png"
-			loading="lazy"
-			alt="Mr. Squirrel sitting"
+		<CldImage
+			width={472}
+			height="100%"
+			aspectRatio={2100 / 1500}
+			class="hidden sm:flex col-span-3 !max-w-[20%] !h-fit   animate-[rotateSlow_1s_ease-in_infinite]"
+			src="mr-squirrel-sitting"
+			alt="Mr. Frog sitting"
 		/>
 
 		<div class="flex flex-row gap-2.5 items-center justify-center col-span-6 m-auto">
@@ -130,43 +138,16 @@
 			</div>
 		</div>
 
-		<img
-			class="hidden sm:flex col-span-3 max-w-[20%] animate-bounce-custom"
-			src="images/mr_frog_sitting.png"
-			loading="lazy"
+		<CldImage
+			width={382}
+			height="100%"
+			aspectRatio={252 / 191}
+			class="hidden sm:flex col-span-3 !max-w-[20%] !h-fit animate-[bouncefrog_1s_ease-in_infinite]"
+			src="mr-frog-sitting"
 			alt="Mr. Frog sitting"
 		/>
 	</div>
 </section>
 
 <style>
-	@keyframes bounce {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(-5px);
-		}
-	}
-
-	.animate-bounce-custom {
-		animation: bounce 1s infinite steps(50);
-	}
-
-	@keyframes rotate {
-		0% {
-			transform: scaleX(1);
-		}
-		50% {
-			transform: scaleX(0.98);
-		}
-		100% {
-			transform: scaleX(1);
-		}
-	}
-
-	.animate-rotate-custom {
-		animation: rotate 2s ease-in-out infinite;
-	}
 </style>

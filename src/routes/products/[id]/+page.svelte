@@ -6,6 +6,7 @@
 	import ButtonBack from '../../terms/ButtonBack.svelte';
 	import { ExclamationCircleSolid } from 'flowbite-svelte-icons';
 	import { wrapTextInParagraphTags } from '$lib/helpers';
+	import { CldImage } from 'svelte-cloudinary';
 
 	export let data;
 
@@ -68,5 +69,13 @@
 		<h6 class="text-md text-center">We couldn't find a match based on the provided product ID.</h6>
 		<ButtonBack />
 	</div>
-	<img src="/images/hunnie-bunny-reading-a-book-to-mr-squirrel.png" class="w-full" />
+
+	<CldImage
+		width={2100}
+		height="100%"
+		aspectRatio={2100 / 1500}
+		src="hunnie-bunny-reading-a-book-to-mr-squirrel"
+		quality={80}
+		class="w-full"
+	/>
 {/if}

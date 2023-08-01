@@ -2,7 +2,7 @@
 	import { Button, Input, Label, Modal, Textarea } from 'flowbite-svelte';
 	import { CheckSolid, PenSolid } from 'flowbite-svelte-icons';
 
-	const WEB3_FORM_PUBLIC_ACCESS_KEY = '0fd2108d-3b99-42ca-8a98-513ad5957009';
+	const WEB3_FORM_PUBLIC_ACCESS_KEY = '7915d9f2-0f8d-4606-be62-fb349ea54199';
 	const WEB3_FORM_URL = 'https://api.web3forms.com/submit';
 
 	const form = {
