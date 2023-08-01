@@ -7,6 +7,7 @@
 
 <svelte:head>
 	<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+	<title>Uh oh</title>
 </svelte:head>
 
 <section class="bg-white dark:bg-gray-900 h-[100vh] flex flex-col items-center">

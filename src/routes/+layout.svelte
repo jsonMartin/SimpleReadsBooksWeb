@@ -36,7 +36,6 @@
 </script>
 
 <svelte:head>
-	<title>Simple Reads Books</title>
 	<meta
 		name="description"
 		content="bunny garden animals nature squirrel frog vegetables woods spring summer children books picture book"

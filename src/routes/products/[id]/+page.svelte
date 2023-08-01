@@ -17,6 +17,12 @@
 	$: isBook = product?.type === 'book';
 </script>
 
+<svelte:head>
+	{#if product}
+		<title>{product.title}</title>
+	{/if}
+</svelte:head>
+
 {#if product}
 	<div
 		class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-1 w-full justiy-center items-center justify-items-center"

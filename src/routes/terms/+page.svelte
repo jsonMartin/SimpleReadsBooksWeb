@@ -7,6 +7,10 @@
 	const pClass = 'text-sm text-gray-500 font-normal leading-normal pb-2';
 </script>
 
+<svelte:head>
+	<title>Terms & Conditions</title>
+</svelte:head>
+
 <div class="m-auto max-w-2xl mt-10">
 	<section class="w-full flex flex-col justify-center items-center mb-10">
 		<h1 class="text-4xl font-extrabold">Terms and Conditions</h1>

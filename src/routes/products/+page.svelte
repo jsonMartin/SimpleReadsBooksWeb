@@ -8,6 +8,10 @@
 	const { products } = data;
 </script>
 
+<svelte:head>
+	<title>Books & Products</title>
+</svelte:head>
+
 <h1 class="text-5xl sm:text-6xl md:text-7xl text-center font-bold mt-4 md:mt-8">Books</h1>
 <div
 	class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-4 md:gap-8 justify-items-center mt-4 sm:mt-6 md:mt-10 mx-3 sm:mx-4 md:mx-6"
@@ -36,7 +40,7 @@
 					<span class="text-xl font-medium text-gray-900 dark:text-white">
 						${product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
 					</span>
-					<ButtonAmazon size="sm" />
+					<ButtonAmazon size="xs" />
 				</div>
 			</div>
 		</Card>

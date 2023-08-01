@@ -26,6 +26,10 @@
 	import { CldImage } from 'svelte-cloudinary';
 </script>
 
+<svelte:head>
+	<title>Welcome to Simple Reads Books</title>
+</svelte:head>
+
 <section
 	class="w-full py-10 md:py-20 px-4 md:px-5 bg-[#009933] bg-opacity-40 flex-col justify-start items-center inline-flex font-[Itim]"
 >

@@ -2,6 +2,10 @@
 	import { CldImage } from 'svelte-cloudinary';
 </script>
 
+<svelte:head>
+	<title>About Simple Reads Books</title>
+</svelte:head>
+
 <article
 	class="prose prose-lg sm:prose-xl md:prose-2xl w-full m-auto max-w-4xl p-2 md:p-0 pt-5 md:pt-8"
 >
