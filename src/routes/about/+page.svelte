@@ -65,13 +65,6 @@
 			I hope you will join the Simple Reads Books community and share my books with your family and
 			friends. Enjoy!
 		</p>
-		Horses have always been my first love and true passion, and I was fortunate to buy my first horse
-		when I was in college. Some of my best years were spent showing my thoroughbred mare in hunter shows.
-		When I moved to California, I gave up riding to raise my family and didn’t buy another horse until
-		our son went off to college. I now have three horses, a chestnut Appendix Quarter horse gelding named
-		Crimson Sky, a black German warmblood gelding named San Fransisko, and a bay Oldenburg gelding named
-		Santana. All three are trained in dressage and have done extremely well at shows with their professional
-		rider.
 
 		<h2>Mission Statement</h2>
 		<p>
