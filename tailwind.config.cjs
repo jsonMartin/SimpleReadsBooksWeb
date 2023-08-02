@@ -1,7 +1,12 @@
 const config = {
   content: [
     "./src/**/*.{html,js,svelte,ts}",
-    "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
+
+    // Dev mode: Uncomment out the line below to include ALL Flowbite components
+    // "./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
+
+    // Prod Mode: Only include the components being used in the project
+    "./node_modules/flowbite-svelte/**/{buttons,badges,footer,forms,modals,carousels,typography}/*.{html,js,svelte,ts}",
   ],
 
   plugins: [
