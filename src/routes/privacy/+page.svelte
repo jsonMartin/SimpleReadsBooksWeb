@@ -3,8 +3,6 @@
 	const h3Class = 'text-gray-900 text-xl font-semibold pb-0.5 leading-normal';
 	const pClass = 'text-gray-500 text-sm font-normal leading-normal';
 
-	import { goto } from '$app/navigation';
-	import { Button } from 'flowbite-svelte';
 	import ButtonBack from '../terms/ButtonBack.svelte';
 </script>
 

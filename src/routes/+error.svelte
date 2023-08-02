@@ -1,7 +1,5 @@
 <script>
-	import { Button } from 'flowbite-svelte';
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
 	import ButtonBack from './terms/ButtonBack.svelte';
 </script>
 
