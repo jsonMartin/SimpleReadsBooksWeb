@@ -88,7 +88,7 @@
 						<CldImage
 							width={128}
 							height="100%"
-							aspectRatio={128/104}
+							aspectRatio={128 / 104}
 							src="logo"
 							class="mr-3 !w-12 sm:!w-16"
 							alt="logo"
@@ -208,6 +208,7 @@
 						>
 							<FooterLink href="/terms">Terms & Conditions</FooterLink>
 							<FooterLink href="/privacy">Privacy Policy</FooterLink>
+							<FooterLink href="/credits">Credits</FooterLink>
 							<FooterLink href="/" aClass="hidden">Reviews</FooterLink>
 						</FooterLinkGroup>
 
