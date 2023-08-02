@@ -87,9 +87,10 @@
 					<div class="md:hidden flex flex-row justify-center items-center min-w-min">
 						<CldImage
 							width={128}
-							height={104}
+							height="100%"
+							aspectRatio={128/104}
 							src="logo"
-							class="mr-3 h-6 sm:h-9"
+							class="mr-3 !w-12 sm:!w-16"
 							alt="logo"
 							loading="eager"
 						/>
