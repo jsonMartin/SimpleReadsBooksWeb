@@ -5,10 +5,15 @@
 	export let disabled = true;
 	export let size: 'xl' | 'xs' | 'sm' | 'lg' | 'md' = 'xl';
 
-	$: buttonClass = `${fullWidth && 'w-full'}`;
+	$: buttonClass = `${fullWidth && 'w-full'} no-underline`;
 </script>
 
-<Button disabled color="primary" {size} class={buttonClass} on:click={() => alert('Clicked')}>
+<Button
+	href="https://www.amazon.com/dp/B0C9VVS9KX?ref=myi_title_dp"
+	color="primary"
+	{size}
+	class={buttonClass}
+>
 	<svg
 		class="mr-3"
 		style="color: white"

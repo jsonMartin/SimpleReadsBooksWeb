@@ -89,9 +89,14 @@
 
 		<div class="p-4 basis-full md:basis-5/12 flex flex-col justify-start items-center">
 			<div
-				class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal mb-10"
+				class="md:mt-[70px] xl:mt-[90px] text-center text-black text-xl lg:text-2xl xl:text-3xl font-normal mb-10 md:mb-20"
 			>
-				Release Date <mark class="px-2 bg-[#B9D6B8] rounded">August 15, 2023</mark>
+				<div
+					class="text-center text-black text-3xl lg:text-4xl xl:text-5xl font-normal mb-2 underline"
+				>
+					Hunnie Bunny's Garden
+				</div>
+				<mark class="px-2 bg-[#B9D6B8] rounded">Available Now</mark>
 			</div>
 
 			<ButtonAmazon />
@@ -103,7 +108,7 @@
 				style="scale:1.25"
 				src="hunnie-bunny-reading-book"
 				alt="hunnie bunny reading"
-				class="mt-10"
+				class="mt-16"
 			/>
 		</div>
 	</div>
