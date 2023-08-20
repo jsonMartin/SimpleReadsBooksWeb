@@ -103,13 +103,13 @@
 					</div>
 				</NavBrand>
 
-				<NavHamburger on:click={() => toggle()} />
+				<NavHamburger on:click={() => toggle()} btnClass="hover:bg-primary" />
 
 				<NavUl
 					{hidden}
 					nonActiveClass="md:text-white md:font-bold"
-					activeClass="font-extrabold text-white underline bg-green-400 md:bg-transparent"
-					ulClass="flex flex-col p-3 mt-3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium bg-gray-100 md:bg-transparent"
+					activeClass="font-extrabold text-white underline bg-green-400 bg-pink-500 md:bg-transparent"
+					ulClass="flex flex-col p-3 mt-3 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium bg-transparent"
 					divClass="w-full md:block md:w-auto md:bg-black md:bg-opacity-[.15] md:rounded-full md:mr-2 md:mt-2 md:[transform:perspective(250px)_translateZ(0)_rotateX(5deg)]"
 					color="green"
 				>
@@ -142,6 +142,7 @@
 
 					<NavLi
 						href="/contact"
+						active={$page.url.pathname.includes('contact')}
 						nonActiveClass="md:hover:transform md:hover:scale-125 md:text-white md:font-bold"
 						activeClass="bg-primary-500 md:hover:transform md:hover:scale-125 text-white md:bg-transparent md:font-extrabold md:underline"
 					>
